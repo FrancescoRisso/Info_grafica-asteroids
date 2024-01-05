@@ -1,0 +1,53 @@
+#ifndef _SPACESHIP_H
+#define _SPACESHIP_H
+
+#include <glad/glad.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <vector>
+
+#include "../shader_s.h"
+
+#define root2div2 (float) 0.70710678
+
+namespace Asteroids {
+
+class Spaceship {
+   public:
+	Spaceship();
+
+	void Draw();
+
+   private:
+	glm::vec3 pos;
+	float angle;
+	Shader shader;
+	unsigned int VBO, VAO;
+	glm::mat4 transform;
+
+	const float radius = 0.1;
+	const float moveBase = 0.01;
+
+	// clang-format off
+	float points[9*3] = {
+		(float) radius * root2div2,		(float) radius * root2div2,		(float) 0,
+		(float) -radius * root2div2,	(float) radius * root2div2,		(float) 0,
+		(float) radius * root2div2,		(float) -radius * root2div2,	(float) 0,
+
+		(float) -radius * root2div2,	(float) -radius * root2div2,	(float) 0,
+		(float) -radius * root2div2,	(float) radius * root2div2,		(float) 0,
+		(float) radius * root2div2,		(float) -radius * root2div2,	(float) 0,
+
+		(float) radius * root2div2,		(float) radius * root2div2,		(float) 0,
+		(float) -radius * root2div2,	(float) radius * root2div2,		(float) 0,
+		(float) 0,						(float) radius,					(float) 0
+	};
+	// clang-format on
+
+	void updateTransform();
+};
+
+}  // namespace Asteroids
+
+#endif
