@@ -2,7 +2,11 @@
 
 using namespace Asteroids;
 
-Spaceship::Spaceship() : shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs") {
+Spaceship::Spaceship() : shader() {}
+
+void Spaceship::Init() {
+	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
+
 	pos = glm::vec3((float) 0);
 	angle = 0;
 
@@ -13,7 +17,7 @@ Spaceship::Spaceship() : shader("./resources/shaders/shader.vs", "./resources/sh
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
 
 	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
 	glEnableVertexAttribArray(0);
 
 	updateTransform();
@@ -32,4 +36,24 @@ void Spaceship::updateTransform() {
 	transform = glm::mat4((float) 1);
 	transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));
 	transform = glm::translate(transform, pos);
+}
+
+void Spaceship::Move(direction dir) {
+	glm::vec3 offset(0);
+
+	switch(dir) {
+		case up: offset.y = moveBase; break;
+		case down: offset.y = -moveBase; break;
+		case left: offset.x = -moveBase; break;
+		case right: offset.x = moveBase; break;
+	}
+
+	pos = pos + offset;
+
+	if(pos.x + radius > 1) pos.x = 1 - radius;
+	if(pos.x - radius < -1) pos.x = radius - 1;
+	if(pos.y + radius > 1) pos.y = 1 - radius;
+	if(pos.y - radius < -1) pos.y = radius - 1;
+
+	updateTransform();
 }

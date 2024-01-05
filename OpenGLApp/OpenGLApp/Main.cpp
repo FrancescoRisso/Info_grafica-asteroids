@@ -17,6 +17,8 @@ void processInput(GLFWwindow* window);
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+Spaceship spaceship;
+
 int main() {
 	// glfw: initialize and configure
 	// ------------------------------
@@ -47,7 +49,7 @@ int main() {
 		return -1;
 	}
 
-	Spaceship spaceship;
+	spaceship.Init();
 
 	// render loop
 	// -----------
@@ -79,6 +81,10 @@ int main() {
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) spaceship.Move(up);
+	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) spaceship.Move(down);
+	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) spaceship.Move(left);
+	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) spaceship.Move(right);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

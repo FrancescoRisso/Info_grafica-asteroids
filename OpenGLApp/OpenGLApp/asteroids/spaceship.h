@@ -13,11 +13,15 @@
 
 namespace Asteroids {
 
+enum direction { up, down, left, right };
+
 class Spaceship {
    public:
 	Spaceship();
 
 	void Draw();
+	void Move(direction dir);
+	void Init();
 
    private:
 	glm::vec3 pos;
@@ -27,7 +31,7 @@ class Spaceship {
 	glm::mat4 transform;
 
 	const float radius = 0.1;
-	const float moveBase = 0.01;
+	const float moveBase = 0.0001;
 
 	// clang-format off
 	float points[9*3] = {
