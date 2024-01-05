@@ -17,7 +17,7 @@ void Spaceship::Init() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
 
 	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
 	glEnableVertexAttribArray(0);
 
 	updateTransform();
@@ -34,12 +34,12 @@ void Spaceship::Draw() {
 
 void Spaceship::updateTransform() {
 	transform = glm::mat4((float) 1);
+	transform = glm::translate(transform, glm::vec3(pos, 0));
 	transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));
-	transform = glm::translate(transform, pos);
 }
 
 void Spaceship::Move(direction dir) {
-	glm::vec3 offset(0);
+	glm::vec2 offset(0);
 
 	switch(dir) {
 		case up: offset.y = moveBase; break;
