@@ -29,7 +29,7 @@ class Spaceship : public Object {
    private:
 	const float moveBase = 0.0001;
 
-	float points[NumPointsSpaceship * 2];
+	float points[NumPointsSpaceship * 2] = {0};
 };
 
 }  // namespace Asteroids

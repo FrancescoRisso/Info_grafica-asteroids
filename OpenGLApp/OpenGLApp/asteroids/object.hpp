@@ -27,14 +27,14 @@ class Object {
 	glm::vec2 pos;
 	glm::vec2 speed;
 
-	float angle;
+	float angle = 0;
 
 	glm::mat4 transform;
 
 	Shader shader;
 	unsigned int VBO = 0, VAO = 0;
 
-	float radius;
+	float radius = 0;
 
 	virtual void updateTransform();
 };
