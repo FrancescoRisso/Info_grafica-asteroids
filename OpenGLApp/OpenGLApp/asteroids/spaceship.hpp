@@ -10,8 +10,6 @@
 #include "../shader_s.h"
 #include "../utils.h"
 
-#define root2div2 (float) 0.70710678
-
 namespace Asteroids {
 
 enum direction { up, down, left, right };
