@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "../shader_s.h"
+#include "../utils.h"
 
 #define root2div2 (float) 0.70710678
 
@@ -22,6 +23,7 @@ class Spaceship {
 	void Draw();
 	void Move(direction dir);
 	void Init();
+	void PointTo(glm::vec2 mousePos);
 
    private:
 	glm::vec2 pos;

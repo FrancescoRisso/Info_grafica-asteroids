@@ -57,3 +57,9 @@ void Spaceship::Move(direction dir) {
 
 	updateTransform();
 }
+
+void Spaceship::PointTo(glm::vec2 mousePos) {
+	float newAngle = angleBetween(pos + YaxisVersor, mousePos, pos) - 3.14;
+	if(newAngle == newAngle) angle = newAngle;  // to avoid indeterminate forms
+	updateTransform();
+}

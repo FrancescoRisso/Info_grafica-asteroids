@@ -30,6 +30,9 @@
     <ClCompile Include="shader_s.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader_s.h">
@@ -42,6 +45,9 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="asteroids\spaceship.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>File di origine</Filter>
     </ClInclude>
   </ItemGroup>

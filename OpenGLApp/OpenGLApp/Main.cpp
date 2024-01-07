@@ -11,11 +11,18 @@
 using namespace Asteroids;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+unsigned int SCR_WIDTH = 800;
+unsigned int SCR_HEIGHT = 600;
+
+// mouse
+float deltaTime;
+float lastFrame = 0;
+float lastX, lastY;
+bool firstMouse = true;
 
 Spaceship spaceship;
 
@@ -41,6 +48,10 @@ int main() {
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+
+	// tell GLFW to capture our mouse
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -93,4 +104,25 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	// make sure the viewport matches the new window dimensions; note that width and
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
+	SCR_WIDTH = width;
+	SCR_HEIGHT = height;
+}
+
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
+	float xpos = (float) xposIn;
+	float ypos = (float) yposIn;
+
+	if(firstMouse) {
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;  // reversed since y-coordinates go from bottom to top
+
+	spaceship.PointTo(mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT)));
+
+	lastX = xpos;
+	lastY = ypos;
 }
