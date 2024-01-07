@@ -18,10 +18,14 @@ class Object {
    public:
 	Object();
 
+	virtual void Init() = 0;
+
 	virtual void Draw() const = 0;
+	
 	virtual void Move();
 	virtual void Move(direction dir) {};
-	virtual void Init() = 0;
+
+	virtual void updateTransform();
 
    protected:
 	glm::vec2 pos;
@@ -35,8 +39,6 @@ class Object {
 	unsigned int VBO = 0, VAO = 0;
 
 	float radius = 0;
-
-	virtual void updateTransform();
 };
 
 }  // namespace Asteroids
