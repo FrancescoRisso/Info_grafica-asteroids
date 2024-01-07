@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="asteroids\object.cpp" />
     <ClCompile Include="asteroids\spaceship.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Main.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="asteroids\object.hpp" />
     <ClInclude Include="asteroids\spaceship.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="shader_s.h" />

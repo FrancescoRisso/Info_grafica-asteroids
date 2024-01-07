@@ -2,13 +2,33 @@
 
 using namespace Asteroids;
 
-Spaceship::Spaceship() : shader() {}
+Spaceship::Spaceship() {}
 
 void Spaceship::Init() {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	pos = glm::vec3((float) 0);
 	angle = 0;
+
+	radius = 0.1;
+
+	// clang-format off
+	float tmpPoints[NumPointsSpaceship * 3] = {
+		(float) radius * root2div2,		(float) radius * root2div2,
+		(float) -radius * root2div2,	(float) radius * root2div2,
+		(float) radius * root2div2,		(float) -radius * root2div2,
+
+		(float) -radius * root2div2,	(float) -radius * root2div2,
+		(float) -radius * root2div2,	(float) radius * root2div2,
+		(float) radius * root2div2,		(float) -radius * root2div2,
+
+		(float) radius * root2div2,		(float) radius * root2div2,
+		(float) -radius * root2div2,	(float) radius * root2div2,
+		(float) 0,						(float) radius,
+	};
+	// clang-format on
+
+	memcpy(points, tmpPoints, NumPointsSpaceship * 3 * sizeof(float));
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -23,19 +43,13 @@ void Spaceship::Init() {
 	updateTransform();
 }
 
-void Spaceship::Draw() {
+void Spaceship::Draw() const {
 	shader.use();
 	shader.setMat4("model", transform);
 	shader.setVec3("objectColor", 1, 0, 0);
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 9);
-}
-
-void Spaceship::updateTransform() {
-	transform = glm::mat4((float) 1);
-	transform = glm::translate(transform, glm::vec3(pos, 0));
-	transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));
 }
 
 void Spaceship::Move(direction dir) {
