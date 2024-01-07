@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "shader_s.h"
-#include "asteroids/spaceship.h"
+#include "asteroids/spaceship.hpp"
 
 using namespace Asteroids;
 
