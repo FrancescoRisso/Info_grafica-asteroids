@@ -7,7 +7,7 @@ Spaceship::Spaceship() {}
 void Spaceship::Init() {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
-	pos = glm::vec3((float) 0);
+	pos = glm::vec2((float) 0);
 	angle = 0;
 
 	radius = 0.1;
