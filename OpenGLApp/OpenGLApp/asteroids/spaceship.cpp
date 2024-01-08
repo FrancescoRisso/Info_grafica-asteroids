@@ -4,11 +4,11 @@ using namespace Asteroids;
 
 Spaceship::Spaceship() {}
 
-void Spaceship::Init() {
+void Spaceship::Init(glm::vec2 pos, glm::vec2 speed) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
-	pos = glm::vec2((float) 0);
-	speed = glm::vec2(0.5);
+	this->pos = pos;
+	this->speed = glm::vec2(0.5);
 	angle = 0;
 
 	radius = 0.1;
