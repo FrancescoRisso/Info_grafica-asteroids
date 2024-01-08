@@ -24,16 +24,18 @@ void Object::updateTransform() {
 }
 
 void Object::Move() {
-	float curTime = (float) glfwGetTime();
-	float deltaTime = curTime - lastFrame;
-	lastFrame = curTime;
-
-	pos += deltaTime * speed;
+	pos += timeFromLastFrame() * speed;
 
 	if(!canExitTheScreen) limitMovementToScreen();
 	updateTransform();
 }
 
+float Object::timeFromLastFrame() {
+	float curTime = (float) glfwGetTime();
+	float deltaTime = curTime - lastFrame;
+	lastFrame = curTime;
+	return deltaTime;
+}
 
 void Object::limitMovementToScreen() {
 	if(pos.x + radius > 1) pos.x = 1 - radius;

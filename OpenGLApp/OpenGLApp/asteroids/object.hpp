@@ -48,6 +48,7 @@ class Object {
 	bool canExitTheScreen = false;
 
 	void limitMovementToScreen();
+	float timeFromLastFrame();
 };
 
 }  // namespace Asteroids
