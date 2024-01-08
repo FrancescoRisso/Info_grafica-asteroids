@@ -2,7 +2,7 @@
 
 using namespace Asteroids;
 
-Spaceship::Spaceship() {}
+Spaceship::Spaceship() : lastMousePos(0.0f) {}
 
 void Spaceship::Init(glm::vec2 pos, glm::vec2 speed) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
@@ -65,11 +65,15 @@ void Spaceship::MoveDir(direction dir) {
 
 	pos = pos + offset;
 
+	PointTo(lastMousePos);
+
 	limitMovementToScreen();
 	updateTransform();
 }
 
 void Spaceship::PointTo(glm::vec2 mousePos) {
+	lastMousePos = mousePos;
+
 	float newAngle = angleBetween(pos + YaxisVersor, mousePos, pos) - 3.14;
 	if(newAngle == newAngle) angle = newAngle;  // to avoid indeterminate forms
 	updateTransform();

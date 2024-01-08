@@ -22,6 +22,8 @@ class Spaceship : public Object {
 
    private:
 	float points[NumTrianglesSpaceship * 3 * 2] = {0};
+
+	glm::vec2 lastMousePos;
 };
 
 }  // namespace Asteroids
