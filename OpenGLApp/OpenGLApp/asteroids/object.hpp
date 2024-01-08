@@ -13,6 +13,8 @@
 #include "../shader_s.h"
 #include "../utils.h"
 
+extern float deltaTime;
+
 namespace Asteroids {
 
 enum direction { up, down, left, right };
@@ -48,7 +50,6 @@ class Object {
 	bool canExitTheScreen = false;
 
 	void limitMovementToScreen();
-	float timeFromLastFrame();
 };
 
 }  // namespace Asteroids

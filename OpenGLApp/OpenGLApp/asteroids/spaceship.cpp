@@ -8,6 +8,7 @@ void Spaceship::Init() {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	pos = glm::vec2((float) 0);
+	speed = glm::vec2(0.5);
 	angle = 0;
 
 	radius = 0.1;
@@ -56,10 +57,10 @@ void Spaceship::MoveDir(direction dir) {
 	glm::vec2 offset(0);
 
 	switch(dir) {
-		case up: offset.y = moveBase; break;
-		case down: offset.y = -moveBase; break;
-		case left: offset.x = -moveBase; break;
-		case right: offset.x = moveBase; break;
+		case up: offset.y = speed.x * deltaTime; break;
+		case down: offset.y = -speed.x * deltaTime; break;
+		case left: offset.x = -speed.y * deltaTime; break;
+		case right: offset.x = speed.y * deltaTime; break;
 	}
 
 	pos = pos + offset;

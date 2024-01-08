@@ -69,6 +69,11 @@ int main() {
 		// -----
 		processInput(window);
 
+		// timings
+		float curTime = (float) glfwGetTime();
+		deltaTime = curTime - lastFrame;
+		lastFrame = curTime;
+
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
