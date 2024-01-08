@@ -22,7 +22,7 @@ class Spaceship : public Object {
 
 	void Draw() const override;
 	void Move() override {};
-	void Move(direction dir) override;
+	void MoveDir(direction dir) override;
 	void Init() override;
 	void PointTo(glm::vec2 mousePos);
 

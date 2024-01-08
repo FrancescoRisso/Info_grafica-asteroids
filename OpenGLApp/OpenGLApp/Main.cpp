@@ -92,10 +92,10 @@ int main() {
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
-	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) spaceship.Move(up);
-	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) spaceship.Move(down);
-	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) spaceship.Move(left);
-	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) spaceship.Move(right);
+	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) spaceship.MoveDir(up);
+	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) spaceship.MoveDir(down);
+	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) spaceship.MoveDir(left);
+	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) spaceship.MoveDir(right);
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

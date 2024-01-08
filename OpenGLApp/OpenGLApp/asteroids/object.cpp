@@ -23,4 +23,21 @@ void Object::updateTransform() {
 	transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));
 }
 
-void Object::Move() {}
+void Object::Move() {
+	float curTime = (float) glfwGetTime();
+	float deltaTime = curTime - lastFrame;
+	lastFrame = curTime;
+
+	pos += deltaTime * speed;
+
+	if(!canExitTheScreen) limitMovementToScreen();
+	updateTransform();
+}
+
+
+void Object::limitMovementToScreen() {
+	if(pos.x + radius > 1) pos.x = 1 - radius;
+	if(pos.x - radius < -1) pos.x = radius - 1;
+	if(pos.y + radius > 1) pos.y = 1 - radius;
+	if(pos.y - radius < -1) pos.y = radius - 1;
+}

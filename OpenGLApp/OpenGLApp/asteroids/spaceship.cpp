@@ -52,7 +52,7 @@ void Spaceship::Draw() const {
 	glDrawArrays(GL_TRIANGLES, 0, 9);
 }
 
-void Spaceship::Move(direction dir) {
+void Spaceship::MoveDir(direction dir) {
 	glm::vec2 offset(0);
 
 	switch(dir) {
@@ -64,11 +64,7 @@ void Spaceship::Move(direction dir) {
 
 	pos = pos + offset;
 
-	if(pos.x + radius > 1) pos.x = 1 - radius;
-	if(pos.x - radius < -1) pos.x = radius - 1;
-	if(pos.y + radius > 1) pos.y = 1 - radius;
-	if(pos.y - radius < -1) pos.y = radius - 1;
-
+	limitMovementToScreen();
 	updateTransform();
 }
 

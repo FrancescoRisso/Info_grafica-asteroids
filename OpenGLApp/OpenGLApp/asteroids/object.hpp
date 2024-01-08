@@ -1,7 +1,10 @@
 #ifndef _OBJECT_H
 #define _OBJECT_H
 
+// clang-format off
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+// clang-format on
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,9 +24,9 @@ class Object {
 	virtual void Init() = 0;
 
 	virtual void Draw() const = 0;
-	
+
 	virtual void Move();
-	virtual void Move(direction dir) {};
+	virtual void MoveDir(direction dir) {};
 
 	virtual void updateTransform();
 
@@ -39,6 +42,12 @@ class Object {
 	unsigned int VBO = 0, VAO = 0;
 
 	float radius = 0;
+
+	float lastFrame = 0;
+
+	bool canExitTheScreen = false;
+
+	void limitMovementToScreen();
 };
 
 }  // namespace Asteroids
