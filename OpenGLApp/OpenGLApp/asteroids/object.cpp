@@ -26,7 +26,7 @@ void Object::updateTransform() {
 void Object::Move() {
 	pos += deltaTime * speed;
 
-	if(!canExitTheScreen) limitMovementToScreen();
+	if(!canExitTheScreen()) limitMovementToScreen();
 	updateTransform();
 }
 

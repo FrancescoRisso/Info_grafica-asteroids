@@ -47,7 +47,9 @@ class Object {
 
 	float lastFrame = 0;
 
-	bool canExitTheScreen = false;
+	virtual bool canExitTheScreen() const {
+		return false;
+	};
 
 	void limitMovementToScreen();
 };
