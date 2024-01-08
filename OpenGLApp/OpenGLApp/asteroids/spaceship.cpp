@@ -14,7 +14,7 @@ void Spaceship::Init() {
 	radius = 0.1;
 
 	// clang-format off
-	float tmpPoints[NumPointsSpaceship * 2] = {
+	float tmpPoints[NumTrianglesSpaceship * 3 * 2] = {
 		(float) radius * root2div2,		(float) radius * root2div2,
 		(float) -radius * root2div2,	(float) radius * root2div2,
 		(float) radius * root2div2,		(float) -radius * root2div2,
@@ -29,7 +29,7 @@ void Spaceship::Init() {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, NumPointsSpaceship * 2 * sizeof(float));
+	memcpy(points, tmpPoints, NumTrianglesSpaceship * 2 * sizeof(float));
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);

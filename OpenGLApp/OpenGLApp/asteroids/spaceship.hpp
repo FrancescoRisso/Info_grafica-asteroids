@@ -3,7 +3,7 @@
 
 #include "object.hpp"
 
-#define NumPointsSpaceship 9
+#define NumTrianglesSpaceship 3
 
 namespace Asteroids {
 
@@ -18,7 +18,7 @@ class Spaceship : public Object {
 	void PointTo(glm::vec2 mousePos);
 
    private:
-	float points[NumPointsSpaceship * 2] = {0};
+	float points[NumTrianglesSpaceship * 3 * 2] = {0};
 };
 
 }  // namespace Asteroids
