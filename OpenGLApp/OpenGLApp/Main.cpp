@@ -60,7 +60,7 @@ int main() {
 		return -1;
 	}
 
-	spaceship.Init();
+	spaceship.Init(glm::vec2(0));
 
 	// render loop
 	// -----------
