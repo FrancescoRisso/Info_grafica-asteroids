@@ -10,6 +10,9 @@
 
 float angleBetween(glm::vec2 a, glm::vec2 b, glm::vec2 origin);
 
+// uses (0,0) as origin
+float angleBetweenVerticalDir(glm::vec2 a);
+
 glm::vec2 mouse2graphicCoords(glm::vec2 mouseCoords, glm::vec2 screenSize);
 
 #endif
