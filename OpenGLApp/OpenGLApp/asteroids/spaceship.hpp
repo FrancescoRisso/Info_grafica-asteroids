@@ -18,8 +18,6 @@ class Spaceship : public Object {
 	void PointTo(glm::vec2 mousePos);
 
    private:
-	const float moveBase = 0.0001;
-
 	float points[NumPointsSpaceship * 2] = {0};
 };
 
