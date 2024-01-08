@@ -1,14 +1,6 @@
 #ifndef _SPACESHIP_H
 #define _SPACESHIP_H
 
-#include <glad/glad.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <vector>
-
-#include "../shader_s.h"
-#include "../utils.h"
 #include "object.hpp"
 
 #define NumPointsSpaceship 9
