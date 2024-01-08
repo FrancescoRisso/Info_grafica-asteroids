@@ -29,7 +29,7 @@ void Spaceship::Init(glm::vec2 pos, glm::vec2 speed) {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, NumTrianglesSpaceship * 2 * sizeof(float));
+	memcpy(points, tmpPoints, NumTrianglesSpaceship * 3 * 2 * sizeof(float));
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -50,7 +50,7 @@ void Spaceship::Draw() const {
 	shader.setVec3("objectColor", 1, 0, 0);
 
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 9);
+	glDrawArrays(GL_TRIANGLES, 0, 3 * NumTrianglesSpaceship);
 }
 
 void Spaceship::MoveDir(direction dir) {
