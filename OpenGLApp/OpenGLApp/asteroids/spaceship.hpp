@@ -7,7 +7,6 @@
 
 namespace Asteroids {
 
-// class Spaceship {
 class Spaceship : public Object {
    public:
 	Spaceship();
