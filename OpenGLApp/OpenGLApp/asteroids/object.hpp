@@ -11,7 +11,7 @@
 #include <vector>
 
 #include "../shader_s.h"
-#include "../utils.h"
+#include "../utils.hpp"
 
 extern float deltaTime;
 
