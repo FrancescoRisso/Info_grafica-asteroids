@@ -4,8 +4,8 @@
 using namespace std;
 
 float angleBetween(glm::vec2 a, glm::vec2 b, glm::vec2 origin) {
-	glm::vec2 da = glm::normalize(a - origin);
-	glm::vec2 db = glm::normalize(b - origin);
+	glm::vec2 da = glm::normalize(scaleVectorReverse(a - origin));
+	glm::vec2 db = glm::normalize(scaleVectorReverse(b - origin));
 
 	float sina = -da.y;
 	float cosa = da.x;
@@ -28,6 +28,15 @@ glm::vec2 scaleVector(glm::vec2 vector) {
 		vector.x *= (float) SCR_HEIGHT / (float) SCR_WIDTH;
 	else
 		vector.y *= (float) SCR_WIDTH / (float) SCR_HEIGHT;
+
+	return vector;
+}
+
+glm::vec2 scaleVectorReverse(glm::vec2 vector) {
+	if(SCR_WIDTH > SCR_HEIGHT)
+		vector.x /= (float) SCR_HEIGHT / (float) SCR_WIDTH;
+	else
+		vector.y /= (float) SCR_WIDTH / (float) SCR_HEIGHT;
 
 	return vector;
 }

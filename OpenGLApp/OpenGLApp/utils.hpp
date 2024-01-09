@@ -19,5 +19,6 @@ float angleBetweenVerticalDir(glm::vec2 a);
 glm::vec2 mouse2graphicCoords(glm::vec2 mouseCoords, glm::vec2 screenSize);
 
 glm::vec2 scaleVector(glm::vec2 vector);
+glm::vec2 scaleVectorReverse(glm::vec2 vector);
 
 #endif
