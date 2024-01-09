@@ -27,3 +27,7 @@ void Object::limitMovementToScreen() {
 	if(pos.y + radius > 1) pos.y = 1 - radius;
 	if(pos.y - radius < -1) pos.y = radius - 1;
 }
+
+bool Object::isOutOfScreen() {
+	return (pos.x - radius > 1) || (pos.x + radius < -1) || (pos.y - radius > 1) || (pos.y + radius < -1);
+}

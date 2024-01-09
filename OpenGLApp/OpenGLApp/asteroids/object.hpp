@@ -32,6 +32,8 @@ class Object {
 
 	virtual void updateTransform();
 
+	virtual bool isOutOfScreen();
+
    protected:
 	glm::vec2 pos;
 	glm::vec2 speed;

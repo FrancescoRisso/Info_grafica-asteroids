@@ -86,9 +86,15 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for(auto projectilePtr = projectiles.begin(); projectilePtr != projectiles.end(); projectilePtr++) {
+		auto projectilePtr = projectiles.begin();
+		while(projectilePtr != projectiles.end()) {
 			projectilePtr->Draw();
 			projectilePtr->Move();
+			if(projectilePtr->isOutOfScreen()) {
+				projectilePtr = projectiles.erase(projectilePtr);
+				continue;
+			}
+			projectilePtr++;
 		}
 
 		spaceship.Draw();
