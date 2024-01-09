@@ -2,6 +2,7 @@
 #define _SPACESHIP_H
 
 #include "object.hpp"
+#include "projectile.hpp"
 
 #define NumTrianglesSpaceship 3
 
@@ -19,6 +20,7 @@ class Spaceship : public Object {
 		Init(pos, glm::vec2(0));
 	}
 	void PointTo(glm::vec2 mousePos);
+	Projectile Shoot();
 
    private:
 	float points[NumTrianglesSpaceship * 3 * 2] = {0};

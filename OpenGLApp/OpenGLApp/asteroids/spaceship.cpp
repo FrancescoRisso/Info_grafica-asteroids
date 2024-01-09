@@ -78,3 +78,10 @@ void Spaceship::PointTo(glm::vec2 mousePos) {
 	if(newAngle == newAngle) angle = newAngle;  // to avoid indeterminate forms
 	updateTransform();
 }
+
+Projectile Spaceship::Shoot() {
+	Projectile p;
+	glm::vec2 dir(cos(angle), sin(angle));
+	p.Init(pos + radius * dir, dir);
+	return p;
+}

@@ -36,6 +36,9 @@
     <ClCompile Include="asteroids\object.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="asteroids\projectile.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader_s.h">
@@ -54,6 +57,9 @@
       <Filter>File di origine</Filter>
     </ClInclude>
     <ClInclude Include="asteroids\object.hpp">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroids\projectile.hpp">
       <Filter>File di origine</Filter>
     </ClInclude>
   </ItemGroup>

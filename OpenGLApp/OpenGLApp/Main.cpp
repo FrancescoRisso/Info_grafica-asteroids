@@ -4,14 +4,17 @@
 // clang-format on
 
 #include <iostream>
+#include <list>
 
 #include "shader_s.h"
 #include "asteroids/spaceship.hpp"
+#include "asteroids/projectile.hpp"
 
 using namespace Asteroids;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void mouse_click(GLFWwindow* window, int button, int action, int mods);
 void processInput(GLFWwindow* window);
 
 // settings
@@ -23,8 +26,10 @@ float deltaTime;
 float lastFrame = 0;
 float lastX, lastY;
 bool firstMouse = true;
+bool shootEnable = true;
 
 Spaceship spaceship;
+std::list<Projectile> projectiles;
 
 int main() {
 	// glfw: initialize and configure
@@ -49,6 +54,7 @@ int main() {
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetMouseButtonCallback(window, mouse_click);
 
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -78,6 +84,11 @@ int main() {
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		for(auto projectilePtr = projectiles.begin(); projectilePtr != projectiles.end(); projectilePtr++) {
+			projectilePtr->Draw();
+			projectilePtr->Move();
+		}
 
 		spaceship.Draw();
 
@@ -132,4 +143,12 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
 
 	lastX = xpos;
 	lastY = ypos;
+}
+
+void mouse_click(GLFWwindow* window, int button, int action, int mods) {
+	if(shootEnable && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+		projectiles.push_back(spaceship.Shoot());
+		shootEnable = false;
+	}
+	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) shootEnable = true;
 }
