@@ -2,20 +2,11 @@
 
 using namespace Asteroids;
 
-extern unsigned int SCR_WIDTH;
-extern unsigned int SCR_HEIGHT;
-
 Object::Object() : shader(), pos(0), speed(0), transform(0) {}
 
 void Object::updateTransform() {
 	transform = glm::mat4((float) 1);
-
-	glm::vec2 scale(1);
-
-	if(SCR_WIDTH > SCR_HEIGHT)
-		scale.x = (float) SCR_HEIGHT / (float) SCR_WIDTH;
-	else
-		scale.y = (float) SCR_WIDTH / (float) SCR_HEIGHT;
+	glm::vec2 scale = scaleVector(glm::vec2(1));
 
 	transform = glm::scale(transform, glm::vec3(scale, 1));
 

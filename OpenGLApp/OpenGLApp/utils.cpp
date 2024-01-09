@@ -23,6 +23,14 @@ float angleBetweenVerticalDir(glm::vec2 a) {
 	return angleBetween(a, YaxisVersor, glm::vec2(0));
 }
 
+glm::vec2 scaleVector(glm::vec2 vector) {
+	if(SCR_WIDTH > SCR_HEIGHT)
+		vector.x *= (float) SCR_HEIGHT / (float) SCR_WIDTH;
+	else
+		vector.y *= (float) SCR_WIDTH / (float) SCR_HEIGHT;
+
+	return vector;
+}
 
 glm::vec2 mouse2graphicCoords(glm::vec2 mouseCoords, glm::vec2 screenSize) {
 	glm::vec2 res;
