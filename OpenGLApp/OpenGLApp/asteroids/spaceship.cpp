@@ -81,7 +81,7 @@ void Spaceship::PointTo(glm::vec2 mousePos) {
 
 Projectile Spaceship::Shoot() {
 	Projectile p;
-	glm::vec2 dir(cos(angle), sin(angle));
-	p.Init(pos + radius * dir, dir);
+	glm::vec2 dir(-sin(angle), cos(angle));
+	p.Init(pos + radius * scaleVector(dir), scaleVector(dir));
 	return p;
 }
