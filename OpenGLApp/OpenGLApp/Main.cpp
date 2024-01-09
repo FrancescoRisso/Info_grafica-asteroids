@@ -6,6 +6,7 @@
 #include <iostream>
 #include <list>
 
+#include "utils.hpp"
 #include "shader_s.h"
 #include "asteroids/spaceship.hpp"
 #include "asteroids/projectile.hpp"

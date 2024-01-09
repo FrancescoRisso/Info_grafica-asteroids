@@ -53,7 +53,7 @@
     <ClInclude Include="asteroids\spaceship.h">
       <Filter>File di origine</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
+    <ClInclude Include="utils.hpp">
       <Filter>File di origine</Filter>
     </ClInclude>
     <ClInclude Include="asteroids\object.hpp">
