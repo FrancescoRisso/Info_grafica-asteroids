@@ -10,7 +10,7 @@
 #include "shader_s.h"
 #include "asteroids/spaceship.hpp"
 #include "asteroids/projectile.hpp"
-
+//inserisco un commento
 using namespace Asteroids;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
