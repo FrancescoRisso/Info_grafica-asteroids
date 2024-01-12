@@ -28,7 +28,6 @@ class Object {
 	virtual void Draw() const = 0;
 
 	virtual void Move();
-	virtual void MoveDir(direction dir) {};
 
 	virtual void updateTransform();
 
