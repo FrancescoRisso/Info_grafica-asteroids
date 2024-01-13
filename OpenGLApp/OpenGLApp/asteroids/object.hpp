@@ -128,8 +128,6 @@ class Object {
 
 	float radius = 0;
 
-	float lastFrame = 0;
-
 	virtual bool canExitTheScreen() const {
 		return false;
 	};
