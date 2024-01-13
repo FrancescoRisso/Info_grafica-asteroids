@@ -116,22 +116,45 @@ class Object {
 	virtual bool isOutOfScreen();
 
    protected:
+	// pos: the position on the screen
 	glm::vec2 pos;
+
+	// speed: the speed (vector) at which the object is moving
+	// it's what Move() uses to compute the next position
 	glm::vec2 speed;
 
+	// angle: the rotation angle of the object around its center
+	// angle = 0 points towards up, which is the positive Y direction
 	float angle = 0;
 
+	// transform: the matrix that applies the position, the rotation angle,
+	// and the scaling factor in order to keep proportions fixed
+	// independently from the viewport size
 	glm::mat4 transform;
 
+	// shader: the program (fragment sh + vertex sh) used to render the object
 	Shader shader;
+
+	// VBO and VAO: the VBO and VAO that contain data about this object
 	unsigned int VBO = 0, VAO = 0;
 
+	// radius: the radius of the sphere that approximates the object
 	float radius = 0;
 
+	// canExitTheScreen: if the object is allowed to exit the screen
+	// It's just an attribute, but implemented as function to be
+	// overwritable by child classes
 	virtual bool canExitTheScreen() const {
 		return false;
 	};
 
+	/*
+		limitMovementToScreen
+		---------------------------------------------------------------------
+		Checks if the object is allowed to exit the screen. If not, caps pos
+		in order to have the object fully inside the screen
+		TODO: fix proportions not working properly with this function
+	*/
 	void limitMovementToScreen();
 };
 
