@@ -14,7 +14,7 @@ class Spaceship : public Object {
 
 	void Draw() const override;
 	void Move() override {};
-	void MoveDir(direction dir) override;
+	void MoveDir(direction dir);
 	void Init(glm::vec2 pos, glm::vec2 speed) override;  // speed is ignored, since spaceship does not move autonomously
 	void Init(glm::vec2 pos) {
 		Init(pos, glm::vec2(0));
