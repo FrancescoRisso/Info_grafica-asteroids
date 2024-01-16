@@ -64,7 +64,7 @@ class Object {
 		---------------------------------------------------------------------
 		PARAMETERS:
 			- pos: the initial position of the object
-			- speed: the speed the object has
+			- speedDirection: the direction where the object is moving
 	*/
 	virtual void Init(glm::vec2 pos, glm::vec2 speed) = 0;
 
