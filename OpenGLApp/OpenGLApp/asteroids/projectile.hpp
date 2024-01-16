@@ -12,7 +12,7 @@ class Projectile : public Object {
 	Projectile();
 
 	void Draw() const override;
-	void Init(glm::vec2 pos, glm::vec2 speed) override;
+	void Init(glm::vec2 pos, glm::vec2 speedDirection) override;
 
    private:
 	float points[NumTrianglesProjectile * 3 * 2] = {0};

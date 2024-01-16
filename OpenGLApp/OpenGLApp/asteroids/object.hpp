@@ -23,7 +23,7 @@ class Object {
    public:
 	Object();
 
-	virtual void Init(glm::vec2 pos, glm::vec2 speed) = 0;
+	virtual void Init(glm::vec2 pos, glm::vec2 speedDirection) = 0;
 
 	virtual void Draw() const = 0;
 
