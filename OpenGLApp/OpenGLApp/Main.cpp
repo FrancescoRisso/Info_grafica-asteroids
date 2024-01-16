@@ -33,6 +33,9 @@ Spaceship spaceship;
 std::list<Projectile> projectiles;
 
 int main() {
+	// init randomness
+	srand(time(NULL));
+
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
