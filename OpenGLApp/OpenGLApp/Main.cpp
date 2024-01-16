@@ -15,7 +15,6 @@ using namespace Asteroids;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void mouse_click(GLFWwindow* window, int button, int action, int mods);
 void processInput(GLFWwindow* window);
 
 // settings
@@ -55,7 +54,6 @@ int main() {
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetMouseButtonCallback(window, mouse_click);
 
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -119,6 +117,11 @@ void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
 	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
 	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
+	if(shootEnable && glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		projectiles.push_back(spaceship.Shoot());
+		shootEnable = false;
+	}
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) shootEnable = true;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -150,12 +153,4 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
 
 	lastX = xpos;
 	lastY = ypos;
-}
-
-void mouse_click(GLFWwindow* window, int button, int action, int mods) {
-	if(shootEnable && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-		projectiles.push_back(spaceship.Shoot());
-		shootEnable = false;
-	}
-	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) shootEnable = true;
 }
