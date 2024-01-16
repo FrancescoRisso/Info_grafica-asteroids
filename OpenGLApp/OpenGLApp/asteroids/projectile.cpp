@@ -5,8 +5,6 @@ using namespace Asteroids;
 Projectile::Projectile() {}
 
 
-// ALL TODO
-
 void Projectile::Init(glm::vec2 pos, glm::vec2 speed) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
