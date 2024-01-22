@@ -62,11 +62,12 @@ class Object {
 		The distance is considered from the surface, not from the middle
 		---------------------------------------------------------------------
 		PARAMETERS:
-			- p: the point where to compute the distance from (in real OpenGL
+			- p: the point where to compute the distance from (in scaled
 				coordinates)
 		---------------------------------------------------------------------
 		OUTPUT:
-			- the distance
+			- the distance, if p is outside the radius
+			- -1, if p is inside the object
 	*/
 	virtual float findDistanceFrom(glm::vec2 p);
 
