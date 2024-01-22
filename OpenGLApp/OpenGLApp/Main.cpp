@@ -10,6 +10,7 @@
 #include "shader_s.h"
 #include "asteroids/spaceship.hpp"
 #include "asteroids/projectile.hpp"
+#include "asteroids/asteroid.hpp"
 
 using namespace Asteroids;
 
@@ -31,6 +32,7 @@ bool shootEnable = true;
 
 Spaceship spaceship;
 std::list<Projectile> projectiles;
+std::list<Asteroid> asteroids;
 
 int main() {
 	// init randomness
@@ -98,6 +100,23 @@ int main() {
 				continue;
 			}
 			projectilePtr++;
+		}
+
+		if(rand() % 1000 == 0) {
+			Asteroid a;
+			a.Spawn();
+			asteroids.push_back(a);
+		}
+
+		auto asteroidPtr = asteroids.begin();
+		while(asteroidPtr != asteroids.end()) {
+			asteroidPtr->Draw();
+			asteroidPtr->Move();
+			if(asteroidPtr->isOutOfScreen()) {
+				asteroidPtr = asteroids.erase(asteroidPtr);
+				continue;
+			}
+			asteroidPtr++;
 		}
 
 		spaceship.Draw();

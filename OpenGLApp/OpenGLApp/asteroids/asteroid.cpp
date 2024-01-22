@@ -2,17 +2,17 @@
 
 using namespace Asteroids;
 
-Asteroid::Asteroid() {}
+Asteroid::Asteroid() {
+	radius = 0.1;
+}
 
 
 void Asteroid::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	this->pos = pos;
-	this->speed = scaleVector(1.0f * scaleVectorReverse(glm::normalize(speedDirection)));
-	angle = angleBetweenVerticalDir(speed);
-
-	radius = 0.1;
+	this->speed = scaleVector(0.5f * scaleVectorReverse(glm::normalize(speedDirection)));
+	angle = -angleBetweenVerticalDir(speed);
 
 	// clang-format off
 	float tmpPoints[NumTrianglesAsteroid * 3 * 2] = {
@@ -48,4 +48,27 @@ void Asteroid::Draw() const {
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 9);
+}
+
+void Asteroid::Spawn() {
+	float firstPos1D = (float) rand() / RAND_MAX * 2 - 1;
+	float otherCoord = 1 + radius;
+	glm::vec2 firstPos, speedDir;
+
+	direction side = (direction)(rand() % 4);
+
+	float angleOffset = glm::radians((((float) rand() / RAND_MAX) * 2 - 1) * AsteroidAngleRandomness);
+	float angle;
+
+	switch(side) {
+		case up: firstPos = glm::vec2(firstPos1D, otherCoord); break;
+		case down: firstPos = glm::vec2(firstPos1D, -otherCoord); break;
+		case right: firstPos = glm::vec2(otherCoord, firstPos1D); break;
+		case left: firstPos = glm::vec2(-otherCoord, firstPos1D); break;
+	}
+
+	angle = angleBetweenVerticalDir(firstPos);
+	angle = angleOffset + angle;
+	speedDir = glm::vec2(sin(angle), cos(angle));
+	Init(firstPos, scaleVector(speedDir));
 }

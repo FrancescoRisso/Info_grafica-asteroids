@@ -11,6 +11,10 @@
 
 #define NumTrianglesAsteroid 2
 
+// A freshly spawned asteroid's speed points to the center of the screen
+// plus or minus a random value <= AsteroidAngleRandomness (in deg)
+#define AsteroidAngleRandomness 30
+
 namespace Asteroids {
 
 class Asteroid : public Object {
@@ -24,6 +28,15 @@ class Asteroid : public Object {
 
 	// Init: implemented as required by class Object
 	void Init(glm::vec2 pos, glm::vec2 speed) override;
+
+
+	/*
+		Spawn
+		---------------------------------------------------------------------
+		Executes the Init(), spawning an asteroid in a random place on the
+		border of the screen, with a random initial speed
+	*/
+	void Spawn();
 
 
    private:
