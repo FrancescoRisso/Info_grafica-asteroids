@@ -39,6 +39,17 @@ class Asteroid : public Object {
 	void Spawn();
 
 
+	/*
+		ShouldSpawn
+		---------------------------------------------------------------------
+		Tells if an asteroid should be spawned right now
+		---------------------------------------------------------------------
+		OUTPUT:
+			- whether the main callee should spawn an asteroid or not
+	*/
+	bool ShouldSpawn();
+
+
    private:
 	// points: the array of points defining the triangles of the spaceship
 	float points[NumTrianglesAsteroid * 3 * 2] = {0};

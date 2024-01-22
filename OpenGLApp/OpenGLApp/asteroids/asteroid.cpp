@@ -72,3 +72,8 @@ void Asteroid::Spawn() {
 	speedDir = glm::vec2(sin(angle), cos(angle));
 	Init(firstPos, scaleVector(speedDir));
 }
+
+
+bool Asteroid::ShouldSpawn() {
+	return rand() % 5000 == 0;
+}

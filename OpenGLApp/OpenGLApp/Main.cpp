@@ -34,6 +34,8 @@ Spaceship spaceship;
 std::list<Projectile> projectiles;
 std::list<Asteroid> asteroids;
 
+Asteroid tmpAsteroid;
+
 int main() {
 	// init randomness
 	srand(time(NULL));
@@ -102,10 +104,9 @@ int main() {
 			projectilePtr++;
 		}
 
-		if(rand() % 1000 == 0) {
-			Asteroid a;
-			a.Spawn();
-			asteroids.push_back(a);
+		if(tmpAsteroid.ShouldSpawn()) {
+			tmpAsteroid.Spawn();
+			asteroids.push_back(tmpAsteroid);
 		}
 
 		auto asteroidPtr = asteroids.begin();
