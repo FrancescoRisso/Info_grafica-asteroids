@@ -68,7 +68,7 @@ class Object {
 		OUTPUT:
 			- the distance
 	*/
-	float findDistanceFrom(glm::vec2 p);
+	virtual float findDistanceFrom(glm::vec2 p);
 
 
 	/*
@@ -84,7 +84,7 @@ class Object {
 			- the vector from this object's surface to p (in scaled
 				coordinates)
 	*/
-	glm::vec2 findRadiusTowards(glm::vec2 p);
+	virtual glm::vec2 findRadiusTowards(glm::vec2 p);
 };
 
 }  // namespace Asteroids
