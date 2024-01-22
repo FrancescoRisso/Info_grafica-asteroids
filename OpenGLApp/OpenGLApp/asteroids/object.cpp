@@ -31,3 +31,10 @@ void Object::limitMovementToScreen() {
 bool Object::isOutOfScreen() {
 	return (pos.x - radius > 1) || (pos.x + radius < -1) || (pos.y - radius > 1) || (pos.y + radius < -1);
 }
+
+
+float Object::findDistanceFrom(glm::vec2 p) {
+	glm::vec2 dirCenterToP = glm::normalize(p - pos);
+	glm::vec2 radiusTowardsP = radius * dirCenterToP;
+	return glm::length(scaleVectorReverse(pos + radiusTowardsP - p));
+}
