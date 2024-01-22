@@ -51,4 +51,9 @@ float Object::findDistanceFrom(glm::vec2 p) {
 	return glm::length(delta);
 }
 
+
+bool Object::collidesWith(Object *o) {
+	glm::vec2 vecTowardsOther = findRadiusTowards(o->pos);
+	float dist = o->findDistanceFrom(pos + vecTowardsOther);
+	return dist <= 0;
 }

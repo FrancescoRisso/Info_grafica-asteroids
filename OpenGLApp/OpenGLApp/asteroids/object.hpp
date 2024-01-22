@@ -33,6 +33,20 @@ class Object {
 
 	virtual bool isOutOfScreen();
 
+
+	/*
+		collidesWith
+		---------------------------------------------------------------------
+		Checks if the object is colliding with another object
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- o: a pointer to the other object
+		---------------------------------------------------------------------
+		OUTPUT:
+			- whether the two objects' hitboxes collide
+	*/
+	virtual bool collidesWith(Object* o);
+
    protected:
 	glm::vec2 pos;
 	glm::vec2 speed;
