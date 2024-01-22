@@ -33,8 +33,11 @@ bool Object::isOutOfScreen() {
 }
 
 
+glm::vec2 Object::findRadiusTowards(glm::vec2 p) {
+	return radius * glm::normalize(p - pos);
+}
+
+
 float Object::findDistanceFrom(glm::vec2 p) {
-	glm::vec2 dirCenterToP = glm::normalize(p - pos);
-	glm::vec2 radiusTowardsP = radius * dirCenterToP;
-	return glm::length(scaleVectorReverse(pos + radiusTowardsP - p));
+	return glm::length(scaleVectorReverse(pos + findRadiusTowards(p) - p));
 }

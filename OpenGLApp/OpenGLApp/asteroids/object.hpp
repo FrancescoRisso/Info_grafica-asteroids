@@ -33,22 +33,6 @@ class Object {
 
 	virtual bool isOutOfScreen();
 
-
-	/*
-		findDistanceFrom
-		---------------------------------------------------------------------
-		Computes the distance from this object to a given point
-		The distance is considered from the surface, not from the middle
-		---------------------------------------------------------------------
-		PARAMETERS:
-			- p: the point where to compute the distance from (in real OpenGL
-				coordinates)
-		---------------------------------------------------------------------
-		OUTPUT:
-			- the distance
-	*/
-	float findDistanceFrom(glm::vec2 p);
-
    protected:
 	glm::vec2 pos;
 	glm::vec2 speed;
@@ -69,6 +53,38 @@ class Object {
 	};
 
 	void limitMovementToScreen();
+
+
+	/*
+		findDistanceFrom
+		---------------------------------------------------------------------
+		Computes the distance from this object to a given point
+		The distance is considered from the surface, not from the middle
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- p: the point where to compute the distance from (in real OpenGL
+				coordinates)
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the distance
+	*/
+	float findDistanceFrom(glm::vec2 p);
+
+
+	/*
+		findRadiusTowards
+		---------------------------------------------------------------------
+		Computes the vector of the (scaled) radius in the direction towards
+		a given point
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- p: the point
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the vector from this object's surface to p (in scaled
+				coordinates)
+	*/
+	glm::vec2 findRadiusTowards(glm::vec2 p);
 };
 
 }  // namespace Asteroids
