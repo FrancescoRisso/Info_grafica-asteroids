@@ -11,6 +11,7 @@
 #include "asteroids/spaceship.hpp"
 #include "asteroids/projectile.hpp"
 #include "asteroids/asteroid.hpp"
+#include "asteroids/_debugOpts.hpp"
 
 using namespace Asteroids;
 
@@ -84,9 +85,13 @@ int main() {
 		processInput(window);
 
 		// timings
+#ifdef DEBUG_fixedDeltaTime
+		deltaTime = 0.0005;
+#else
 		float curTime = (float) glfwGetTime();
 		deltaTime = curTime - lastFrame;
 		lastFrame = curTime;
+#endif
 
 		// render
 		// ------
