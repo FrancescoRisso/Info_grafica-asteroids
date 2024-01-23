@@ -35,6 +35,8 @@ Spaceship spaceship;
 std::list<Projectile> projectiles;
 std::list<Asteroid> asteroids;
 
+bool asteroidProjCollision;
+
 Asteroid tmpAsteroid;
 
 int main() {
@@ -98,14 +100,28 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		asteroidProjCollision = false;
+
 		auto projectilePtr = projectiles.begin();
 		while(projectilePtr != projectiles.end()) {
-			projectilePtr->Draw();
-			projectilePtr->Move();
-			if(projectilePtr->isOutOfScreen()) {
+			auto asteroidPtr = asteroids.begin();
+			while(asteroidPtr != asteroids.end()) {
+				if(asteroidPtr->collidesWith(&(*projectilePtr))) {
+					asteroidPtr = asteroids.erase(asteroidPtr);
+					asteroidProjCollision = true;
+					break;
+				}
+				asteroidPtr++;
+			}
+
+			if(projectilePtr->isOutOfScreen() || asteroidProjCollision) {
 				projectilePtr = projectiles.erase(projectilePtr);
 				continue;
 			}
+
+			projectilePtr->Draw();
+			projectilePtr->Move();
+
 			projectilePtr++;
 		}
 
