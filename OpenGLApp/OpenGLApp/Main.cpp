@@ -13,6 +13,23 @@
 #include "asteroids/asteroid.hpp"
 #include "asteroids/_debugOpts.hpp"
 
+
+/*
+	checkAsteroidProjectileCollision
+	---------------------------------------------------------------------
+	Checks if a given projectile collides with any asteroids.
+	If so, the function kills the asteroid, while the callee is in charge
+	of killing the projectile
+	---------------------------------------------------------------------
+	PARAMETERS:
+		- proj: an iterator to find a given projectile
+	---------------------------------------------------------------------
+	OUTPUT:
+		- whether a collision occurred (then, the projectile should be
+			killed)
+*/
+bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj);
+
 using namespace Asteroids;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -34,8 +51,6 @@ bool shootEnable = true;
 Spaceship spaceship;
 std::list<Projectile> projectiles;
 std::list<Asteroid> asteroids;
-
-bool asteroidProjCollision;
 
 Asteroid tmpAsteroid;
 
@@ -100,21 +115,14 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		asteroidProjCollision = false;
-
 		auto projectilePtr = projectiles.begin();
 		while(projectilePtr != projectiles.end()) {
-			auto asteroidPtr = asteroids.begin();
-			while(asteroidPtr != asteroids.end()) {
-				if(asteroidPtr->collidesWith(&(*projectilePtr))) {
-					asteroidPtr = asteroids.erase(asteroidPtr);
-					asteroidProjCollision = true;
-					break;
-				}
-				asteroidPtr++;
+			if(checkAsteroidProjectileCollision(projectilePtr)) {
+				projectilePtr = projectiles.erase(projectilePtr);
+				continue;
 			}
 
-			if(projectilePtr->isOutOfScreen() || asteroidProjCollision) {
+			if(projectilePtr->isOutOfScreen()) {
 				projectilePtr = projectiles.erase(projectilePtr);
 				continue;
 			}
@@ -202,4 +210,18 @@ void mouse_click(GLFWwindow* window, int button, int action, int mods) {
 		shootEnable = false;
 	}
 	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) shootEnable = true;
+}
+
+bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj) {
+	auto asteroidPtr = asteroids.begin();
+
+	while(asteroidPtr != asteroids.end()) {
+		if(asteroidPtr->collidesWith(&(*proj))) {
+			asteroidPtr = asteroids.erase(asteroidPtr);
+			return true;
+		}
+		asteroidPtr++;
+	}
+
+	return false;
 }
