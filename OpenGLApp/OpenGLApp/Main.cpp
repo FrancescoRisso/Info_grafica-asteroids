@@ -54,6 +54,8 @@ std::list<Asteroid> asteroids;
 
 Asteroid tmpAsteroid;
 
+bool hasDied = false;
+
 int main() {
 	// init randomness
 	srand(time(NULL));
@@ -97,6 +99,8 @@ int main() {
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
+		if(hasDied) continue;
+
 		// input
 		// -----
 		processInput(window);
@@ -146,6 +150,8 @@ int main() {
 				asteroidPtr = asteroids.erase(asteroidPtr);
 				continue;
 			}
+
+			if(asteroidPtr->collidesWith(&spaceship)) hasDied = true;
 			asteroidPtr++;
 		}
 
