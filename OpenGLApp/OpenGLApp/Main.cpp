@@ -26,7 +26,7 @@ float deltaTime;
 float lastFrame = 0;
 float lastX, lastY;
 bool firstMouse = true;
-bool shootEnable = true;
+int shootCount = 0;
 
 Spaceship spaceship;
 std::list<Projectile> projectiles;
@@ -117,11 +117,13 @@ void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
 	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
 	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
-	if(shootEnable && glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		projectiles.push_back(spaceship.Shoot());
-		shootEnable = false;
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		if(shootCount > 1.25 / deltaTime) shootCount = 0;
+		// if(shootCount > 1700000 * deltaTime) shootCount = 0;
+		if(shootCount == 0) projectiles.push_back(spaceship.Shoot());
+		shootCount++;
 	}
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) shootEnable = true;
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) shootCount = 0;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
