@@ -22,14 +22,30 @@ void Object::Move() {
 }
 
 void Object::limitMovementToScreen() {
-	if(pos.x + radius > 1) pos.x = 1 - radius;
-	if(pos.x - radius < -1) pos.x = radius - 1;
-	if(pos.y + radius > 1) pos.y = 1 - radius;
-	if(pos.y - radius < -1) pos.y = radius - 1;
+	glm::vec2 scaledRadius(radius);
+
+	scaledRadius = scaleVector(scaledRadius);
+
+	if(pos.x + scaledRadius.x > 1) pos.x = 1 - scaledRadius.x;
+	if(pos.x - scaledRadius.x < -1) pos.x = scaledRadius.x - 1;
+	if(pos.y + scaledRadius.y > 1) pos.y = 1 - scaledRadius.y;
+	if(pos.y - scaledRadius.y < -1) pos.y = scaledRadius.y - 1;
 }
 
 bool Object::isOutOfScreen() {
-	return (pos.x - radius > 1) || (pos.x + radius < -1) || (pos.y - radius > 1) || (pos.y + radius < -1);
+	glm::vec2 tmpVector(0);
+
+	tmpVector.x = pos.x + radius;
+	tmpVector.y = pos.y + radius;
+	tmpVector = scaleVector(tmpVector);
+	if(tmpVector.x > 1 || tmpVector.y > 1) return true;
+
+	tmpVector.x = pos.x - radius;
+	tmpVector.y = pos.y - radius;
+	tmpVector = scaleVector(tmpVector);
+	if(tmpVector.x < -1 || tmpVector.y < -1) return true;
+
+	return false;
 }
 
 

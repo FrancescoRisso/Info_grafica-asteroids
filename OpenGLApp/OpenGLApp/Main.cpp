@@ -34,7 +34,6 @@ using namespace Asteroids;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void mouse_click(GLFWwindow* window, int button, int action, int mods);
 void processInput(GLFWwindow* window);
 
 // settings
@@ -46,7 +45,7 @@ float deltaTime;
 float lastFrame = 0;
 float lastX, lastY;
 bool firstMouse = true;
-bool shootEnable = true;
+int shootCount = 0;
 
 Spaceship spaceship;
 std::list<Projectile> projectiles;
@@ -82,7 +81,6 @@ int main() {
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetMouseButtonCallback(window, mouse_click);
 
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -173,10 +171,17 @@ int main() {
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
-	if(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) spaceship.MoveDir(up);
-	if(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) spaceship.MoveDir(down);
-	if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) spaceship.MoveDir(left);
-	if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) spaceship.MoveDir(right);
+	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) spaceship.MoveDir(up);
+	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
+	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
+	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		if(shootCount > 1.25 / deltaTime) shootCount = 0;
+		// if(shootCount > 1700000 * deltaTime) shootCount = 0;
+		if(shootCount == 0) projectiles.push_back(spaceship.Shoot());
+		shootCount++;
+	}
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) shootCount = 0;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -210,13 +215,6 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
 	lastY = ypos;
 }
 
-void mouse_click(GLFWwindow* window, int button, int action, int mods) {
-	if(shootEnable && button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
-		projectiles.push_back(spaceship.Shoot());
-		shootEnable = false;
-	}
-	if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) shootEnable = true;
-}
 
 bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj) {
 	auto asteroidPtr = asteroids.begin();
