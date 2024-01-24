@@ -10,6 +10,25 @@
 #include "shader_s.h"
 #include "asteroids/spaceship.hpp"
 #include "asteroids/projectile.hpp"
+#include "asteroids/asteroid.hpp"
+#include "asteroids/_debugOpts.hpp"
+
+
+/*
+	checkAsteroidProjectileCollision
+	---------------------------------------------------------------------
+	Checks if a given projectile collides with any asteroids.
+	If so, the function kills the asteroid, while the callee is in charge
+	of killing the projectile
+	---------------------------------------------------------------------
+	PARAMETERS:
+		- proj: an iterator to find a given projectile
+	---------------------------------------------------------------------
+	OUTPUT:
+		- whether a collision occurred (then, the projectile should be
+			killed)
+*/
+bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj);
 
 using namespace Asteroids;
 
@@ -30,8 +49,16 @@ int shootCount = 0;
 
 Spaceship spaceship;
 std::list<Projectile> projectiles;
+std::list<Asteroid> asteroids;
+
+Asteroid tmpAsteroid;
+
+bool hasDied = false;
 
 int main() {
+	// init randomness
+	srand(time(NULL));
+
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -70,14 +97,20 @@ int main() {
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
+		if(hasDied) continue;
+
 		// input
 		// -----
 		processInput(window);
 
 		// timings
+#ifdef DEBUG_fixedDeltaTime
+		deltaTime = 0.0005;
+#else
 		float curTime = (float) glfwGetTime();
 		deltaTime = curTime - lastFrame;
 		lastFrame = curTime;
+#endif
 
 		// render
 		// ------
@@ -86,13 +119,38 @@ int main() {
 
 		auto projectilePtr = projectiles.begin();
 		while(projectilePtr != projectiles.end()) {
-			projectilePtr->Draw();
-			projectilePtr->Move();
+			if(checkAsteroidProjectileCollision(projectilePtr)) {
+				projectilePtr = projectiles.erase(projectilePtr);
+				continue;
+			}
+
 			if(projectilePtr->isOutOfScreen()) {
 				projectilePtr = projectiles.erase(projectilePtr);
 				continue;
 			}
+
+			projectilePtr->Draw();
+			projectilePtr->Move();
+
 			projectilePtr++;
+		}
+
+		if(tmpAsteroid.ShouldSpawn()) {
+			tmpAsteroid.Spawn();
+			asteroids.push_back(tmpAsteroid);
+		}
+
+		auto asteroidPtr = asteroids.begin();
+		while(asteroidPtr != asteroids.end()) {
+			asteroidPtr->Draw();
+			asteroidPtr->Move();
+			if(asteroidPtr->isOutOfScreen()) {
+				asteroidPtr = asteroids.erase(asteroidPtr);
+				continue;
+			}
+
+			if(asteroidPtr->collidesWith(&spaceship)) hasDied = true;
+			asteroidPtr++;
 		}
 
 		spaceship.Draw();
@@ -155,4 +213,19 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
 
 	lastX = xpos;
 	lastY = ypos;
+}
+
+
+bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj) {
+	auto asteroidPtr = asteroids.begin();
+
+	while(asteroidPtr != asteroids.end()) {
+		if(asteroidPtr->collidesWith(&(*proj))) {
+			asteroidPtr = asteroids.erase(asteroidPtr);
+			return true;
+		}
+		asteroidPtr++;
+	}
+
+	return false;
 }

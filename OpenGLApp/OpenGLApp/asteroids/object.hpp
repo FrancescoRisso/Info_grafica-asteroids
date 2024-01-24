@@ -56,7 +56,7 @@ class Object {
 	Object();
 
 
-	/*
+  /*
 		Init (abstract)
 		---------------------------------------------------------------------
 		Initializes all the attributes needed for the object.
@@ -66,7 +66,8 @@ class Object {
 			- pos: the initial position of the object
 			- speedDirection: the direction where the object is moving
 	*/
-	virtual void Init(glm::vec2 pos, glm::vec2 speed) = 0;
+	virtual void Init(glm::vec2 pos, glm::vec2 speedDirection) = 0;
+
 
 
 	/*
@@ -115,6 +116,20 @@ class Object {
 	*/
 	virtual bool isOutOfScreen();
 
+
+	/*
+		collidesWith
+		---------------------------------------------------------------------
+		Checks if the object is colliding with another object
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- o: a pointer to the other object
+		---------------------------------------------------------------------
+		OUTPUT:
+			- whether the two objects' hitboxes collide
+	*/
+	virtual bool collidesWith(Object* o);
+
    protected:
 	// pos: the position on the screen
 	glm::vec2 pos;
@@ -156,6 +171,39 @@ class Object {
 		TODO: fix proportions not working properly with this function
 	*/
 	void limitMovementToScreen();
+
+
+	/*
+		findDistanceFrom
+		---------------------------------------------------------------------
+		Computes the distance from this object to a given point
+		The distance is considered from the surface, not from the middle
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- p: the point where to compute the distance from (in scaled
+				coordinates)
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the distance, if p is outside the radius
+			- -1, if p is inside the object
+	*/
+	virtual float findDistanceFrom(glm::vec2 p);
+
+
+	/*
+		findRadiusTowards
+		---------------------------------------------------------------------
+		Computes the vector of the (scaled) radius in the direction towards
+		a given point
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- p: the point
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the vector from this object's surface to p (in scaled
+				coordinates)
+	*/
+	virtual glm::vec2 findRadiusTowards(glm::vec2 p);
 };
 
 }  // namespace Asteroids

@@ -46,7 +46,7 @@ class Spaceship : public Object {
 	// Since speed is fixed (assigned by Init), there is no need to pass an
 	// initial one to the function, therefore an extra Init method is defined,
 	// without the speed parameter
-	void Init(glm::vec2 pos, glm::vec2 speed) override;  // speed is ignored, since spaceship does not move autonomously
+	void Init(glm::vec2 pos, glm::vec2 speedDirection) override;  // speed is ignored, since spaceship does not move autonomously
 	void Init(glm::vec2 pos) {
 		Init(pos, glm::vec2(0));
 	}

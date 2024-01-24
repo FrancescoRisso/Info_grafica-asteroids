@@ -4,7 +4,7 @@ using namespace Asteroids;
 
 Spaceship::Spaceship() : lastMousePos(0.0f) {}
 
-void Spaceship::Init(glm::vec2 pos, glm::vec2 speed) {
+void Spaceship::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	this->pos = pos;

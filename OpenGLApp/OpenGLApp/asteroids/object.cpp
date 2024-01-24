@@ -47,3 +47,28 @@ bool Object::isOutOfScreen() {
 
 	return false;
 }
+
+
+glm::vec2 Object::findRadiusTowards(glm::vec2 p) {
+	return radius * scaleVector(glm::normalize(scaleVectorReverse(p - pos)));
+}
+
+
+float Object::findDistanceFrom(glm::vec2 p) {
+	glm::vec2 radiusTow = findRadiusTowards(p);
+	glm::vec2 delta = scaleVectorReverse(pos + radiusTow - p);
+	glm::vec2 deltaWithoutRadius = pos - p;
+
+	if(glm::all(glm::isnan(delta))) return -1;
+
+	if(glm::length(deltaWithoutRadius) < glm::length(radiusTow)) return -1;
+
+	return glm::length(delta);
+}
+
+
+bool Object::collidesWith(Object *o) {
+	glm::vec2 vecTowardsOther = findRadiusTowards(o->pos);
+	float dist = o->findDistanceFrom(pos + vecTowardsOther);
+	return dist <= 0;
+}
