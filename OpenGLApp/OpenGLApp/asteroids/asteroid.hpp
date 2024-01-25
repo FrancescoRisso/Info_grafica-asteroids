@@ -2,6 +2,7 @@
 #define _ASTEROID_H
 
 #include "object.hpp"
+#include "parameters.hpp"
 
 /*
 	ASTEROID
@@ -10,10 +11,6 @@
 */
 
 #define NumTrianglesAsteroid 2
-
-// A freshly spawned asteroid's speed points to the center of the screen
-// plus or minus a random value <= AsteroidAngleRandomness (in deg)
-#define AsteroidAngleRandomness 30
 
 namespace Asteroids {
 

@@ -1,5 +1,7 @@
 #include "spaceship.hpp"
 
+#include "parameters.hpp"
+
 using namespace Asteroids;
 
 Spaceship::Spaceship() : lastMousePos(0.0f) {}
@@ -11,7 +13,7 @@ void Spaceship::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	this->speed = glm::vec2(0.5);
 	angle = 0;
 
-	radius = 0.1;
+	radius = radius_Spaceship;
 
 	// clang-format off
 	float tmpPoints[NumTrianglesSpaceship * 3 * 2] = {

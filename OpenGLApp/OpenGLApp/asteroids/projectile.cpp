@@ -1,5 +1,8 @@
 #include "projectile.hpp"
 
+#include "parameters.hpp"
+
+
 using namespace Asteroids;
 
 Projectile::Projectile() {}
@@ -9,10 +12,10 @@ void Projectile::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	this->pos = pos;
-	this->speed = scaleVector(1.0f * scaleVectorReverse(glm::normalize(speedDirection)));
+	this->speed = scaleVector(speed_Projectile * scaleVectorReverse(glm::normalize(speedDirection)));
 	angle = angleBetweenVerticalDir(speed);
 
-	radius = 0.01;
+	radius = radius_Projectile;
 
 	// clang-format off
 	float tmpPoints[NumTrianglesProjectile * 3 * 2] = {

@@ -13,6 +13,8 @@
 #include "../shader_s.h"
 #include "../utils.hpp"
 
+#include "parameters.hpp"
+
 /*
 	OBJECT
 	---------------------------------------------------------------------
@@ -56,18 +58,17 @@ class Object {
 	Object();
 
 
-  /*
-		Init (abstract)
-		---------------------------------------------------------------------
-		Initializes all the attributes needed for the object.
-		It MUST be implemented by classes that derive from Object
-		---------------------------------------------------------------------
-		PARAMETERS:
-			- pos: the initial position of the object
-			- speedDirection: the direction where the object is moving
-	*/
+	/*
+		  Init (abstract)
+		  ---------------------------------------------------------------------
+		  Initializes all the attributes needed for the object.
+		  It MUST be implemented by classes that derive from Object
+		  ---------------------------------------------------------------------
+		  PARAMETERS:
+			  - pos: the initial position of the object
+			  - speedDirection: the direction where the object is moving
+	  */
 	virtual void Init(glm::vec2 pos, glm::vec2 speedDirection) = 0;
-
 
 
 	/*

@@ -77,7 +77,6 @@ class Spaceship : public Object {
 	Projectile Shoot();
 
    private:
-
 	// points: the array of points defining the triangles of the spaceship
 	float points[NumTrianglesSpaceship * 3 * 2] = {0};
 
