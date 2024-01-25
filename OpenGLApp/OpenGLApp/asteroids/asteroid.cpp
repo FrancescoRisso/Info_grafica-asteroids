@@ -3,7 +3,7 @@
 using namespace Asteroids;
 
 Asteroid::Asteroid() {
-	radius = 0.1;
+	radius = radius_Asteroid;
 }
 
 
@@ -11,7 +11,7 @@ void Asteroid::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	this->pos = pos;
-	this->speed = scaleVector(0.5f * scaleVectorReverse(glm::normalize(speedDirection)));
+	this->speed = scaleVector(speed_Asteroid * scaleVectorReverse(glm::normalize(speedDirection)));
 	angle = -angleBetweenVerticalDir(speed);
 
 	// clang-format off
@@ -57,7 +57,7 @@ void Asteroid::Spawn() {
 
 	direction side = (direction)(rand() % 4);
 
-	float angleOffset = glm::radians((((float) rand() / RAND_MAX) * 2 - 1) * AsteroidAngleRandomness);
+	float angleOffset = glm::radians((((float) rand() / RAND_MAX) * 2 - 1) * asteroidAngleRandomness);
 	float angle;
 
 	switch(side) {
@@ -75,5 +75,5 @@ void Asteroid::Spawn() {
 
 
 bool Asteroid::ShouldSpawn() {
-	return rand() % 5000 == 0;
+	return rand() % weightOfSpawningAsteroid == 0;
 }
