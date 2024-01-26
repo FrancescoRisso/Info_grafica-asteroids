@@ -38,12 +38,12 @@ bool Object::isOutOfScreen() {
 	tmpVector.x = pos.x + radius;
 	tmpVector.y = pos.y + radius;
 	tmpVector = scaleVector(tmpVector);
-	if(tmpVector.x > 1 || tmpVector.y > 1) return true;
+	if(tmpVector.x < -1 || tmpVector.y < -1) return true;
 
 	tmpVector.x = pos.x - radius;
 	tmpVector.y = pos.y - radius;
 	tmpVector = scaleVector(tmpVector);
-	if(tmpVector.x < -1 || tmpVector.y < -1) return true;
+	if(tmpVector.x > 1 || tmpVector.y > 1) return true;
 
 	return false;
 }
