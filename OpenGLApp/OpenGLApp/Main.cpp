@@ -93,7 +93,6 @@ int main() {
 	}
 
 	spaceship.Init(glm::vec2(0));
-	tmpAsteroid.Spawn();
 
 	// render loop
 	// -----------
@@ -118,45 +117,43 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// auto projectilePtr = projectiles.begin();
-		// while(projectilePtr != projectiles.end()) {
-		// 	if(checkAsteroidProjectileCollision(projectilePtr)) {
-		// 		projectilePtr = projectiles.erase(projectilePtr);
-		// 		continue;
-		// 	}
+		auto projectilePtr = projectiles.begin();
+		while(projectilePtr != projectiles.end()) {
+			if(checkAsteroidProjectileCollision(projectilePtr)) {
+				projectilePtr = projectiles.erase(projectilePtr);
+				continue;
+			}
 
-		// 	if(projectilePtr->isOutOfScreen()) {
-		// 		projectilePtr = projectiles.erase(projectilePtr);
-		// 		continue;
-		// 	}
+			if(projectilePtr->isOutOfScreen()) {
+				projectilePtr = projectiles.erase(projectilePtr);
+				continue;
+			}
 
-		// 	projectilePtr->Draw();
-		// 	projectilePtr->Move();
+			projectilePtr->Draw();
+			projectilePtr->Move();
 
-		// 	projectilePtr++;
-		// }
+			projectilePtr++;
+		}
 
-		// if(tmpAsteroid.ShouldSpawn()) {
-		// 	tmpAsteroid.Spawn();
-		// 	asteroids.push_back(tmpAsteroid);
-		// }
+		if(tmpAsteroid.ShouldSpawn()) {
+			tmpAsteroid.Spawn();
+			asteroids.push_back(tmpAsteroid);
+		}
 
-		// auto asteroidPtr = asteroids.begin();
-		// while(asteroidPtr != asteroids.end()) {
-		// 	asteroidPtr->Draw();
-		// 	asteroidPtr->Move();
-		// 	if(asteroidPtr->isOutOfScreen()) {
-		// 		asteroidPtr = asteroids.erase(asteroidPtr);
-		// 		continue;
-		// 	}
+		auto asteroidPtr = asteroids.begin();
+		while(asteroidPtr != asteroids.end()) {
+			asteroidPtr->Draw();
+			asteroidPtr->Move();
+			if(asteroidPtr->isOutOfScreen()) {
+				asteroidPtr = asteroids.erase(asteroidPtr);
+				continue;
+			}
 
-		// 	if(asteroidPtr->collidesWith(&spaceship)) hasDied = true;
-		// 	asteroidPtr++;
-		// }
+			if(asteroidPtr->collidesWith(&spaceship)) hasDied = true;
+			asteroidPtr++;
+		}
 
 		spaceship.Draw();
-		tmpAsteroid.Move();
-		tmpAsteroid.Draw();
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

@@ -51,7 +51,7 @@ class Asteroid : public Object {
 
    private:
 	// points: the array of points defining the triangles of the spaceship
-	float points[NumTrianglesAsteroid * 3 * 2] = {0};
+	float points[NumTrianglesAsteroid * 3 * 2 * 2] = {0};
 
 
    protected:
