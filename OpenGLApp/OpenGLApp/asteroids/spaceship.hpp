@@ -1,7 +1,6 @@
 #ifndef _SPACESHIP_H
 #define _SPACESHIP_H
 
-#include "../stb_image.h"
 #include "object.hpp"
 #include "projectile.hpp"
 
@@ -11,20 +10,11 @@
 	This is the class that describes the spaceship
 */
 
-
-// NumTrianglesSpaceship: the number of triangles that compose the render
-// of the spaceship
-#define NumTrianglesSpaceship 2
-
 namespace Asteroids {
 
 class Spaceship : public Object {
    public:
 	Spaceship();
-
-
-	// Draw: implemented as required by class Object
-	void Draw() const override;
 
 
 	// Move: disabled the automatic movement defined in Object
@@ -79,10 +69,15 @@ class Spaceship : public Object {
 
    private:
 	// points: the array of points defining the triangles of the spaceship
-	float points[NumTrianglesSpaceship * 3 * 2 * 2] = {0};
+	float points[numTriangles_Spaceship * 3 * 2 * 2] = {0};
 
 	// lastMousePos: the last recorded target of PointTo()
 	glm::vec2 lastMousePos;
+
+	// set number of triangles to be rendered
+	virtual int numTriangles() const override {
+		return numTriangles_Spaceship;
+	};
 };
 
 }  // namespace Asteroids

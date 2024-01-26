@@ -1,7 +1,6 @@
 #ifndef _ASTEROID_H
 #define _ASTEROID_H
 
-#include "../stb_image.h"
 #include "object.hpp"
 #include "parameters.hpp"
 
@@ -12,17 +11,11 @@
 	This is the class that describes an asteroid
 */
 
-#define NumTrianglesAsteroid 2
-
 namespace Asteroids {
 
 class Asteroid : public Object {
    public:
 	Asteroid();
-
-
-	// Draw: implemented as required by class Object
-	void Draw() const override;
 
 
 	// Init: implemented as required by class Object
@@ -51,13 +44,18 @@ class Asteroid : public Object {
 
    private:
 	// points: the array of points defining the triangles of the spaceship
-	float points[NumTrianglesAsteroid * 3 * 2 * 2] = {0};
+	float points[numTriangles_Asteroid * 3 * 2 * 2] = {0};
 
 
    protected:
 	// Asteroid can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
 		return true;
+	};
+
+	// set number of triangles to be rendered
+	virtual int numTriangles() const override {
+		return numTriangles_Asteroid;
 	};
 };
 

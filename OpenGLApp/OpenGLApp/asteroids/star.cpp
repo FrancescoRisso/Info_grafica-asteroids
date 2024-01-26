@@ -16,7 +16,7 @@ void Star::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	radius = radius_Star;
 
 	// clang-format off
-	float tmpPoints[NumTrianglesStar * 3 * 2] = {
+	float tmpPoints[numTriangles_Star * 3 * 2] = {
 		(float) radius * root2div2,		(float) radius * root2div2,
 		(float) -radius * root2div2,	(float) radius * root2div2,
 		(float) radius * root2div2,		(float) -radius * root2div2,
@@ -27,7 +27,9 @@ void Star::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, NumTrianglesStar * 3 * 2 * sizeof(float));
+	memcpy(points, tmpPoints, numTriangles_Star * 3 * 2 * sizeof(float));
+
+	color = glm::vec3(1, 1, 1);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -50,13 +52,4 @@ void Star::Spawn() {
 	float angle = glm::radians((float) rand() / RAND_MAX * 360);
 
 	Init(glm::vec2(posX, posY), glm::vec2(sin(angle), cos(angle)));
-}
-
-void Star::Draw() const {
-	shader.use();
-	shader.setMat4("model", transform);
-	shader.setVec3("objectColor", 1, 1, 1);
-
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
 }

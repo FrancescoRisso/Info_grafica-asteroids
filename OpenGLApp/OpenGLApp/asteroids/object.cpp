@@ -2,7 +2,7 @@
 
 using namespace Asteroids;
 
-Object::Object() : shader(), pos(0), speed(0), transform(0) {}
+Object::Object() : shader(), pos(0), speed(0), transform(0), color(0) {}
 
 void Object::updateTransform() {
 	transform = glm::mat4((float) 1);
@@ -67,8 +67,54 @@ float Object::findDistanceFrom(glm::vec2 p) {
 }
 
 
-bool Object::collidesWith(Object *o) {
+bool Object::collidesWith(Object* o) {
 	glm::vec2 vecTowardsOther = findRadiusTowards(o->pos);
 	float dist = o->findDistanceFrom(pos + vecTowardsOther);
 	return dist <= 0;
+}
+
+
+void Object::addTexture(const char* filePath) {
+	unsigned int texture;
+
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	int width, height, nrChannels;
+
+	stbi_set_flip_vertically_on_load(true);  // tell stb_image.h to flip loaded texture's on the y-axis.
+
+	unsigned char* data = stbi_load(filePath, &width, &height, &nrChannels, 0);
+	if(data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	} else
+		std::cout << "Failed to load texture" << std::endl;
+
+	stbi_image_free(data);
+
+	shader.setInt("texture", 0);
+
+	textures.push_back(texture);
+}
+
+
+void Object::Draw() const {
+	shader.use();
+	shader.setMat4("model", transform);
+
+	if(textures.size() != 0) {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textures[rand() % textures.size()]);
+	} else
+		shader.setVec3("objectColor", color);
+
+	glBindVertexArray(VAO);
+	glDrawArrays(GL_TRIANGLES, 0, 3 * numTriangles());
 }

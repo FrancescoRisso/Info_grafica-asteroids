@@ -16,7 +16,7 @@ void Spaceship::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	radius = radius_Spaceship;
 
 	// clang-format off
-	float tmpPoints[NumTrianglesSpaceship * 3 * 2 * 2] = {
+	float tmpPoints[numTriangles_Spaceship * 3 * 2 * 2] = {
 		(float) radius,		(float) radius,		1,	1,
 		(float) -radius,	(float) radius, 	0,	1,
 		(float) radius,		(float) -radius,	1,	0,
@@ -27,7 +27,7 @@ void Spaceship::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, NumTrianglesSpaceship * 3 * 2 * 2 * sizeof(float));
+	memcpy(points, tmpPoints, numTriangles_Spaceship * 3 * 2 * 2 * sizeof(float));
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -41,43 +41,10 @@ void Spaceship::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	// texture sesttings
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	int width, height, nrChannels;
-
-	stbi_set_flip_vertically_on_load(true);  // tell stb_image.h to flip loaded texture's on the y-axis.
-	unsigned char* data = stbi_load("./resources/textures/spaceship.png", &width, &height, &nrChannels, 0);
-	if(data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	} else
-		std::cout << "Failed to load texture" << std::endl;
-	stbi_image_free(data);
-
-	shader.setInt("texture", 0);
+	addTexture("./resources/textures/spaceship.png");
 
 	// update transform matrix
 	updateTransform();
-}
-
-void Spaceship::Draw() const {
-	shader.use();
-	shader.setMat4("model", transform);
-	shader.setVec3("objectColor", 1, 0, 0);
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3 * NumTrianglesSpaceship);
 }
 
 void Spaceship::MoveDir(direction dir) {

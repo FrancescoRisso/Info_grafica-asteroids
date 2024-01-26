@@ -9,6 +9,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
+#include "../stb_image.h"
 
 #include "../shader_s.h"
 #include "../utils.hpp"
@@ -79,9 +80,8 @@ class Object {
 		The object MUST be rendered as centered in the origin, then it will
 		be the transformation matrix that handles the position and rotation
 		of the object
-		It MUST be implemented by classes that derive from Object
 	*/
-	virtual void Draw() const = 0;
+	void Draw() const;
 
 
 	/*
@@ -157,8 +157,14 @@ class Object {
 	// radius: the radius of the sphere that approximates the object
 	float radius = 0;
 
-	// texture: the ID of the texture of this object
-	unsigned int texture;
+	// color: the color of the object
+	// ignored if it has some textures
+	glm::vec3 color;
+
+	// numTriangles: the settings of how many triangle compose this object
+	// It's just an attribute, but implemented as function to be forced to be
+	// set (and overwritten) by child classes
+	virtual int numTriangles() const = 0;
 
 	// canExitTheScreen: if the object is allowed to exit the screen
 	// It's just an attribute, but implemented as function to be
@@ -208,6 +214,24 @@ class Object {
 				coordinates)
 	*/
 	virtual glm::vec2 findRadiusTowards(glm::vec2 p);
+
+
+	/*
+		addTexture
+		---------------------------------------------------------------------
+		Adds a texture (saved in RGBA format) to the current object
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- filePath: the path to the image file
+	*/
+	void addTexture(const char* filePath);
+
+
+   private:
+	// textures: an array of ID of the textures of this object
+	// if more than one, a random one is chosen every time
+	// if none present, a uniform color is displayed instead (see variable color)
+	std::vector<unsigned int> textures;
 };
 
 }  // namespace Asteroids

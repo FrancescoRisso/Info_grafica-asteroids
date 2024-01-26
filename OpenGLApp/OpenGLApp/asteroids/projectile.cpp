@@ -18,7 +18,7 @@ void Projectile::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	radius = radius_Projectile;
 
 	// clang-format off
-	float tmpPoints[NumTrianglesProjectile * 3 * 2] = {
+	float tmpPoints[numTriangles_Projectile * 3 * 2] = {
 		(float) radius * root2div2,		(float) radius * root2div2,
 		(float) -radius * root2div2,	(float) radius * root2div2,
 		(float) radius * root2div2,		(float) -radius * root2div2,
@@ -29,7 +29,9 @@ void Projectile::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, NumTrianglesProjectile * 3 * 2 * sizeof(float));
+	memcpy(points, tmpPoints, numTriangles_Projectile * 3 * 2 * sizeof(float));
+
+	color = glm::vec3(1, 0, 0);
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -42,13 +44,4 @@ void Projectile::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	glEnableVertexAttribArray(0);
 
 	updateTransform();
-}
-
-void Projectile::Draw() const {
-	shader.use();
-	shader.setMat4("model", transform);
-	shader.setVec3("objectColor", 1, 0, 0);
-
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 9);
 }

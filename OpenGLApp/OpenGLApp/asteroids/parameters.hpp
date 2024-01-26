@@ -22,6 +22,16 @@
 
 
 /*	---------------------------------------------------------------------
+	Number of triangles per object type
+-----------------------------------------------------------------------*/
+
+#define numTriangles_Asteroid 2
+#define numTriangles_Spaceship 2
+#define numTriangles_Projectile 2
+#define numTriangles_Star 2
+
+
+/*	---------------------------------------------------------------------
 	Randomness parameters
 -----------------------------------------------------------------------*/
 
