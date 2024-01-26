@@ -157,6 +157,9 @@ class Object {
 	// radius: the radius of the sphere that approximates the object
 	float radius = 0;
 
+	// texture: the ID of the texture of this object
+	unsigned int texture;
+
 	// canExitTheScreen: if the object is allowed to exit the screen
 	// It's just an attribute, but implemented as function to be
 	// overwritable by child classes

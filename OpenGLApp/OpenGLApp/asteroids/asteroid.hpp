@@ -1,8 +1,10 @@
 #ifndef _ASTEROID_H
 #define _ASTEROID_H
 
+#include "../stb_image.h"
 #include "object.hpp"
 #include "parameters.hpp"
+
 
 /*
 	ASTEROID
