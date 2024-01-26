@@ -17,13 +17,13 @@ void Asteroid::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 
 	// clang-format off
 	float tmpPoints[NumTrianglesAsteroid * 3 * 2 * 2] = {
-		(float) radius * root2div2,		(float) radius * root2div2,		1,		1,
-		(float) -radius * root2div2,	(float) radius * root2div2, 	-1,		1,
-		(float) radius * root2div2,		(float) -radius * root2div2,	1,		-1,
+		(float) radius,		(float) radius,		1,	1,
+		(float) -radius,	(float) radius, 	0,	1,
+		(float) radius,		(float) -radius,	1,	0,
 
-		(float) -radius * root2div2,	(float) -radius * root2div2,	-1,		-1,
-		(float) -radius * root2div2,	(float) radius * root2div2,		-1, 	1,
-		(float) radius * root2div2,		(float) -radius * root2div2,	1,		-1,
+		(float) -radius,	(float) -radius,	0,	0,
+		(float) -radius,	(float) radius,		0,	1,
+		(float) radius,		(float) -radius,	1,	0,
 	};
 	// clang-format on
 
@@ -36,10 +36,10 @@ void Asteroid::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
 
 	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) 0);
 	glEnableVertexAttribArray(0);
-	// glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
-	// glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	// texture sesttings
 	glGenTextures(1, &texture);
@@ -56,7 +56,7 @@ void Asteroid::Init(glm::vec2 pos, glm::vec2 speedDirection) {
 	stbi_set_flip_vertically_on_load(true);  // tell stb_image.h to flip loaded texture's on the y-axis.
 	unsigned char* data = stbi_load("./resources/textures/asteroid-0.png", &width, &height, &nrChannels, 0);
 	if(data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	} else
 		std::cout << "Failed to load texture" << std::endl;

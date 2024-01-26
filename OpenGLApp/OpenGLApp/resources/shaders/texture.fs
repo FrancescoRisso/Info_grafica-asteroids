@@ -6,5 +6,7 @@ in vec2 TextureCoordinates;
 
 void main()
 {
-    FragColor = texture(texture, TextureCoordinates);
+	vec4 color = texture2D(texture, TextureCoordinates);
+	if (color.w > 0) FragColor = color;
+	else discard;
 }
