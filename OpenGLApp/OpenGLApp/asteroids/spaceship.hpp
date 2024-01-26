@@ -1,6 +1,7 @@
 #ifndef _SPACESHIP_H
 #define _SPACESHIP_H
 
+#include "../stb_image.h"
 #include "object.hpp"
 #include "projectile.hpp"
 
@@ -13,7 +14,7 @@
 
 // NumTrianglesSpaceship: the number of triangles that compose the render
 // of the spaceship
-#define NumTrianglesSpaceship 3
+#define NumTrianglesSpaceship 2
 
 namespace Asteroids {
 
@@ -78,7 +79,7 @@ class Spaceship : public Object {
 
    private:
 	// points: the array of points defining the triangles of the spaceship
-	float points[NumTrianglesSpaceship * 3 * 2] = {0};
+	float points[NumTrianglesSpaceship * 3 * 2 * 2] = {0};
 
 	// lastMousePos: the last recorded target of PointTo()
 	glm::vec2 lastMousePos;
