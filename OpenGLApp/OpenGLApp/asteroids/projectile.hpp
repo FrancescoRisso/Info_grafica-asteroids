@@ -4,7 +4,7 @@
 #include "object.hpp"
 
 /*
-	SPACESHIP
+	PROJECTILE
 	---------------------------------------------------------------------
 	This is the class that describes a projectile
 */
