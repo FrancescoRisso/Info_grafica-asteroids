@@ -144,6 +144,7 @@
     <ClCompile Include="asteroids\parameters.cpp" />
     <ClCompile Include="asteroids\projectile.cpp" />
     <ClCompile Include="asteroids\spaceship.cpp" />
+    <ClCompile Include="asteroids\star.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="shader_s.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="asteroids\parameters.hpp" />
     <ClInclude Include="asteroids\projectile.hpp" />
     <ClInclude Include="asteroids\spaceship.h" />
+    <ClInclude Include="asteroids\star.hpp" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="shader_s.h" />
     <ClInclude Include="stb_image.h" />
