@@ -113,7 +113,7 @@ void Object::Draw() const {
 
 	if(getTextures().size() != 0) {
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, getTextures()[rand() % getTextures().size()]);
+		glBindTexture(GL_TEXTURE_2D, chosenTexture);
 	} else
 		getShader().setVec3("objectColor", color());
 
@@ -127,6 +127,8 @@ void Object::initGL(float points[]) {
 	int valuesPerPoint = hasTextures ? 4 : 2;
 
 	unsigned int VAO, VBO;
+
+	if(getTextures().size() > 0) chosenTexture = getTextures()[rand() % getTextures().size()];
 
 	if(!shaderIsSet()) {
 		switch(shaderChoice()) {

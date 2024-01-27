@@ -286,6 +286,9 @@ class Object {
 			- points: an array of points to be written in the
 	*/
 	void initGL(float points[]);
+
+   private:
+	unsigned int chosenTexture;
 };
 
 }  // namespace Asteroids
