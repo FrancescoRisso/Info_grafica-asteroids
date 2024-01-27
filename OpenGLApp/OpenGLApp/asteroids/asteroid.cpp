@@ -9,8 +9,6 @@ Asteroid::Asteroid() {
 
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
-	shader = Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs");
-
 	this->pos = pos;
 	this->speed = scaleVector(speed_Asteroid * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
 	this->angle = angle;
@@ -27,24 +25,9 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, numTriangles_Asteroid * 3 * 2 * 2 * sizeof(float));
-
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
 	addTexture("./resources/textures/asteroid-0.png");
 
-	// update transform matrix
-	updateTransform();
+	initGL(tmpPoints);
 }
 
 void Asteroid::Spawn() {

@@ -68,16 +68,17 @@ class Spaceship : public Object {
 	Projectile Shoot();
 
    private:
-	// points: the array of points defining the triangles of the spaceship
-	float points[numTriangles_Spaceship * 3 * 2 * 2] = {0};
-
 	// lastMousePos: the last recorded target of PointTo()
 	glm::vec2 lastMousePos;
 
 	// set number of triangles to be rendered
-	virtual int numTriangles() const override {
+	int numTriangles() const override {
 		return numTriangles_Spaceship;
 	};
+
+	availableShaders shaderChoice() const override {
+		return shader_withTexture;
+	}
 };
 
 }  // namespace Asteroids

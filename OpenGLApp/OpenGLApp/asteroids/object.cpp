@@ -118,3 +118,31 @@ void Object::Draw() const {
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3 * numTriangles());
 }
+
+void Object::initGL(float points[]) {
+	bool hasTextures = textures.size() != 0;
+	int numPoints = 3 * numTriangles();
+	int valuesPerPoint = hasTextures ? 4 : 2;
+
+	switch(shaderChoice()) {
+		case shader_monochromatic: shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs"); break;
+		case shader_withTexture: shader = Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs"); break;
+	}
+
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numPoints * valuesPerPoint, points, GL_STATIC_DRAW);
+
+	glBindVertexArray(VAO);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, valuesPerPoint * sizeof(float), (void*) 0);
+	glEnableVertexAttribArray(0);
+
+	if(hasTextures) {
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+	}
+
+	updateTransform();
+}

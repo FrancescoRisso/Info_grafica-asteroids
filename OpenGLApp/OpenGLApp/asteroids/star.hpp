@@ -28,11 +28,6 @@ class Star : public Object {
 	void Init(glm::vec2 pos, float angle) override;
 
 
-   private:
-	// points: the array of points defining the triangles of the spaceship
-	float points[numTriangles_Star * 3 * 2] = {0};
-
-
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
@@ -40,9 +35,13 @@ class Star : public Object {
 	};
 
 	// set number of triangles to be rendered
-	virtual int numTriangles() const override {
+	int numTriangles() const override {
 		return numTriangles_Star;
 	};
+
+	availableShaders shaderChoice() const override {
+		return shader_monochromatic;
+	}
 };
 
 }  // namespace Asteroids

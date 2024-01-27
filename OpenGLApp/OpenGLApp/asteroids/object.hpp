@@ -47,6 +47,14 @@ namespace Asteroids {
 */
 enum direction { up, down, left, right };
 
+/*
+	enum availableShaders
+	---------------------------------------------------------------------
+	Provides an easy way to choose a shader among the available ones
+*/
+enum availableShaders { shader_monochromatic, shader_withTexture };
+
+
 class Object {
    public:
 	/*
@@ -175,6 +183,11 @@ class Object {
 		return false;
 	};
 
+	// shaderChoice: which shader program the object should use
+	// It's just an attribute, but implemented as function to be forced to be
+	// set (and overwritten) by child classes
+	virtual availableShaders shaderChoice() const = 0;
+
 	/*
 		limitMovementToScreen
 		---------------------------------------------------------------------
@@ -227,6 +240,20 @@ class Object {
 			- filePath: the path to the image file
 	*/
 	void addTexture(const char* filePath);
+
+
+	/*
+		initGL
+		---------------------------------------------------------------------
+		Does the initialization of all the OpenGL stuff (VBO, VAO...), while
+		also updating the transformation matrix
+		Must be called AFTER all the parameters (pos, speed, angle, textures,
+		...) have been set.
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- points: an array of points to be written in the
+	*/
+	void initGL(float points[]);
 
 
    private:

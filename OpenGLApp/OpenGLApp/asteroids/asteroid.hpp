@@ -42,11 +42,6 @@ class Asteroid : public Object {
 	bool ShouldSpawn();
 
 
-   private:
-	// points: the array of points defining the triangles of the spaceship
-	float points[numTriangles_Asteroid * 3 * 2 * 2] = {0};
-
-
    protected:
 	// Asteroid can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
@@ -54,9 +49,13 @@ class Asteroid : public Object {
 	};
 
 	// set number of triangles to be rendered
-	virtual int numTriangles() const override {
+	int numTriangles() const override {
 		return numTriangles_Asteroid;
 	};
+
+	availableShaders shaderChoice() const override {
+		return shader_withTexture;
+	}
 };
 
 }  // namespace Asteroids

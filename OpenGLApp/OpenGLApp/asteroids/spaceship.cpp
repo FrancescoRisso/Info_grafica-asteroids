@@ -7,8 +7,6 @@ using namespace Asteroids;
 Spaceship::Spaceship() : lastMousePos(0.0f) {}
 
 void Spaceship::Init(glm::vec2 pos, float angle) {
-	shader = Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs");
-
 	this->pos = pos;
 	this->speed = glm::vec2(0.5);
 	angle = 0;
@@ -27,24 +25,9 @@ void Spaceship::Init(glm::vec2 pos, float angle) {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, numTriangles_Spaceship * 3 * 2 * 2 * sizeof(float));
-
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
 	addTexture("./resources/textures/spaceship.png");
 
-	// update transform matrix
-	updateTransform();
+	initGL(tmpPoints);
 }
 
 void Spaceship::MoveDir(direction dir) {

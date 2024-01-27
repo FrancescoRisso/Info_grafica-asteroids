@@ -7,8 +7,6 @@ Star::Star() {}
 
 
 void Star::Init(glm::vec2 pos, float angle) {
-	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
-
 	this->pos = pos;
 	this->speed = scaleVector(speed_Star * scaleVectorReverse(glm::vec2(cos(angle), sin(angle))));
 	this->angle = angle;
@@ -27,21 +25,9 @@ void Star::Init(glm::vec2 pos, float angle) {
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, numTriangles_Star * 3 * 2 * sizeof(float));
-
 	color = glm::vec3(1, 1, 1);
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
-
-	updateTransform();
+	initGL(tmpPoints);
 }
 
 
