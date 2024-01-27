@@ -19,6 +19,7 @@
 #define speed_Asteroid 0.5f
 #define speed_Projectile 1.0f
 #define speed_Star 0.005f
+#define speed_Spaceship 0.5f
 
 
 /*	---------------------------------------------------------------------

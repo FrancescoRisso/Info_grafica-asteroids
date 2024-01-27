@@ -10,7 +10,7 @@ staticVariablesInitialize_cpp(Spaceship);
 
 void Spaceship::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = glm::vec2(0.5);
+	this->speed = glm::vec2(speed_Spaceship);
 	angle = 0;
 
 	// clang-format off
