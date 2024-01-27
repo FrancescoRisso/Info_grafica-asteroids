@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="asteroids\asteroid.hpp" />
     <ClInclude Include="asteroids\object.hpp" />
+    <ClInclude Include="asteroids\object_staticVariablesDefs.hpp" />
     <ClInclude Include="asteroids\parameters.hpp" />
     <ClInclude Include="asteroids\projectile.hpp" />
     <ClInclude Include="asteroids\spaceship.h" />

@@ -42,6 +42,9 @@ class Asteroid : public Object {
 	bool ShouldSpawn();
 
 
+	staticVariablesAndFunctionDefinitions_hpp(Asteroid);
+
+
    protected:
 	// Asteroid can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {

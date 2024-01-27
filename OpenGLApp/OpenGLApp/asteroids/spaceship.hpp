@@ -67,6 +67,8 @@ class Spaceship : public Object {
 	*/
 	Projectile Shoot();
 
+	staticVariablesAndFunctionDefinitions_hpp(Spaceship);
+
    private:
 	// lastMousePos: the last recorded target of PointTo()
 	glm::vec2 lastMousePos;

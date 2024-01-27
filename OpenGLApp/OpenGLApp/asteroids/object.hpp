@@ -13,6 +13,7 @@
 
 #include "../shader_s.h"
 #include "../utils.hpp"
+#include "object_staticVariablesDefs.hpp"
 
 #include "parameters.hpp"
 
@@ -159,10 +160,35 @@ class Object {
 	glm::mat4 transform;
 
 	// shader: the program (fragment sh + vertex sh) used to render the object
-	Shader shader;  // TODO-static
-
+	//
 	// VBO and VAO: the VBO and VAO that contain data about this object
-	unsigned int VBO = 0, VAO = 0;  // TODO-static
+	//
+	// textures: an array of IDs of the textures of this object
+	// if more than one, a random one is chosen every time
+	// if none present, a uniform color is displayed instead (see variable color)
+	//
+	// To reduce wastes, they three should be stored as static variables in each
+	// child class. Each class must then expose the following getters and setters
+	// for the Object class to be able to work with all child classes.
+	//
+	// Plus, each class should also contain a static:
+	// 	- list of the file paths of the recorded textures
+	//	- flag to telle if VBO, shader and VAO are already set
+	// That should then exposed via textureIsPresent and shaderIsSet
+
+	virtual Shader getShader() const = 0;
+	virtual void setShader(Shader s) = 0;
+
+	virtual unsigned int getVAO() const = 0;
+	virtual void setVAO(unsigned int VAO) = 0;
+	virtual unsigned int getVBO() const = 0;
+	virtual void setVBO(unsigned int VBO) = 0;
+
+	virtual std::vector<unsigned int> getTextures() const = 0;
+	virtual void addTextureID(unsigned int id, const char* filePath) = 0;
+
+	virtual bool shaderIsSet() const = 0;
+	virtual bool textureIsPresent(const char* filePath) const = 0;
 
 	// radius: the radius of the sphere that approximates the object
 	// It's just an attribute, but implemented as function to be forced to be
@@ -260,13 +286,6 @@ class Object {
 			- points: an array of points to be written in the
 	*/
 	void initGL(float points[]);
-
-
-   private:
-	// textures: an array of ID of the textures of this object
-	// if more than one, a random one is chosen every time
-	// if none present, a uniform color is displayed instead (see variable color)
-	std::vector<unsigned int> textures;
 };
 
 }  // namespace Asteroids

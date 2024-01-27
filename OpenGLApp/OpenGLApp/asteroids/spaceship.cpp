@@ -6,6 +6,8 @@ using namespace Asteroids;
 
 Spaceship::Spaceship() : lastMousePos(0.0f) {}
 
+staticVariablesInitialize_cpp(Spaceship);
+
 void Spaceship::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
 	this->speed = glm::vec2(0.5);

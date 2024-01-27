@@ -2,7 +2,7 @@
 
 using namespace Asteroids;
 
-Object::Object() : shader(), pos(0), speed(0), transform(0) {}
+Object::Object() : pos(0), speed(0), transform(0) {}
 
 void Object::updateTransform() {
 	transform = glm::mat4((float) 1);
@@ -77,6 +77,8 @@ bool Object::collidesWith(Object* o) {
 void Object::addTexture(const char* filePath) {
 	unsigned int texture;
 
+	if(textureIsPresent(filePath)) return;
+
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
@@ -99,49 +101,56 @@ void Object::addTexture(const char* filePath) {
 
 	stbi_image_free(data);
 
-	shader.setInt("texture", 0);
+	getShader().setInt("texture", 0);
 
-	textures.push_back(texture);
+	addTextureID(texture, filePath);
 }
 
 
 void Object::Draw() const {
-	shader.use();
-	shader.setMat4("model", transform);
+	getShader().use();
+	getShader().setMat4("model", transform);
 
-	if(textures.size() != 0) {
+	if(getTextures().size() != 0) {
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, textures[rand() % textures.size()]);
+		glBindTexture(GL_TEXTURE_2D, getTextures()[rand() % getTextures().size()]);
 	} else
-		shader.setVec3("objectColor", color());
+		getShader().setVec3("objectColor", color());
 
-	glBindVertexArray(VAO);
+	glBindVertexArray(getVAO());
 	glDrawArrays(GL_TRIANGLES, 0, 3 * numTriangles());
 }
 
 void Object::initGL(float points[]) {
-	bool hasTextures = textures.size() != 0;
+	bool hasTextures = getTextures().size() != 0;
 	int numPoints = 3 * numTriangles();
 	int valuesPerPoint = hasTextures ? 4 : 2;
 
-	switch(shaderChoice()) {
-		case shader_monochromatic: shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs"); break;
-		case shader_withTexture: shader = Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs"); break;
-	}
+	unsigned int VAO, VBO;
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	if(!shaderIsSet()) {
+		switch(shaderChoice()) {
+			case shader_monochromatic: setShader(Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs")); break;
+			case shader_withTexture: setShader(Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs")); break;
+		}
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numPoints * valuesPerPoint, points, GL_STATIC_DRAW);
+		glGenVertexArrays(1, &VAO);
+		glGenBuffers(1, &VBO);
 
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, valuesPerPoint * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
+		setVAO(VAO);
+		setVBO(VBO);
 
-	if(hasTextures) {
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
-		glEnableVertexAttribArray(1);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * numPoints * valuesPerPoint, points, GL_STATIC_DRAW);
+
+		glBindVertexArray(VAO);
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, valuesPerPoint * sizeof(float), (void*) 0);
+		glEnableVertexAttribArray(0);
+
+		if(hasTextures) {
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*) (2 * sizeof(float)));
+			glEnableVertexAttribArray(1);
+		}
 	}
 
 	updateTransform();

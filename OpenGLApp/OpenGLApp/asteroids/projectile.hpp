@@ -20,6 +20,9 @@ class Projectile : public Object {
 	void Init(glm::vec2 pos, float angle) override;
 
 
+	staticVariablesAndFunctionDefinitions_hpp(Projectile);
+
+
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {

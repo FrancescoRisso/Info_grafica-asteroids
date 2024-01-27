@@ -3,8 +3,10 @@
 
 using namespace Asteroids;
 
-Asteroid::Asteroid() {
-}
+Asteroid::Asteroid() {}
+
+
+staticVariablesInitialize_cpp(Asteroid);
 
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
@@ -32,7 +34,7 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 void Asteroid::Spawn() {
 	float firstPos1D = (float) rand() / RAND_MAX * 2 - 1;
 	float otherCoord = 1 + radius();
-	glm::vec2 firstPos, speedDir;
+	glm::vec2 firstPos(0), speedDir;
 
 	direction side = (direction)(rand() % 4);
 

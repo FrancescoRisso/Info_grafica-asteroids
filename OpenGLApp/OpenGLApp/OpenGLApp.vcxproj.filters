@@ -80,6 +80,9 @@
     <ClInclude Include="asteroids\star.hpp">
       <Filter>File di origine</Filter>
     </ClInclude>
+    <ClInclude Include="asteroids\object_staticVariablesDefs.hpp">
+      <Filter>File di origine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.vs">

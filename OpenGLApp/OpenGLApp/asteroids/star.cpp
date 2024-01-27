@@ -6,6 +6,9 @@ using namespace Asteroids;
 Star::Star() {}
 
 
+staticVariablesInitialize_cpp(Star);
+
+
 void Star::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
 	this->speed = scaleVector(speed_Star * scaleVectorReverse(glm::vec2(cos(angle), sin(angle))));
