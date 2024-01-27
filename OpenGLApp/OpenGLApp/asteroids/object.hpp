@@ -164,10 +164,6 @@ class Object {
 	// VBO and VAO: the VBO and VAO that contain data about this object
 	unsigned int VBO = 0, VAO = 0;  // TODO-static
 
-	// color: the color of the object
-	// ignored if it has some textures
-	glm::vec3 color;  // TODO-static
-
 	// radius: the radius of the sphere that approximates the object
 	// It's just an attribute, but implemented as function to be forced to be
 	// set (and overwritten) by child classes
@@ -183,6 +179,14 @@ class Object {
 	// overwritable by child classes
 	virtual bool canExitTheScreen() const {
 		return false;
+	};
+
+	// color: the color of the object, if it is monochromatic
+	// If it has a texture, this value is ignored
+	// It's just an attribute, but implemented as function to be
+	// overwritable by child classes
+	virtual glm::vec3 color() const {
+		return glm::vec3(0);
 	};
 
 	// shaderChoice: which shader program the object should use

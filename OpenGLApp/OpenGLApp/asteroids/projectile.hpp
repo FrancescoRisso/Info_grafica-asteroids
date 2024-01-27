@@ -38,6 +38,10 @@ class Projectile : public Object {
 	float radius() const override {
 		return radius_Projectile;
 	}
+
+	glm::vec3 color() const override {
+		return glm::vec3(1, 0, 0);
+	}
 };
 
 }  // namespace Asteroids

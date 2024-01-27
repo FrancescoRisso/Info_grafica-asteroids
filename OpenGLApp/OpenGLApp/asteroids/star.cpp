@@ -23,8 +23,6 @@ void Star::Init(glm::vec2 pos, float angle) {
 	};
 	// clang-format on
 
-	color = glm::vec3(1, 1, 1);
-
 	initGL(tmpPoints);
 }
 

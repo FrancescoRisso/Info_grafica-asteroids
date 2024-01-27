@@ -2,7 +2,7 @@
 
 using namespace Asteroids;
 
-Object::Object() : shader(), pos(0), speed(0), transform(0), color(0) {}
+Object::Object() : shader(), pos(0), speed(0), transform(0) {}
 
 void Object::updateTransform() {
 	transform = glm::mat4((float) 1);
@@ -113,7 +113,7 @@ void Object::Draw() const {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textures[rand() % textures.size()]);
 	} else
-		shader.setVec3("objectColor", color);
+		shader.setVec3("objectColor", color());
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3 * numTriangles());

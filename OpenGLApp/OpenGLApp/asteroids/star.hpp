@@ -1,7 +1,7 @@
 #ifndef _STAR_H
 #define _STAR_H
 
-#include "projectile.hpp"
+#include "object.hpp"
 
 /*
 	STAR
@@ -45,6 +45,10 @@ class Star : public Object {
 
 	float radius() const override {
 		return radius_Star;
+	}
+
+	glm::vec3 color() const override {
+		return glm::vec3(1, 1, 1);
 	}
 };
 
