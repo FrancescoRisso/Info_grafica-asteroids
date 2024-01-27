@@ -8,12 +8,12 @@ using namespace Asteroids;
 Projectile::Projectile() {}
 
 
-void Projectile::Init(glm::vec2 pos, glm::vec2 speedDirection) {
+void Projectile::Init(glm::vec2 pos, float angle) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	this->pos = pos;
-	this->speed = scaleVector(speed_Projectile * scaleVectorReverse(glm::normalize(speedDirection)));
-	angle = angleBetweenVerticalDir(speed);
+	this->speed = scaleVector(speed_Projectile * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
+	this->angle = -angleBetweenVerticalDir(speed);
 
 	radius = radius_Projectile;
 

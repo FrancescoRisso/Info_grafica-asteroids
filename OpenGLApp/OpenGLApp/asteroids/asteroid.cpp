@@ -8,12 +8,12 @@ Asteroid::Asteroid() {
 }
 
 
-void Asteroid::Init(glm::vec2 pos, glm::vec2 speedDirection) {
+void Asteroid::Init(glm::vec2 pos, float angle) {
 	shader = Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs");
 
 	this->pos = pos;
-	this->speed = scaleVector(speed_Asteroid * scaleVectorReverse(glm::normalize(speedDirection)));
-	angle = -angleBetweenVerticalDir(speed);
+	this->speed = scaleVector(speed_Asteroid * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
+	this->angle = angle;
 
 	// clang-format off
 	float tmpPoints[numTriangles_Asteroid * 3 * 2 * 2] = {
@@ -67,7 +67,7 @@ void Asteroid::Spawn() {
 	angle = angleBetweenVerticalDir(firstPos);
 	angle = angleOffset + angle;
 	speedDir = glm::vec2(sin(angle), cos(angle));
-	Init(firstPos, scaleVector(speedDir));
+	Init(firstPos, angle);
 }
 
 

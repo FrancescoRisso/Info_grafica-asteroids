@@ -18,6 +18,9 @@ extern unsigned int SCR_WIDTH;
 extern unsigned int SCR_HEIGHT;
 
 
+#define pi_float 3.14159265358979f
+
+
 // XaxisVersor: a vector of modulus 1 pointing to the positive X axis direction (right)
 #define XaxisVersor glm::vec2(1, 0)
 

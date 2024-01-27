@@ -6,12 +6,12 @@ using namespace Asteroids;
 Star::Star() {}
 
 
-void Star::Init(glm::vec2 pos, glm::vec2 speedDirection) {
+void Star::Init(glm::vec2 pos, float angle) {
 	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
 
 	this->pos = pos;
-	this->speed = scaleVector(speed_Star * scaleVectorReverse(glm::normalize(speedDirection)));
-	angle = angleBetweenVerticalDir(speedDirection);
+	this->speed = scaleVector(speed_Star * scaleVectorReverse(glm::vec2(cos(angle), sin(angle))));
+	this->angle = angle;
 
 	radius = radius_Star;
 
@@ -51,5 +51,5 @@ void Star::Spawn() {
 
 	float angle = glm::radians((float) rand() / RAND_MAX * 360);
 
-	Init(glm::vec2(posX, posY), glm::vec2(sin(angle), cos(angle)));
+	Init(glm::vec2(posX, posY), angle);
 }

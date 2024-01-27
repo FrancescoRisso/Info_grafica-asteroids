@@ -19,7 +19,7 @@ class Asteroid : public Object {
 
 
 	// Init: implemented as required by class Object
-	void Init(glm::vec2 pos, glm::vec2 speed) override;
+	void Init(glm::vec2 pos, float angle) override;
 
 
 	/*

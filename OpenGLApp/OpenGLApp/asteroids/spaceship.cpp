@@ -6,7 +6,7 @@ using namespace Asteroids;
 
 Spaceship::Spaceship() : lastMousePos(0.0f) {}
 
-void Spaceship::Init(glm::vec2 pos, glm::vec2 speedDirection) {
+void Spaceship::Init(glm::vec2 pos, float angle) {
 	shader = Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs");
 
 	this->pos = pos;
@@ -76,6 +76,6 @@ void Spaceship::PointTo(glm::vec2 mousePos) {
 Projectile Spaceship::Shoot() {
 	Projectile p;
 	glm::vec2 dir(-sin(angle), cos(angle));
-	p.Init(pos + radius * scaleVector(dir), scaleVector(dir));
+	p.Init(pos + radius * scaleVector(dir), pi_float + angleBetweenVerticalDir(scaleVector(scaleVector(dir))));
 	return p;
 }

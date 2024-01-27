@@ -60,16 +60,18 @@ class Object {
 
 
 	/*
-		  Init (abstract)
-		  ---------------------------------------------------------------------
-		  Initializes all the attributes needed for the object.
-		  It MUST be implemented by classes that derive from Object
-		  ---------------------------------------------------------------------
-		  PARAMETERS:
-			  - pos: the initial position of the object
-			  - speedDirection: the direction where the object is moving
+		Init (abstract)
+		---------------------------------------------------------------------
+		Initializes all the attributes needed for the object.
+		It MUST be implemented by classes that derive from Object
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- pos: the initial position of the object
+			- angle: the direction where the object is moving, indicated as
+				the angle (in radians) between the speed and the vertical
+				direction
 	  */
-	virtual void Init(glm::vec2 pos, glm::vec2 speedDirection) = 0;
+	virtual void Init(glm::vec2 pos, float angle) = 0;
 
 
 	/*
