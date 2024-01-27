@@ -11,17 +11,15 @@ void Spaceship::Init(glm::vec2 pos, float angle) {
 	this->speed = glm::vec2(0.5);
 	angle = 0;
 
-	radius = radius_Spaceship;
-
 	// clang-format off
 	float tmpPoints[numTriangles_Spaceship * 3 * 2 * 2] = {
-		(float) radius,		(float) radius,		1,	1,
-		(float) -radius,	(float) radius, 	0,	1,
-		(float) radius,		(float) -radius,	1,	0,
+		(float) radius(),		(float) radius(),		1,	1,
+		(float) -radius(),		(float) radius(), 		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 
-		(float) -radius,	(float) -radius,	0,	0,
-		(float) -radius,	(float) radius,		0,	1,
-		(float) radius,		(float) -radius,	1,	0,
+		(float) -radius(),		(float) -radius(),		0,	0,
+		(float) -radius(),		(float) radius(),		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 	};
 	// clang-format on
 
@@ -59,6 +57,6 @@ void Spaceship::PointTo(glm::vec2 mousePos) {
 Projectile Spaceship::Shoot() {
 	Projectile p;
 	glm::vec2 dir(-sin(angle), cos(angle));
-	p.Init(pos + radius * scaleVector(dir), pi_float + angleBetweenVerticalDir(scaleVector(scaleVector(dir))));
+	p.Init(pos + radius() * scaleVector(dir), pi_float + angleBetweenVerticalDir(scaleVector(scaleVector(dir))));
 	return p;
 }

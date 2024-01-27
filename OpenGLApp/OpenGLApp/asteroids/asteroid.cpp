@@ -4,7 +4,6 @@
 using namespace Asteroids;
 
 Asteroid::Asteroid() {
-	radius = radius_Asteroid;
 }
 
 
@@ -15,13 +14,13 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 
 	// clang-format off
 	float tmpPoints[numTriangles_Asteroid * 3 * 2 * 2] = {
-		(float) radius,		(float) radius,		1,	1,
-		(float) -radius,	(float) radius, 	0,	1,
-		(float) radius,		(float) -radius,	1,	0,
+		(float) radius(),		(float) radius(),		1,	1,
+		(float) -radius(),		(float) radius(), 		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 
-		(float) -radius,	(float) -radius,	0,	0,
-		(float) -radius,	(float) radius,		0,	1,
-		(float) radius,		(float) -radius,	1,	0,
+		(float) -radius(),		(float) -radius(),		0,	0,
+		(float) -radius(),		(float) radius(),		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 	};
 	// clang-format on
 
@@ -32,7 +31,7 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 
 void Asteroid::Spawn() {
 	float firstPos1D = (float) rand() / RAND_MAX * 2 - 1;
-	float otherCoord = 1 + radius;
+	float otherCoord = 1 + radius();
 	glm::vec2 firstPos, speedDir;
 
 	direction side = (direction)(rand() % 4);

@@ -56,6 +56,10 @@ class Asteroid : public Object {
 	availableShaders shaderChoice() const override {
 		return shader_withTexture;
 	}
+
+	float radius() const override {
+		return radius_Asteroid;
+	}
 };
 
 }  // namespace Asteroids

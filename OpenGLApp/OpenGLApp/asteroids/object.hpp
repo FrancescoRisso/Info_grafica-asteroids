@@ -159,17 +159,19 @@ class Object {
 	glm::mat4 transform;
 
 	// shader: the program (fragment sh + vertex sh) used to render the object
-	Shader shader;
+	Shader shader;  // TODO-static
 
 	// VBO and VAO: the VBO and VAO that contain data about this object
-	unsigned int VBO = 0, VAO = 0;
-
-	// radius: the radius of the sphere that approximates the object
-	float radius = 0;
+	unsigned int VBO = 0, VAO = 0;  // TODO-static
 
 	// color: the color of the object
 	// ignored if it has some textures
-	glm::vec3 color;
+	glm::vec3 color;  // TODO-static
+
+	// radius: the radius of the sphere that approximates the object
+	// It's just an attribute, but implemented as function to be forced to be
+	// set (and overwritten) by child classes
+	virtual float radius() const = 0;
 
 	// numTriangles: the settings of how many triangle compose this object
 	// It's just an attribute, but implemented as function to be forced to be

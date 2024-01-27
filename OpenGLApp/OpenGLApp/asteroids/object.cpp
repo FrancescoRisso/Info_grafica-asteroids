@@ -22,7 +22,7 @@ void Object::Move() {
 }
 
 void Object::limitMovementToScreen() {
-	glm::vec2 scaledRadius(radius);
+	glm::vec2 scaledRadius(radius());
 
 	scaledRadius = scaleVector(scaledRadius);
 
@@ -35,13 +35,13 @@ void Object::limitMovementToScreen() {
 bool Object::isOutOfScreen() {
 	glm::vec2 tmpVector(0);
 
-	tmpVector.x = pos.x + radius;
-	tmpVector.y = pos.y + radius;
+	tmpVector.x = pos.x + radius();
+	tmpVector.y = pos.y + radius();
 	tmpVector = scaleVector(tmpVector);
 	if(tmpVector.x < -1 || tmpVector.y < -1) return true;
 
-	tmpVector.x = pos.x - radius;
-	tmpVector.y = pos.y - radius;
+	tmpVector.x = pos.x - radius();
+	tmpVector.y = pos.y - radius();
 	tmpVector = scaleVector(tmpVector);
 	if(tmpVector.x > 1 || tmpVector.y > 1) return true;
 
@@ -50,7 +50,7 @@ bool Object::isOutOfScreen() {
 
 
 glm::vec2 Object::findRadiusTowards(glm::vec2 p) {
-	return radius * scaleVector(glm::normalize(scaleVectorReverse(p - pos)));
+	return radius() * scaleVector(glm::normalize(scaleVectorReverse(p - pos)));
 }
 
 

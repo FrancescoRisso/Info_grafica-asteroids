@@ -11,17 +11,15 @@ void Star::Init(glm::vec2 pos, float angle) {
 	this->speed = scaleVector(speed_Star * scaleVectorReverse(glm::vec2(cos(angle), sin(angle))));
 	this->angle = angle;
 
-	radius = radius_Star;
-
 	// clang-format off
 	float tmpPoints[numTriangles_Star * 3 * 2] = {
-		(float) radius * root2div2,		(float) radius * root2div2,
-		(float) -radius * root2div2,	(float) radius * root2div2,
-		(float) radius * root2div2,		(float) -radius * root2div2,
+		(float) radius() * root2div2,		(float) radius() * root2div2,
+		(float) -radius() * root2div2,		(float) radius() * root2div2,
+		(float) radius() * root2div2,		(float) -radius() * root2div2,
 
-		(float) -radius * root2div2,	(float) -radius * root2div2,
-		(float) -radius * root2div2,	(float) radius * root2div2,
-		(float) radius * root2div2,		(float) -radius * root2div2,
+		(float) -radius() * root2div2,		(float) -radius() * root2div2,
+		(float) -radius() * root2div2,		(float) radius() * root2div2,
+		(float) radius() * root2div2,		(float) -radius() * root2div2,
 	};
 	// clang-format on
 

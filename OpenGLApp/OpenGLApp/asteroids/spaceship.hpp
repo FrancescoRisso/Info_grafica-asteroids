@@ -79,6 +79,10 @@ class Spaceship : public Object {
 	availableShaders shaderChoice() const override {
 		return shader_withTexture;
 	}
+
+	float radius() const override {
+		return radius_Spaceship;
+	}
 };
 
 }  // namespace Asteroids

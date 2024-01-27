@@ -42,6 +42,10 @@ class Star : public Object {
 	availableShaders shaderChoice() const override {
 		return shader_monochromatic;
 	}
+
+	float radius() const override {
+		return radius_Star;
+	}
 };
 
 }  // namespace Asteroids
