@@ -11,6 +11,7 @@
 #include "asteroids/spaceship.hpp"
 #include "asteroids/projectile.hpp"
 #include "asteroids/asteroid.hpp"
+#include "asteroids/star.hpp"
 #include "asteroids/_debugOpts.hpp"
 
 
@@ -46,6 +47,8 @@ float lastFrame = 0;
 float lastX, lastY;
 bool firstMouse = true;
 int shootCount = 0;
+
+Star stars[numStars];
 
 Spaceship spaceship;
 std::list<Projectile> projectiles;
@@ -94,10 +97,12 @@ int main() {
 
 	spaceship.Init(glm::vec2(0));
 
+	for(int i = 0; i < numStars; i++) stars[i].Spawn();
+
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
-		if(hasDied) continue;
+		// if(hasDied) continue;
 
 		// input
 		// -----
@@ -114,8 +119,14 @@ int main() {
 
 		// render
 		// ------
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		for(int i = 0; i < numStars; i++) {
+			stars[i].Draw();
+			stars[i].Move();
+			if(stars[i].isOutOfScreen()) stars[i].Spawn();
+		}
 
 		auto projectilePtr = projectiles.begin();
 		while(projectilePtr != projectiles.end()) {
@@ -194,6 +205,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	SCR_HEIGHT = height;
 
 	spaceship.updateTransform();
+	for(int i = 0; i < numStars; i++) stars[i].updateTransform();
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {

@@ -6,53 +6,28 @@ using namespace Asteroids;
 
 Spaceship::Spaceship() : lastMousePos(0.0f) {}
 
-void Spaceship::Init(glm::vec2 pos, glm::vec2 speedDirection) {
-	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
+staticVariablesInitialize_cpp(Spaceship);
 
+void Spaceship::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = glm::vec2(0.5);
+	this->speed = glm::vec2(speed_Spaceship);
 	angle = 0;
 
-	radius = radius_Spaceship;
-
 	// clang-format off
-	float tmpPoints[NumTrianglesSpaceship * 3 * 2] = {
-		(float) radius * root2div2,		(float) radius * root2div2,
-		(float) -radius * root2div2,	(float) radius * root2div2,
-		(float) radius * root2div2,		(float) -radius * root2div2,
+	float tmpPoints[numTriangles_Spaceship * 3 * 2 * 2] = {
+		(float) radius(),		(float) radius(),		1,	1,
+		(float) -radius(),		(float) radius(), 		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 
-		(float) -radius * root2div2,	(float) -radius * root2div2,
-		(float) -radius * root2div2,	(float) radius * root2div2,
-		(float) radius * root2div2,		(float) -radius * root2div2,
-
-		(float) radius * root2div2,		(float) radius * root2div2,
-		(float) -radius * root2div2,	(float) radius * root2div2,
-		(float) 0,						(float) radius,
+		(float) -radius(),		(float) -radius(),		0,	0,
+		(float) -radius(),		(float) radius(),		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, NumTrianglesSpaceship * 3 * 2 * sizeof(float));
+	addTexture("./resources/textures/spaceship.png");
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
-
-	updateTransform();
-}
-
-void Spaceship::Draw() const {
-	shader.use();
-	shader.setMat4("model", transform);
-	shader.setVec3("objectColor", 1, 0, 0);
-
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3 * NumTrianglesSpaceship);
+	initGL(tmpPoints);
 }
 
 void Spaceship::MoveDir(direction dir) {
@@ -84,6 +59,6 @@ void Spaceship::PointTo(glm::vec2 mousePos) {
 Projectile Spaceship::Shoot() {
 	Projectile p;
 	glm::vec2 dir(-sin(angle), cos(angle));
-	p.Init(pos + radius * scaleVector(dir), scaleVector(dir));
+	p.Init(pos + radius() * scaleVector(dir), pi_float + angleBetweenVerticalDir(scaleVector(scaleVector(dir))));
 	return p;
 }

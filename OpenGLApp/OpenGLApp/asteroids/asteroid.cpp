@@ -1,59 +1,40 @@
 #include "asteroid.hpp"
 
+
 using namespace Asteroids;
 
-Asteroid::Asteroid() {
-	radius = radius_Asteroid;
-}
+Asteroid::Asteroid() {}
 
 
-void Asteroid::Init(glm::vec2 pos, glm::vec2 speedDirection) {
-	shader = Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs");
+staticVariablesInitialize_cpp(Asteroid);
 
+
+void Asteroid::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = scaleVector(speed_Asteroid * scaleVectorReverse(glm::normalize(speedDirection)));
-	angle = -angleBetweenVerticalDir(speed);
+	this->speed = scaleVector(speed_Asteroid * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
+	this->angle = angle;
 
 	// clang-format off
-	float tmpPoints[NumTrianglesAsteroid * 3 * 2] = {
-		(float) radius * root2div2,		(float) radius * root2div2,
-		(float) -radius * root2div2,	(float) radius * root2div2,
-		(float) radius * root2div2,		(float) -radius * root2div2,
+	float tmpPoints[numTriangles_Asteroid * 3 * 2 * 2] = {
+		(float) radius(),		(float) radius(),		1,	1,
+		(float) -radius(),		(float) radius(), 		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 
-		(float) -radius * root2div2,	(float) -radius * root2div2,
-		(float) -radius * root2div2,	(float) radius * root2div2,
-		(float) radius * root2div2,		(float) -radius * root2div2,
+		(float) -radius(),		(float) -radius(),		0,	0,
+		(float) -radius(),		(float) radius(),		0,	1,
+		(float) radius(),		(float) -radius(),		1,	0,
 	};
 	// clang-format on
 
-	memcpy(points, tmpPoints, NumTrianglesAsteroid * 3 * 2 * sizeof(float));
+	addTexture("./resources/textures/asteroid-0.png");
 
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(points), points, GL_STATIC_DRAW);
-
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
-
-	updateTransform();
-}
-
-void Asteroid::Draw() const {
-	shader.use();
-	shader.setMat4("model", transform);
-	shader.setVec3("objectColor", 1, 0, 0);
-
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 9);
+	initGL(tmpPoints);
 }
 
 void Asteroid::Spawn() {
 	float firstPos1D = (float) rand() / RAND_MAX * 2 - 1;
-	float otherCoord = 1 + radius;
-	glm::vec2 firstPos, speedDir;
+	float otherCoord = 1 + radius();
+	glm::vec2 firstPos(0), speedDir;
 
 	direction side = (direction)(rand() % 4);
 
@@ -70,7 +51,7 @@ void Asteroid::Spawn() {
 	angle = angleBetweenVerticalDir(firstPos);
 	angle = angleOffset + angle;
 	speedDir = glm::vec2(sin(angle), cos(angle));
-	Init(firstPos, scaleVector(speedDir));
+	Init(firstPos, angle);
 }
 
 

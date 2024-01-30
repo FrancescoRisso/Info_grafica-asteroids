@@ -9,9 +9,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
+#include "../stb_image.h"
 
 #include "../shader_s.h"
 #include "../utils.hpp"
+#include "object_staticVariablesDefs.hpp"
 
 #include "parameters.hpp"
 
@@ -46,6 +48,14 @@ namespace Asteroids {
 */
 enum direction { up, down, left, right };
 
+/*
+	enum availableShaders
+	---------------------------------------------------------------------
+	Provides an easy way to choose a shader among the available ones
+*/
+enum availableShaders { shader_monochromatic, shader_withTexture };
+
+
 class Object {
    public:
 	/*
@@ -59,16 +69,18 @@ class Object {
 
 
 	/*
-		  Init (abstract)
-		  ---------------------------------------------------------------------
-		  Initializes all the attributes needed for the object.
-		  It MUST be implemented by classes that derive from Object
-		  ---------------------------------------------------------------------
-		  PARAMETERS:
-			  - pos: the initial position of the object
-			  - speedDirection: the direction where the object is moving
+		Init (abstract)
+		---------------------------------------------------------------------
+		Initializes all the attributes needed for the object.
+		It MUST be implemented by classes that derive from Object
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- pos: the initial position of the object
+			- angle: the direction where the object is moving, indicated as
+				the angle (in radians) between the speed and the vertical
+				direction
 	  */
-	virtual void Init(glm::vec2 pos, glm::vec2 speedDirection) = 0;
+	virtual void Init(glm::vec2 pos, float angle) = 0;
 
 
 	/*
@@ -79,9 +91,8 @@ class Object {
 		The object MUST be rendered as centered in the origin, then it will
 		be the transformation matrix that handles the position and rotation
 		of the object
-		It MUST be implemented by classes that derive from Object
 	*/
-	virtual void Draw() const = 0;
+	void Draw() const;
 
 
 	/*
@@ -149,13 +160,45 @@ class Object {
 	glm::mat4 transform;
 
 	// shader: the program (fragment sh + vertex sh) used to render the object
-	Shader shader;
-
+	//
 	// VBO and VAO: the VBO and VAO that contain data about this object
-	unsigned int VBO = 0, VAO = 0;
+	//
+	// textures: an array of IDs of the textures of this object
+	// if more than one, a random one is chosen every time
+	// if none present, a uniform color is displayed instead (see variable color)
+	//
+	// To reduce wastes, they three should be stored as static variables in each
+	// child class. Each class must then expose the following getters and setters
+	// for the Object class to be able to work with all child classes.
+	//
+	// Plus, each class should also contain a static:
+	// 	- list of the file paths of the recorded textures
+	//	- flag to telle if VBO, shader and VAO are already set
+	// That should then exposed via textureIsPresent and shaderIsSet
+
+	virtual Shader getShader() const = 0;
+	virtual void setShader(Shader s) = 0;
+
+	virtual unsigned int getVAO() const = 0;
+	virtual void setVAO(unsigned int VAO) = 0;
+	virtual unsigned int getVBO() const = 0;
+	virtual void setVBO(unsigned int VBO) = 0;
+
+	virtual std::vector<unsigned int> getTextures() const = 0;
+	virtual void addTextureID(unsigned int id, const char* filePath) = 0;
+
+	virtual bool shaderIsSet() const = 0;
+	virtual bool textureIsPresent(const char* filePath) const = 0;
 
 	// radius: the radius of the sphere that approximates the object
-	float radius = 0;
+	// It's just an attribute, but implemented as function to be forced to be
+	// set (and overwritten) by child classes
+	virtual float radius() const = 0;
+
+	// numTriangles: the settings of how many triangle compose this object
+	// It's just an attribute, but implemented as function to be forced to be
+	// set (and overwritten) by child classes
+	virtual int numTriangles() const = 0;
 
 	// canExitTheScreen: if the object is allowed to exit the screen
 	// It's just an attribute, but implemented as function to be
@@ -163,6 +206,19 @@ class Object {
 	virtual bool canExitTheScreen() const {
 		return false;
 	};
+
+	// color: the color of the object, if it is monochromatic
+	// If it has a texture, this value is ignored
+	// It's just an attribute, but implemented as function to be
+	// overwritable by child classes
+	virtual glm::vec3 color() const {
+		return glm::vec3(0);
+	};
+
+	// shaderChoice: which shader program the object should use
+	// It's just an attribute, but implemented as function to be forced to be
+	// set (and overwritten) by child classes
+	virtual availableShaders shaderChoice() const = 0;
 
 	/*
 		limitMovementToScreen
@@ -205,6 +261,34 @@ class Object {
 				coordinates)
 	*/
 	virtual glm::vec2 findRadiusTowards(glm::vec2 p);
+
+
+	/*
+		addTexture
+		---------------------------------------------------------------------
+		Adds a texture (saved in RGBA format) to the current object
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- filePath: the path to the image file
+	*/
+	void addTexture(const char* filePath);
+
+
+	/*
+		initGL
+		---------------------------------------------------------------------
+		Does the initialization of all the OpenGL stuff (VBO, VAO...), while
+		also updating the transformation matrix
+		Must be called AFTER all the parameters (pos, speed, angle, textures,
+		...) have been set.
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- points: an array of points to be written in the
+	*/
+	void initGL(float points[]);
+
+   private:
+	unsigned int chosenTexture;
 };
 
 }  // namespace Asteroids

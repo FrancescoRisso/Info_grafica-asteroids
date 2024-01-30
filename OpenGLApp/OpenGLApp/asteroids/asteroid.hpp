@@ -4,13 +4,12 @@
 #include "object.hpp"
 #include "parameters.hpp"
 
+
 /*
 	ASTEROID
 	---------------------------------------------------------------------
 	This is the class that describes an asteroid
 */
-
-#define NumTrianglesAsteroid 2
 
 namespace Asteroids {
 
@@ -19,12 +18,8 @@ class Asteroid : public Object {
 	Asteroid();
 
 
-	// Draw: implemented as required by class Object
-	void Draw() const override;
-
-
 	// Init: implemented as required by class Object
-	void Init(glm::vec2 pos, glm::vec2 speed) override;
+	void Init(glm::vec2 pos, float angle) override;
 
 
 	/*
@@ -47,9 +42,7 @@ class Asteroid : public Object {
 	bool ShouldSpawn();
 
 
-   private:
-	// points: the array of points defining the triangles of the spaceship
-	float points[NumTrianglesAsteroid * 3 * 2] = {0};
+	staticVariablesAndFunctionDefinitions_hpp(Asteroid);
 
 
    protected:
@@ -57,6 +50,19 @@ class Asteroid : public Object {
 	bool canExitTheScreen() const override {
 		return true;
 	};
+
+	// set number of triangles to be rendered
+	int numTriangles() const override {
+		return numTriangles_Asteroid;
+	};
+
+	availableShaders shaderChoice() const override {
+		return shader_withTexture;
+	}
+
+	float radius() const override {
+		return radius_Asteroid;
+	}
 };
 
 }  // namespace Asteroids

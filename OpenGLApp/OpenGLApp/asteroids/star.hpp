@@ -1,26 +1,34 @@
-#ifndef _PROJECTILE_H
-#define _PROJECTILE_H
+#ifndef _STAR_H
+#define _STAR_H
 
 #include "object.hpp"
 
 /*
-	PROJECTILE
+	STAR
 	---------------------------------------------------------------------
-	This is the class that describes a projectile
+	This is the class that describes a star
 */
 
 namespace Asteroids {
 
-class Projectile : public Object {
+class Star : public Object {
    public:
-	Projectile();
+	Star();
+
+
+	/*
+		Spawn
+		---------------------------------------------------------------------
+		Spawns a star in a random location, rotated at a random angle
+	*/
+	void Spawn();
 
 
 	// Init: implemented as required by class Object
 	void Init(glm::vec2 pos, float angle) override;
 
 
-	staticVariablesAndFunctionDefinitions_hpp(Projectile);
+	staticVariablesAndFunctionDefinitions_hpp(Star);
 
 
    protected:
@@ -31,7 +39,7 @@ class Projectile : public Object {
 
 	// set number of triangles to be rendered
 	int numTriangles() const override {
-		return numTriangles_Projectile;
+		return numTriangles_Star;
 	};
 
 	availableShaders shaderChoice() const override {
@@ -39,11 +47,11 @@ class Projectile : public Object {
 	}
 
 	float radius() const override {
-		return radius_Projectile;
+		return radius_Star;
 	}
 
 	glm::vec3 color() const override {
-		return glm::vec3(1, 0, 0);
+		return glm::vec3(1, 1, 1);
 	}
 };
 

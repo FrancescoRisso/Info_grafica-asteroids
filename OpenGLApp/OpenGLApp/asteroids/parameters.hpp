@@ -9,6 +9,7 @@
 #define radius_Asteroid 0.1
 #define radius_Spaceship 0.1
 #define radius_Projectile 0.01
+#define radius_Star 0.005f
 
 
 /*	---------------------------------------------------------------------
@@ -17,6 +18,18 @@
 
 #define speed_Asteroid 0.5f
 #define speed_Projectile 1.0f
+#define speed_Star 0.005f
+#define speed_Spaceship 0.5f
+
+
+/*	---------------------------------------------------------------------
+	Number of triangles per object type
+-----------------------------------------------------------------------*/
+
+#define numTriangles_Asteroid 2
+#define numTriangles_Spaceship 2
+#define numTriangles_Projectile 2
+#define numTriangles_Star 2
 
 
 /*	---------------------------------------------------------------------
@@ -28,6 +41,13 @@
 #define asteroidAngleRandomness 30
 
 // the chance of spawining an asteroid at every tick is 1/weightOfSpawningAsteroid
-#define weightOfSpawningAsteroid 5000
+#define weightOfSpawningAsteroid 2500
+
+
+/*	---------------------------------------------------------------------
+	Number of scene items
+-----------------------------------------------------------------------*/
+
+#define numStars 200
 
 #endif
