@@ -6,7 +6,9 @@
 	Sizes of items
 -----------------------------------------------------------------------*/
 
-#define radius_Asteroid 0.1
+#define radius_smallAsteroid 0.05
+#define radius_mediumAsteroid 0.1
+#define radius_largeAsteroid 0.2
 #define radius_Spaceship 0.1
 #define radius_Projectile 0.01
 #define radius_Star 0.005f
@@ -33,6 +35,15 @@
 
 
 /*	---------------------------------------------------------------------
+	Mass of the medium and big asteroid, where 1 is the mass of the small
+	asteroid
+-----------------------------------------------------------------------*/
+
+#define mass_mediumAsteroid 2
+#define mass_largeAsteroid 4  // must be >= mass_mediumAsteroid
+
+
+/*	---------------------------------------------------------------------
 	Randomness parameters
 -----------------------------------------------------------------------*/
 
@@ -42,6 +53,12 @@
 
 // the chance of spawining an asteroid at every tick is 1/weightOfSpawningAsteroid
 #define weightOfSpawningAsteroid 250
+
+// the weights of an asteroid to be small, medium or large
+// chance is weight / (sum of the three weights)
+#define weight_smallAsteroid 1
+#define weight_mediumAsteroid 1
+#define weight_largeAsteroid 1
 
 
 /*	---------------------------------------------------------------------

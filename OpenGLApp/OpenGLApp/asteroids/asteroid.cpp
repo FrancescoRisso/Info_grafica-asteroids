@@ -6,7 +6,13 @@ using namespace Asteroids;
 Asteroid::Asteroid() {}
 
 
-staticVariablesInitialize_cpp(Asteroid);
+unsigned int Asteroid::VAO_small, Asteroid::VAO_medium, Asteroid::VAO_large;
+unsigned int Asteroid::VBO_small, Asteroid::VBO_medium, Asteroid::VBO_large;
+bool Asteroid::VAOset_small, Asteroid::VAOset_medium, Asteroid::VAOset_large;
+Shader Asteroid::shader;
+std::vector<unsigned int> Asteroid::textures;
+std::vector<const char*> Asteroid::textureFiles;
+bool Asteroid::shaderSet;
 
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
@@ -40,6 +46,8 @@ void Asteroid::Spawn() {
 	float otherCoord = 1 + radius();
 	glm::vec2 firstPos(0), speedDir;
 
+	randomizeSize();
+
 	direction side = (direction)(rand() % 4);
 
 	float angleOffset = glm::radians((((float) rand() / RAND_MAX) * 2 - 1) * asteroidAngleRandomness);
@@ -61,4 +69,50 @@ void Asteroid::Spawn() {
 
 bool Asteroid::ShouldSpawn() {
 	return rand() % weightOfSpawningAsteroid == 0;
+}
+
+
+void Asteroid::randomizeSize() {
+	int mass, sizeRand;
+	int massLeft = 0;
+
+	numChildren = 0;
+
+	sizeRand = weight_smallAsteroid + weight_mediumAsteroid + weight_largeAsteroid;
+	sizeRand = rand() % sizeRand;
+
+	if(sizeRand >= 0 && sizeRand < weight_smallAsteroid) {
+		size = small;
+		mass = 1;
+		numChildrenLeft = 0;
+		return;
+	}
+	sizeRand -= weight_smallAsteroid;
+
+	if(sizeRand >= 0 && sizeRand < weight_mediumAsteroid) {
+		size = medium;
+		mass = mass_mediumAsteroid;
+	}
+	sizeRand -= weight_mediumAsteroid;
+
+	if(sizeRand >= 0) {
+		size = large;
+		mass = mass_largeAsteroid;
+	}
+
+	massLeft = mass;
+
+	while(massLeft > 0) {
+		if(massLeft > mass_mediumAsteroid && rand() % 2 == 0) {
+			numChildren++;
+			children.push_back(medium);
+			massLeft -= mass_mediumAsteroid;
+		} else {
+			numChildren++;
+			children.push_back(small);
+			massLeft--;
+		}
+	}
+
+	numChildrenLeft = numChildren;
 }
