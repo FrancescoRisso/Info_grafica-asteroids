@@ -43,10 +43,12 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 
 void Asteroid::Spawn() {
 	float firstPos1D = (float) rand() / RAND_MAX * 2 - 1;
-	float otherCoord = 1 + radius();
+	float otherCoord;
 	glm::vec2 firstPos(0), speedDir;
 
 	randomizeSize();
+
+	otherCoord = 1 + radius();
 
 	direction side = (direction)(rand() % 4);
 
@@ -76,15 +78,12 @@ void Asteroid::randomizeSize() {
 	int mass, sizeRand;
 	int massLeft = 0;
 
-	numChildren = 0;
-
 	sizeRand = weight_smallAsteroid + weight_mediumAsteroid + weight_largeAsteroid;
 	sizeRand = rand() % sizeRand;
 
 	if(sizeRand >= 0 && sizeRand < weight_smallAsteroid) {
 		size = small;
 		mass = 1;
-		numChildrenLeft = 0;
 		return;
 	}
 	sizeRand -= weight_smallAsteroid;
@@ -104,15 +103,11 @@ void Asteroid::randomizeSize() {
 
 	while(massLeft > 0) {
 		if(massLeft > mass_mediumAsteroid && rand() % 2 == 0) {
-			numChildren++;
 			children.push_back(medium);
 			massLeft -= mass_mediumAsteroid;
 		} else {
-			numChildren++;
 			children.push_back(small);
 			massLeft--;
 		}
 	}
-
-	numChildrenLeft = numChildren;
 }

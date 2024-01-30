@@ -46,6 +46,7 @@ class Asteroid : public Object {
 	static bool ShouldSpawn();
 
 
+   protected:
 	staticShader(Asteroid);
 	staticTextures(Asteroid);
 
@@ -112,7 +113,6 @@ class Asteroid : public Object {
 		}
 	}
 
-   protected:
 	// Asteroid can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
 		return true;
@@ -139,14 +139,6 @@ class Asteroid : public Object {
    private:
 	// size: the size of this asteroid
 	size_t size;
-
-	// numChilds: the number of asteroids that are generated when this
-	// asteroid is destroyed
-	unsigned int numChildren;
-
-	// numChildsLeft: the number of asteroids that have not yet been
-	// generated
-	unsigned int numChildrenLeft;
 
 	// children: the sizes of the children asteroids
 	std::vector<size_t> children;
