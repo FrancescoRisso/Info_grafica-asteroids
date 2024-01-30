@@ -41,7 +41,7 @@
 #define asteroidAngleRandomness 30
 
 // the chance of spawining an asteroid at every tick is 1/weightOfSpawningAsteroid
-#define weightOfSpawningAsteroid 2500
+#define weightOfSpawningAsteroid 250
 
 
 /*	---------------------------------------------------------------------

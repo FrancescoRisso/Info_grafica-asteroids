@@ -1,8 +1,10 @@
 #ifndef _SPACESHIP_H
 #define _SPACESHIP_H
 
+#include "_debugOpts.hpp"
 #include "object.hpp"
 #include "projectile.hpp"
+
 
 /*
 	SPACESHIP
