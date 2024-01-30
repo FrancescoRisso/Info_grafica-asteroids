@@ -1,6 +1,7 @@
 #ifndef _ASTEROID_H
 #define _ASTEROID_H
 
+#include "_debugOpts.hpp"
 #include "object.hpp"
 #include "parameters.hpp"
 
