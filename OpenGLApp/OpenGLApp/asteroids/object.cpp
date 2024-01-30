@@ -157,3 +157,10 @@ void Object::initGL(float points[]) {
 
 	updateTransform();
 }
+
+
+void Object::useSameTextureAs(Object* other) {
+	if(getVAO() != other->getVAO()) return;
+
+	chosenTexture = other->chosenTexture;
+}

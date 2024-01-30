@@ -287,6 +287,19 @@ class Object {
 	*/
 	void initGL(float points[]);
 
+
+	/*
+		useSameTextureAs
+		---------------------------------------------------------------------
+		Forces this object to use the same texture as another object.
+		If they are objects of different classes, nothing is done (it would
+		make no sense, since textures are class-dependent)
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- other: the object whose texture should be copied
+	*/
+	void useSameTextureAs(Object* other);
+
    private:
 	unsigned int chosenTexture;
 };
