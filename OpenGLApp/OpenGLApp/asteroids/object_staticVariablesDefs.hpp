@@ -17,13 +17,17 @@
 #define staticVariablesAndFunctionDefinitions_hpp(className) \
 	staticVAO_VBO(className);                                \
 	staticShader(className);                                 \
-	staticTextures(className);                               \
-	staticControl(className);
+	staticTextures(className)
 
 
 #define staticVAO_VBO(className)             \
 	static unsigned int VAO;                 \
 	static unsigned int VBO;                 \
+	static bool VaoVboSet;                   \
+                                             \
+	bool VaoVboAreSet() const override {     \
+		return className::VaoVboSet;         \
+	}                                        \
                                              \
 	unsigned int getVAO() const override {   \
 		return className::VAO;               \
@@ -46,6 +50,10 @@
 
 #define staticShader(className)         \
 	static Shader shader;               \
+	static bool shaderSet;              \
+	bool shaderIsSet() const override { \
+		return className::shaderSet;    \
+	}                                   \
                                         \
 	Shader getShader() const override { \
 		return className::shader;       \
@@ -74,19 +82,6 @@
 		for(int i = 0; i < className::textureFiles.size(); i++)         \
 			if(className::textureFiles[i] == filePath) return true;     \
 		return false;                                                   \
-	}
-
-
-#define staticControl(className)         \
-	static bool shaderSet;               \
-	static bool VaoVboSet;               \
-                                         \
-	bool shaderIsSet() const override {  \
-		return className::shaderSet;     \
-	}                                    \
-                                         \
-	bool VaoVboAreSet() const override { \
-		return className::VaoVboSet;     \
 	}
 
 
