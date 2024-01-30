@@ -9,7 +9,8 @@
 	Shader className::shader;                         \
 	std::vector<unsigned int> className::textures;    \
 	std::vector<const char*> className::textureFiles; \
-	bool className::shaderSet
+	bool className::shaderSet;                        \
+	bool className::VaoVboSet
 
 
 // Insert this in the .hpp file, to define all static variables and the respective methods
@@ -30,6 +31,7 @@
                                              \
 	void setVAO(unsigned int VAO) override { \
 		className::VAO = VAO;                \
+		className::VaoVboSet = true;         \
 	}                                        \
                                              \
 	unsigned int getVBO() const override {   \
@@ -38,6 +40,7 @@
                                              \
 	void setVBO(unsigned int VBO) override { \
 		className::VBO = VBO;                \
+		className::VaoVboSet = true;         \
 	}
 
 
@@ -74,11 +77,16 @@
 	}
 
 
-#define staticControl(className)        \
-	static bool shaderSet;              \
-                                        \
-	bool shaderIsSet() const override { \
-		return className::shaderSet;    \
+#define staticControl(className)         \
+	static bool shaderSet;               \
+	static bool VaoVboSet;               \
+                                         \
+	bool shaderIsSet() const override {  \
+		return className::shaderSet;     \
+	}                                    \
+                                         \
+	bool VaoVboAreSet() const override { \
+		return className::VaoVboSet;     \
 	}
 
 

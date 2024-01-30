@@ -188,6 +188,7 @@ class Object {
 	virtual void addTextureID(unsigned int id, const char* filePath) = 0;
 
 	virtual bool shaderIsSet() const = 0;
+	virtual bool VaoVboAreSet() const = 0;
 	virtual bool textureIsPresent(const char* filePath) const = 0;
 
 	// radius: the radius of the sphere that approximates the object

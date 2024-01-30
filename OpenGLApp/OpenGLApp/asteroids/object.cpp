@@ -135,7 +135,9 @@ void Object::initGL(float points[]) {
 			case shader_monochromatic: setShader(Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs")); break;
 			case shader_withTexture: setShader(Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs")); break;
 		}
+	}
 
+	if(!VaoVboAreSet()) {
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
 
