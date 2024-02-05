@@ -80,11 +80,13 @@ class Letter : public Object {
 		PARAMETERS:
 			- c: the character to be added
 			- path: the path to its texture
+			- the width (in pixels) of the character texture
 	*/
-	void addCharacterTexture(char c, const char* path);
+	void addCharacterTexture(char c, const char* path, unsigned char width);
 
 
 	static std::map<char, unsigned int> charToId;
+	static std::map<char, unsigned char> letterWidth;
 };
 
 }  // namespace Asteroids
