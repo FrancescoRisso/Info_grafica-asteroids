@@ -122,7 +122,7 @@ void Object::Draw() const {
 }
 
 void Object::initGL(float points[]) {
-	bool hasTextures = shaderChoice() == shader_withTexture;
+	bool hasTextures = (shaderChoice() == shader_withTexture || shaderChoice() == shader_textureTransparency);
 	int numPoints = 3 * numTriangles();
 	int valuesPerPoint = hasTextures ? 4 : 2;
 
@@ -134,6 +134,7 @@ void Object::initGL(float points[]) {
 		switch(shaderChoice()) {
 			case shader_monochromatic: setShader(Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs")); break;
 			case shader_withTexture: setShader(Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs")); break;
+			case shader_textureTransparency: setShader(Shader("./resources/shaders/texture-alpha.vs", "./resources/shaders/texture-alpha.fs")); break;
 		}
 	}
 

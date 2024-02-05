@@ -53,7 +53,7 @@ enum direction { up, down, left, right };
 	---------------------------------------------------------------------
 	Provides an easy way to choose a shader among the available ones
 */
-enum availableShaders { shader_monochromatic, shader_withTexture };
+enum availableShaders { shader_monochromatic, shader_withTexture, shader_textureTransparency };
 
 
 class Object {
