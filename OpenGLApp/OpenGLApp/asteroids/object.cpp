@@ -111,7 +111,7 @@ void Object::Draw() const {
 	getShader().use();
 	getShader().setMat4("model", transform);
 
-	if(getTextures().size() != 0) {
+	if(shaderChoice() == shader_withTexture) {
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, chosenTexture);
 	} else
@@ -122,7 +122,7 @@ void Object::Draw() const {
 }
 
 void Object::initGL(float points[]) {
-	bool hasTextures = getTextures().size() != 0;
+	bool hasTextures = shaderChoice() == shader_withTexture;
 	int numPoints = 3 * numTriangles();
 	int valuesPerPoint = hasTextures ? 4 : 2;
 
