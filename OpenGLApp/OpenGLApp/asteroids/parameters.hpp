@@ -32,6 +32,7 @@
 #define numTriangles_Spaceship 2
 #define numTriangles_Projectile 2
 #define numTriangles_Star 2
+#define numTriangles_Letter 2
 
 
 /*	---------------------------------------------------------------------

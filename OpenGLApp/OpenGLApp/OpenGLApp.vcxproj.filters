@@ -48,6 +48,9 @@
     <ClCompile Include="asteroids\star.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="asteroids\letter.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader_s.h">
@@ -81,6 +84,9 @@
       <Filter>File di origine</Filter>
     </ClInclude>
     <ClInclude Include="asteroids\object_staticVariablesDefs.hpp">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroids\letter.hpp">
       <Filter>File di origine</Filter>
     </ClInclude>
   </ItemGroup>
