@@ -111,11 +111,20 @@ void Object::Draw() const {
 	getShader().use();
 	getShader().setMat4("model", transform);
 
-	if(shaderChoice() == shader_withTexture) {
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, chosenTexture);
-	} else
-		getShader().setVec3("objectColor", color());
+	switch(shaderChoice()) {
+		case shader_withTexture:
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, chosenTexture);
+			break;
+
+		case shader_textureTransparency:
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, chosenTexture);
+			getShader().setVec3("objectColor", color());
+			break;
+			
+		case shader_monochromatic: getShader().setVec3("objectColor", color()); break;
+	}
 
 	glBindVertexArray(getVAO());
 	glDrawArrays(GL_TRIANGLES, 0, 3 * numTriangles());
