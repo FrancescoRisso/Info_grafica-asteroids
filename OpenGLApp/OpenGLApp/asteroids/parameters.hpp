@@ -40,7 +40,7 @@
 -----------------------------------------------------------------------*/
 
 #define mass_mediumAsteroid 2
-#define mass_largeAsteroid 4  // must be >= mass_mediumAsteroid
+#define mass_largeAsteroid 4  // MUST be greater than the medium
 
 
 /*	---------------------------------------------------------------------
@@ -52,13 +52,17 @@
 #define asteroidAngleRandomness 30
 
 // the chance of spawining an asteroid at every tick is 1/weightOfSpawningAsteroid
-#define weightOfSpawningAsteroid 250
+#define weightOfSpawningAsteroid 2500
 
 // the weights of an asteroid to be small, medium or large
 // chance is weight / (sum of the three weights)
 #define weight_smallAsteroid 1
 #define weight_mediumAsteroid 1
 #define weight_largeAsteroid 1
+
+// the percentage of momentum that is transferred from an asteroid to its
+// children
+#define conservedMomentum_Asteroid 0.65f
 
 
 /*	---------------------------------------------------------------------

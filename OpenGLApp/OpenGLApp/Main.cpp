@@ -234,6 +234,7 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 
 	while(asteroidPtr != asteroids.end()) {
 		if(asteroidPtr->collidesWith(&(*proj))) {
+			while(asteroidPtr->hasChildren()) asteroids.push_back(asteroidPtr->getChild());
 			asteroidPtr = asteroids.erase(asteroidPtr);
 			return true;
 		}

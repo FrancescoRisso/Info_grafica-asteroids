@@ -46,6 +46,29 @@ class Asteroid : public Object {
 	static bool ShouldSpawn();
 
 
+	/*
+		hasChildren
+		---------------------------------------------------------------------
+		Tells if the asteroids still has to generate children, or it has
+		generated all
+		---------------------------------------------------------------------
+		OUTPUT:
+			- whether the asteroid still has children
+	*/
+	bool hasChildren();
+
+
+	/*
+		getChild
+		---------------------------------------------------------------------
+		Returns the next of the children
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the next children in sequence
+	*/
+	Asteroid getChild();
+
+
    protected:
 	staticShader(Asteroid);
 	staticTextures(Asteroid);
@@ -136,12 +159,26 @@ class Asteroid : public Object {
 		}
 	}
 
+
+	/*
+		updateChildren
+		---------------------------------------------------------------------
+		Computes all the children parameters
+	*/
+	void updateChildren();
+
    private:
 	// size: the size of this asteroid
 	size_t size;
 
+	// numChildren: the number of children this asteroid will generate
+	unsigned int numChildren;
+
 	// children: the sizes of the children asteroids
 	std::vector<size_t> children;
+
+	// children: the sizes of the children asteroids
+	std::vector<float> childrenAngles;
 
 	/*
 		randomizeSize
@@ -150,6 +187,20 @@ class Asteroid : public Object {
 		(including the ones related to the children)
 	*/
 	void randomizeSize();
+
+
+	/*
+		getWeight
+		---------------------------------------------------------------------
+		Returns the mass of a given-size asteroid
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- s: the size
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the mass for that size
+	*/
+	static int getMass(size_t s);
 };
 
 }  // namespace Asteroids
