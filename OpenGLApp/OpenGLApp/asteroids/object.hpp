@@ -267,12 +267,17 @@ class Object {
 	/*
 		addTexture
 		---------------------------------------------------------------------
-		Adds a texture (saved in RGBA format) to the current object
+		Adds a texture (saved in RGBA format) to the current object and
+		returns its ID
 		---------------------------------------------------------------------
 		PARAMETERS:
 			- filePath: the path to the image file
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the ID assigned by OpenGL to the texture
+			- -1 if the texture was already present
 	*/
-	void addTexture(const char* filePath);
+	int addTexture(const char* filePath);
 
 
 	/*

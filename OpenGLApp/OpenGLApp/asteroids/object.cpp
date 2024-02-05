@@ -74,10 +74,10 @@ bool Object::collidesWith(Object* o) {
 }
 
 
-void Object::addTexture(const char* filePath) {
+int Object::addTexture(const char* filePath) {
 	unsigned int texture;
 
-	if(textureIsPresent(filePath)) return;
+	if(textureIsPresent(filePath)) return -1;
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -104,6 +104,8 @@ void Object::addTexture(const char* filePath) {
 	getShader().setInt("texture", 0);
 
 	addTextureID(texture, filePath);
+
+	return texture;
 }
 
 
@@ -122,7 +124,7 @@ void Object::Draw() const {
 			glBindTexture(GL_TEXTURE_2D, chosenTexture);
 			getShader().setVec3("objectColor", color());
 			break;
-			
+
 		case shader_monochromatic: getShader().setVec3("objectColor", color()); break;
 	}
 
