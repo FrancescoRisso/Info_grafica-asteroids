@@ -28,11 +28,11 @@ void Letter::Init(glm::vec2 pos, float angle) {
 	float tmpPoints[numTriangles_Letter * 3 * 2 * 2] = {
 		(float) 0,			(float) 0,		0.0f,	1.0f,
 		(float) 0,			(float) -1, 	0.0f,	0.0f,
-		(float) 5/8,		(float) 0, 		1.0f,	1.0f,
+		(float) 5/10,		(float) 0, 		1.0f,	1.0f,
 
 		(float) 0,			(float) -1,		0.0f,	0.0f,
-		(float) 5/8,		(float) 0,		1.0f,	1.0f,
-		(float) 5/8,		(float) -1,		1.0f,	0.0f,
+		(float) 5/10,		(float) 0,		1.0f,	1.0f,
+		(float) 5/10,		(float) -1,		1.0f,	0.0f,
 	};
 	// clang-format on
 
