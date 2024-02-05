@@ -54,8 +54,6 @@ Spaceship spaceship;
 std::list<Projectile> projectiles;
 std::list<Asteroid> asteroids;
 
-Asteroid tmpAsteroid;
-
 bool hasDied = false;
 
 int main() {
@@ -128,6 +126,8 @@ int main() {
 			if(stars[i].isOutOfScreen()) stars[i].Spawn();
 		}
 
+		int tmp = Star::VAO;
+
 		auto projectilePtr = projectiles.begin();
 		while(projectilePtr != projectiles.end()) {
 			if(checkAsteroidProjectileCollision(projectilePtr)) {
@@ -146,7 +146,8 @@ int main() {
 			projectilePtr++;
 		}
 
-		if(tmpAsteroid.ShouldSpawn()) {
+		if(Asteroid::ShouldSpawn()) {
+			Asteroid tmpAsteroid;
 			tmpAsteroid.Spawn();
 			asteroids.push_back(tmpAsteroid);
 		}
@@ -233,6 +234,7 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 
 	while(asteroidPtr != asteroids.end()) {
 		if(asteroidPtr->collidesWith(&(*proj))) {
+			while(asteroidPtr->hasChildren()) asteroids.push_back(asteroidPtr->getChild());
 			asteroidPtr = asteroids.erase(asteroidPtr);
 			return true;
 		}

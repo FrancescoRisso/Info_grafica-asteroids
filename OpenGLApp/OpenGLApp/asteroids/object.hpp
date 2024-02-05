@@ -188,6 +188,7 @@ class Object {
 	virtual void addTextureID(unsigned int id, const char* filePath) = 0;
 
 	virtual bool shaderIsSet() const = 0;
+	virtual bool VaoVboAreSet() const = 0;
 	virtual bool textureIsPresent(const char* filePath) const = 0;
 
 	// radius: the radius of the sphere that approximates the object
@@ -286,6 +287,19 @@ class Object {
 			- points: an array of points to be written in the
 	*/
 	void initGL(float points[]);
+
+
+	/*
+		useSameTextureAs
+		---------------------------------------------------------------------
+		Forces this object to use the same texture as another object.
+		If they are objects of different classes, nothing is done (it would
+		make no sense, since textures are class-dependent)
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- other: the object whose texture should be copied
+	*/
+	void useSameTextureAs(Object* other);
 
    private:
 	unsigned int chosenTexture;
