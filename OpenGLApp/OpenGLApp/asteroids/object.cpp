@@ -176,3 +176,9 @@ void Object::useSameTextureAs(Object* other) {
 
 	chosenTexture = other->chosenTexture;
 }
+
+
+void Object::useTexture(unsigned int id) {
+	auto tmp = getTextures();
+	chosenTexture = getTextures()[id];
+}

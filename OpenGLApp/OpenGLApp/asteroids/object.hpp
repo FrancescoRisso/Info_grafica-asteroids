@@ -301,6 +301,17 @@ class Object {
 	*/
 	void useSameTextureAs(Object* other);
 
+
+	/*
+		useTexture
+		---------------------------------------------------------------------
+		Forces the object to use a specific texture ID
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- id: the texture ID
+	*/
+	void useTexture(unsigned int id);
+
    private:
 	unsigned int chosenTexture;
 };
