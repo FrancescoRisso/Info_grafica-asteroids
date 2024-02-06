@@ -216,6 +216,9 @@ class Object {
 		return glm::vec3(0);
 	};
 
+	// scale: a chance to scale up or down an object
+	float scale = 1;
+
 	// shaderChoice: which shader program the object should use
 	// It's just an attribute, but implemented as function to be forced to be
 	// set (and overwritten) by child classes
