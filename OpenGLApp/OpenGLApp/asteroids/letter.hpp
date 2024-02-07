@@ -86,6 +86,17 @@ class Letter : public Object {
 	void shiftByPixel(float amount);
 
 
+	/*
+		updatePos
+		---------------------------------------------------------------------
+		Updates a letter's position
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- pos: the new position
+	*/
+	void updatePos(glm::vec2 pos);
+
+
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
@@ -133,6 +144,9 @@ class Letter : public Object {
 
 	float shiftAmount;
 	glm::vec2 basePos;
+
+	horizAligns horizontalAlignment;
+	vertAligns verticalAlignment;
 
 	void extraUpdateTransform() override;
 };
