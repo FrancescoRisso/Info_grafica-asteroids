@@ -27,6 +27,7 @@ void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, v
 	this->basePos = scaleVectorReverse(pos);
 	this->speed = glm::vec2(0);
 	this->angle = 0;
+	shiftAmount = 0;
 
 	float top = 0.5;
 	float bottom = -top;
