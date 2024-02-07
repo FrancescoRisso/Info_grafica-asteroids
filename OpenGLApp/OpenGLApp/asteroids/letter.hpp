@@ -17,7 +17,7 @@
 
 namespace Asteroids {
 
-enum horizAligns { alignLeft, alingCenterHoriz, alignRight };
+enum horizAligns { alignLeft, alignCenterHoriz, alignRight };
 enum vertAligns { alignTop, alignCenterVert, alignBottom };
 
 class Letter : public Object {
