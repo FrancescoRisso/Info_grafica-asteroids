@@ -122,9 +122,9 @@ void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, v
 	addCharacterTexture('Y', "./resources/fonts/minecraft/Y_uppercase.png", 5);
 	addCharacterTexture('Z', "./resources/fonts/minecraft/Z_uppercase.png", 5);
 
-	setCharacter(letter);
-
 	initGL(tmpPoints);
+
+	setCharacter(letter);
 }
 
 
