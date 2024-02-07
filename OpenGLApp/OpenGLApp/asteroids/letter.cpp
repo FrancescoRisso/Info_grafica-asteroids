@@ -128,6 +128,14 @@ void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, v
 	addCharacterTexture('Y', "./resources/fonts/minecraft/Y_uppercase.png", 5);
 	addCharacterTexture('Z', "./resources/fonts/minecraft/Z_uppercase.png", 5);
 
+	addCharacterTexture(':', "./resources/fonts/minecraft/colon.png", 1);
+	addCharacterTexture(',', "./resources/fonts/minecraft/comma.png", 1);
+	addCharacterTexture('.', "./resources/fonts/minecraft/dot.png", 1);
+	addCharacterTexture('!', "./resources/fonts/minecraft/exclamation.png", 1);
+	addCharacterTexture('-', "./resources/fonts/minecraft/minus.png", 5);
+	addCharacterTexture('?', "./resources/fonts/minecraft/question.png", 5);
+	addCharacterTexture(' ', "./resources/fonts/minecraft/space.png", 5);
+
 	initGL(tmpPoints);
 
 	setCharacter(letter);
