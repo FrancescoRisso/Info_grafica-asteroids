@@ -35,10 +35,37 @@ void DisplayString::Init(glm::vec2 pos, const char* s, horizAligns horizontalAli
 
 
 void DisplayString::shiftLetters() {
-	int totSize = -1;
+	int totSize;
 
-	for(int i = 0; i < letterObjects.size(); i++) {
-		letterObjects[i].shiftByPixel(++totSize);
-		totSize += letterObjects[i].getWidth();
+	switch(horizontalAlignment) {
+		case alignLeft:
+			totSize = -1;
+			for(int i = 0; i < letterObjects.size(); i++) {
+				letterObjects[i].shiftByPixel(++totSize);
+				totSize += letterObjects[i].getWidth();
+			}
+			break;
+
+		case alignRight:
+			totSize = 1;
+			for(int i = letterObjects.size() - 1; i >= 0; i--) {
+				totSize -= letterObjects[i].getWidth();
+				letterObjects[i].shiftByPixel(--totSize);
+			}
+			break;
+
+		case alignCenterHoriz:
+			totSize = -1;
+			float mid;
+
+			for(int i = 0; i < letterObjects.size(); i++) totSize += 1 + letterObjects[i].getWidth();
+			mid = (float) totSize / 2;
+			totSize = 0;
+
+			for(int i = 0; i < letterObjects.size(); i++) {
+				letterObjects[i].shiftByPixel(++totSize - mid);
+				totSize += letterObjects[i].getWidth();
+			}
+			break;
 	}
 }
