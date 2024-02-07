@@ -19,11 +19,12 @@ void DisplayString::Init(glm::vec2 pos, const char* s, horizAligns horizontalAli
 	this->verticalAlignment = verticalAlignment;
 	this->color = color;
 	this->height = height;
+	this->pos = scaleVector(pos);
 
 	int i = 0;
 	while(s[i] != '\0') {
 		Letter l;
-		l.Init(pos, s[i], horizontalAlignment, verticalAlignment, color, height);
+		l.Init(this->pos, s[i], horizontalAlignment, verticalAlignment, color, height);
 
 		charSequence.push_back(s[i]);
 		letterObjects.push_back(l);
