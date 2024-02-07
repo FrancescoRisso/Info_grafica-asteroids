@@ -59,6 +59,18 @@ class Letter : public Object {
 	void setCharacter(char c);
 
 
+	/*
+		getWidth
+		---------------------------------------------------------------------
+		Tells how wide (in pixels) the "meaningful" texture is for the
+		current letter
+		---------------------------------------------------------------------
+		RETURN:
+			- the width in pixels of the letter
+	*/
+	unsigned int getWidth() const;
+
+
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
@@ -101,6 +113,8 @@ class Letter : public Object {
 	static std::map<char, unsigned char> letterWidth;
 
 	glm::vec3 thisColor;
+
+	char letter;
 };
 
 }  // namespace Asteroids

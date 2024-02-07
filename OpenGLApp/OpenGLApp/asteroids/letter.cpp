@@ -130,4 +130,9 @@ void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, v
 
 void Letter::setCharacter(char c) {
 	useTexture(Letter::charToId[c]);
+	letter = c;
+}
+
+unsigned int Letter::getWidth() const {
+	return (unsigned int) Letter::letterWidth[letter];
 }
