@@ -53,7 +53,7 @@ enum direction { up, down, left, right };
 	---------------------------------------------------------------------
 	Provides an easy way to choose a shader among the available ones
 */
-enum availableShaders { shader_monochromatic, shader_withTexture };
+enum availableShaders { shader_monochromatic, shader_withTexture, shader_textureTransparency };
 
 
 class Object {
@@ -107,13 +107,15 @@ class Object {
 	/*
 		updateTransform
 		---------------------------------------------------------------------
-		Updates the transform matrix based on the current position and
-		rotation angle
-		It CAN be overwritten by classes that derive from Object
+		Updates the transform matrix based on the current position,	rotation
+		angle and scaling factor
 		It MUST be invoked every time position and angle (and eventually more
 		parameters, if needed by the class) change
+		If a child class needs some custom work, it should be put into 
+		extraUpdateTransform, which is called at the start of updateTransform
 	*/
-	virtual void updateTransform();
+	void updateTransform();
+	virtual void extraUpdateTransform() {};
 
 
 	/*
@@ -216,6 +218,9 @@ class Object {
 		return glm::vec3(0);
 	};
 
+	// scale: a chance to scale up or down an object
+	float scale = 1;
+
 	// shaderChoice: which shader program the object should use
 	// It's just an attribute, but implemented as function to be forced to be
 	// set (and overwritten) by child classes
@@ -267,12 +272,17 @@ class Object {
 	/*
 		addTexture
 		---------------------------------------------------------------------
-		Adds a texture (saved in RGBA format) to the current object
+		Adds a texture (saved in RGBA format) to the current object and
+		returns its ID
 		---------------------------------------------------------------------
 		PARAMETERS:
 			- filePath: the path to the image file
+		---------------------------------------------------------------------
+		OUTPUT:
+			- the ID assigned by OpenGL to the texture
+			- -1 if the texture was already present
 	*/
-	void addTexture(const char* filePath);
+	int addTexture(const char* filePath);
 
 
 	/*
@@ -300,6 +310,17 @@ class Object {
 			- other: the object whose texture should be copied
 	*/
 	void useSameTextureAs(Object* other);
+
+
+	/*
+		useTexture
+		---------------------------------------------------------------------
+		Forces the object to use a specific texture ID
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- id: the texture ID
+	*/
+	void useTexture(unsigned int id);
 
    private:
 	unsigned int chosenTexture;

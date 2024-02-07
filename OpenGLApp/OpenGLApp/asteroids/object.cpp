@@ -5,6 +5,8 @@ using namespace Asteroids;
 Object::Object() : pos(0), speed(0), transform(0) {}
 
 void Object::updateTransform() {
+	extraUpdateTransform();
+
 	transform = glm::mat4((float) 1);
 	glm::vec2 scale = scaleVector(glm::vec2(1));
 
@@ -12,6 +14,7 @@ void Object::updateTransform() {
 
 	transform = glm::translate(transform, glm::vec3(pos / scale, 0));
 	transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));
+	transform = glm::scale(transform, glm::vec3(this->scale));
 }
 
 void Object::Move() {
@@ -74,10 +77,10 @@ bool Object::collidesWith(Object* o) {
 }
 
 
-void Object::addTexture(const char* filePath) {
+int Object::addTexture(const char* filePath) {
 	unsigned int texture;
 
-	if(textureIsPresent(filePath)) return;
+	if(textureIsPresent(filePath)) return -1;
 
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -104,6 +107,8 @@ void Object::addTexture(const char* filePath) {
 	getShader().setInt("texture", 0);
 
 	addTextureID(texture, filePath);
+
+	return texture;
 }
 
 
@@ -111,18 +116,27 @@ void Object::Draw() const {
 	getShader().use();
 	getShader().setMat4("model", transform);
 
-	if(getTextures().size() != 0) {
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, chosenTexture);
-	} else
-		getShader().setVec3("objectColor", color());
+	switch(shaderChoice()) {
+		case shader_withTexture:
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, chosenTexture);
+			break;
+
+		case shader_textureTransparency:
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, chosenTexture);
+			getShader().setVec3("objectColor", color());
+			break;
+
+		case shader_monochromatic: getShader().setVec3("objectColor", color()); break;
+	}
 
 	glBindVertexArray(getVAO());
 	glDrawArrays(GL_TRIANGLES, 0, 3 * numTriangles());
 }
 
 void Object::initGL(float points[]) {
-	bool hasTextures = getTextures().size() != 0;
+	bool hasTextures = (shaderChoice() == shader_withTexture || shaderChoice() == shader_textureTransparency);
 	int numPoints = 3 * numTriangles();
 	int valuesPerPoint = hasTextures ? 4 : 2;
 
@@ -134,6 +148,7 @@ void Object::initGL(float points[]) {
 		switch(shaderChoice()) {
 			case shader_monochromatic: setShader(Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs")); break;
 			case shader_withTexture: setShader(Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs")); break;
+			case shader_textureTransparency: setShader(Shader("./resources/shaders/texture-alpha.vs", "./resources/shaders/texture-alpha.fs")); break;
 		}
 	}
 
@@ -165,4 +180,9 @@ void Object::useSameTextureAs(Object* other) {
 	if(getVAO() != other->getVAO()) return;
 
 	chosenTexture = other->chosenTexture;
+}
+
+
+void Object::useTexture(unsigned int id) {
+	chosenTexture = id;
 }

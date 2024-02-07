@@ -140,6 +140,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="asteroids\asteroid.cpp" />
+    <ClCompile Include="asteroids\displayString.cpp" />
+    <ClCompile Include="asteroids\letter.cpp" />
     <ClCompile Include="asteroids\object.cpp" />
     <ClCompile Include="asteroids\parameters.cpp" />
     <ClCompile Include="asteroids\projectile.cpp" />
@@ -153,6 +155,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asteroids\asteroid.hpp" />
+    <ClInclude Include="asteroids\displayString.hpp" />
+    <ClInclude Include="asteroids\letter.hpp" />
     <ClInclude Include="asteroids\object.hpp" />
     <ClInclude Include="asteroids\object_staticVariablesDefs.hpp" />
     <ClInclude Include="asteroids\parameters.hpp" />
