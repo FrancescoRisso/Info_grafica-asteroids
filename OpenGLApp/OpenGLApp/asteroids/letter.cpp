@@ -3,7 +3,7 @@
 
 using namespace Asteroids;
 
-Letter::Letter() {}
+Letter::Letter() : thisColor(0) {}
 
 
 staticVariablesInitialize_cpp(Letter);
@@ -22,23 +22,40 @@ void Letter::addCharacterTexture(char c, const char* path, unsigned char width) 
 }
 
 
-void Letter::Init(glm::vec2 pos, float angle) {
-	this->pos = glm::vec2(0);
+void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, vertAligns verticalAlignment, glm::vec3 color, float height) {
+	this->pos = scaleVectorReverse(pos);
 	this->speed = glm::vec2(0);
 	this->angle = 0;
 
+	float top = 0.5;
+	float bottom = -top;
+	float left = 0.5 * letterAspectRatio;
+	float right = -left;
 
 	// clang-format off
 	float tmpPoints[numTriangles_Letter * 3 * 2 * 2] = {
-		(float) 0,			(float) 0,		0.0f,	1.0f,
-		(float) 0,			(float) -1, 	0.0f,	0.0f,
-		(float) 5/10,		(float) 0, 		1.0f,	1.0f,
+		right,		top,		0.0f,	1.0f,
+		right,		bottom, 	0.0f,	0.0f,
+		left,		top, 		1.0f,	1.0f,
 
-		(float) 0,			(float) -1,		0.0f,	0.0f,
-		(float) 5/10,		(float) 0,		1.0f,	1.0f,
-		(float) 5/10,		(float) -1,		1.0f,	0.0f,
+		right,		bottom,		0.0f,	0.0f,
+		left,		top,		1.0f,	1.0f,
+		left,		bottom,		1.0f,	0.0f,
 	};
 	// clang-format on
+
+	switch(verticalAlignment) {
+		case alignTop: this->pos -= scaleVectorReverse(glm::vec2(0, height / 2)); break;
+		case alignBottom: this->pos += scaleVectorReverse(glm::vec2(0, height / 2)); break;
+	}
+
+	switch(horizontalAlignment) {
+		case alignRight: this->pos -= scaleVectorReverse(glm::vec2(letterAspectRatio * height / 2, 0)); break;
+		case alignLeft: this->pos += scaleVectorReverse(glm::vec2(letterAspectRatio * height / 2, 0)); break;
+	}
+
+	thisColor = color;
+	scale = height;
 
 	addCharacterTexture('0', "./resources/fonts/minecraft/0.png", 5);
 	addCharacterTexture('1', "./resources/fonts/minecraft/1.png", 5);
@@ -104,6 +121,8 @@ void Letter::Init(glm::vec2 pos, float angle) {
 	addCharacterTexture('X', "./resources/fonts/minecraft/X_uppercase.png", 5);
 	addCharacterTexture('Y', "./resources/fonts/minecraft/Y_uppercase.png", 5);
 	addCharacterTexture('Z', "./resources/fonts/minecraft/Z_uppercase.png", 5);
+
+	setCharacter(letter);
 
 	initGL(tmpPoints);
 }

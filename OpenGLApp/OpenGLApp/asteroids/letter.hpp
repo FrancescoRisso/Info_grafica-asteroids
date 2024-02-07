@@ -5,6 +5,8 @@
 
 #include "object.hpp"
 
+#define letterAspectRatio ((float) 5 / 10)
+
 /*
 	LETTER
 	---------------------------------------------------------------------
@@ -13,21 +15,34 @@
 
 namespace Asteroids {
 
+enum horizAligns { alignLeft, alingCenterHoriz, alignRight };
+enum vertAligns { alignTop, alignCenterVert, alignBottom };
+
 class Letter : public Object {
    public:
 	Letter();
 
 
+	// Init: deactivated the default signature
+	void Init(glm::vec2 pos, float angle) override {};
+
+
 	/*
-		Spawn
+		Init
 		---------------------------------------------------------------------
-		Spawns a star in a random location, rotated at a random angle
+		Initializes the letter with all the required data
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- pos: the position of the letter
+			- letter: which character should be displayed
+			- horizontalAlignment: whether pos refers to the left side, the
+				right side, or the center of the letter
+			- verticalAlignment: whether pos refers to the top side, the
+				bottom side, or the center of the letter
+			- color: the color used to display the letter
+			- height: the height of the letter, in OpenGL units
 	*/
-	void Spawn();
-
-
-	// Init: implemented as required by class Object
-	void Init(glm::vec2 pos, float angle) override;
+	void Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, vertAligns verticalAlignment, glm::vec3 color, float height);
 
 
 	staticVariablesAndFunctionDefinitions_hpp(Letter);
@@ -40,9 +55,6 @@ class Letter : public Object {
 		---------------------------------------------------------------------
 		PARAMETERS:
 			- c: the character to be printed
-		---------------------------------------------------------------------
-		OUTPUT:
-			-
 	*/
 	void setCharacter(char c);
 
@@ -67,7 +79,7 @@ class Letter : public Object {
 	}
 
 	glm::vec3 color() const override {
-		return glm::vec3(1, 1, 1);
+		return thisColor;
 	}
 
    private:
@@ -87,6 +99,8 @@ class Letter : public Object {
 
 	static std::map<char, unsigned int> charToId;
 	static std::map<char, unsigned char> letterWidth;
+
+	glm::vec3 thisColor;
 };
 
 }  // namespace Asteroids
