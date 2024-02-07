@@ -10,6 +10,7 @@ void DisplayString::Draw() const {
 
 
 void DisplayString::updateTransform() {
+	pos = scaleVector(unscaledPos);
 	for(int i = 0; i < letterObjects.size(); i++) letterObjects[i].updateTransform();
 }
 
@@ -19,7 +20,11 @@ void DisplayString::Init(glm::vec2 pos, const char* s, horizAligns horizontalAli
 	this->verticalAlignment = verticalAlignment;
 	this->color = color;
 	this->height = height;
-	this->pos = scaleVector(pos);
+	this->unscaledPos = pos;
+	this->pos = scaleVector(unscaledPos);
+
+	charSequence.clear();
+	letterObjects.clear();
 
 	int i = 0;
 	while(s[i] != '\0') {
@@ -69,4 +74,9 @@ void DisplayString::shiftLetters() {
 			}
 			break;
 	}
+}
+
+
+void DisplayString::changeString(const char* newString) {
+	Init(unscaledPos, newString, horizontalAlignment, verticalAlignment, color, height);
 }

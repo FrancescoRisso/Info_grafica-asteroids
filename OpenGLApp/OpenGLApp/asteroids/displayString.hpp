@@ -52,6 +52,17 @@ class DisplayString {
 	void Init(glm::vec2 pos, const char* s, horizAligns horizontalAlignment, vertAligns verticalAlignment, glm::vec3 color, float height);
 
 
+	/*
+		changeString
+		---------------------------------------------------------------------
+		Replaces the previous string with a new one
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- newString: the new string to be displayed
+	*/
+	void changeString(const char* newString);
+
+
    private:
 	std::vector<char> charSequence;
 	std::vector<Letter> letterObjects;
@@ -62,6 +73,9 @@ class DisplayString {
 	glm::vec3 color;
 
 	float height;
+
+	glm::vec2 pos;
+	glm::vec2 unscaledPos;
 
 	/*
 		shiftLetters
