@@ -5,6 +5,8 @@ using namespace Asteroids;
 Object::Object() : pos(0), speed(0), transform(0) {}
 
 void Object::updateTransform() {
+	extraUpdateTransform();
+
 	transform = glm::mat4((float) 1);
 	glm::vec2 scale = scaleVector(glm::vec2(1));
 

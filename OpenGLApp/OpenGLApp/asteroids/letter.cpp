@@ -3,7 +3,7 @@
 
 using namespace Asteroids;
 
-Letter::Letter() : thisColor(0) {}
+Letter::Letter() : thisColor(0), basePos(0) {}
 
 
 staticVariablesInitialize_cpp(Letter);
@@ -24,6 +24,7 @@ void Letter::addCharacterTexture(char c, const char* path, unsigned char width) 
 
 void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, vertAligns verticalAlignment, glm::vec3 color, float height) {
 	this->pos = scaleVectorReverse(pos);
+	this->basePos = scaleVectorReverse(pos);
 	this->speed = glm::vec2(0);
 	this->angle = 0;
 
@@ -135,4 +136,15 @@ void Letter::setCharacter(char c) {
 
 unsigned int Letter::getWidth() const {
 	return (unsigned int) Letter::letterWidth[letter];
+}
+
+
+void Letter::shiftByPixel(float amount) {
+	shiftAmount = amount;
+	updateTransform();
+}
+
+
+void Letter::extraUpdateTransform() {
+	pos = basePos + scaleVector(glm::vec2(shiftAmount * scale * letterAspectRatio / numPixelsHorizontal, 0));
 }

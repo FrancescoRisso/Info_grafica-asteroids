@@ -5,7 +5,9 @@
 
 #include "object.hpp"
 
-#define letterAspectRatio ((float) 5 / 10)
+#define numPixelsHorizontal 5
+#define numPixelsVertical 10
+#define letterAspectRatio ((float) numPixelsHorizontal / numPixelsVertical)
 
 /*
 	LETTER
@@ -71,6 +73,19 @@ class Letter : public Object {
 	unsigned int getWidth() const;
 
 
+	/*
+		shiftByPixel
+		---------------------------------------------------------------------
+		Shifts horizontally a letter by a certain amount, corresponding to a
+		given number of pixels of the letter
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- amount: the number of pixels (positive or negative) to shift.
+				Likely it is an integer, or an integer +0.5
+	*/
+	void shiftByPixel(float amount);
+
+
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
@@ -115,6 +130,11 @@ class Letter : public Object {
 	glm::vec3 thisColor;
 
 	char letter;
+
+	float shiftAmount;
+	glm::vec2 basePos;
+
+	void extraUpdateTransform() override;
 };
 
 }  // namespace Asteroids

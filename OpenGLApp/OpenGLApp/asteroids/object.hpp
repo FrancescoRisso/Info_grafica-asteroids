@@ -107,13 +107,15 @@ class Object {
 	/*
 		updateTransform
 		---------------------------------------------------------------------
-		Updates the transform matrix based on the current position and
-		rotation angle
-		It CAN be overwritten by classes that derive from Object
+		Updates the transform matrix based on the current position,	rotation
+		angle and scaling factor
 		It MUST be invoked every time position and angle (and eventually more
 		parameters, if needed by the class) change
+		If a child class needs some custom work, it should be put into 
+		extraUpdateTransform, which is called at the start of updateTransform
 	*/
-	virtual void updateTransform();
+	void updateTransform();
+	virtual void extraUpdateTransform() {};
 
 
 	/*
