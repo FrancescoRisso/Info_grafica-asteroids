@@ -34,11 +34,7 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 
 	updateChildren();
 
-#ifdef DEBUG_texturesWithShadow
-	addTexture("./resources/textures/asteroid-0.png");
-#else
-	addTexture("./resources/textures/asteroid-grey.png");
-#endif
+	addTexture("./resources/textures/asteroid.png");
 
 	initGL(tmpPoints);
 }
