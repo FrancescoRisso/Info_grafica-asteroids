@@ -12,6 +12,7 @@
 #define radius_Spaceship 0.1
 #define radius_Projectile 0.01
 #define radius_Star 0.005f
+#define radius_Heart 0.05f
 
 
 /*	---------------------------------------------------------------------
@@ -33,6 +34,7 @@
 #define numTriangles_Projectile 2
 #define numTriangles_Star 2
 #define numTriangles_Letter 2
+#define numTriangles_Heart 2
 
 
 /*	---------------------------------------------------------------------
@@ -99,6 +101,16 @@ int weight_largeAsteroid();
 -----------------------------------------------------------------------*/
 
 #define speed_autoShoot 5  // number of shots per second
+
+
+/*	---------------------------------------------------------------------
+	Lives and death settings
+-----------------------------------------------------------------------*/
+
+#define numHearts 3
+#define invulnerabilityTime 2.0f
+#define blinkOn_time 0.25f
+#define blinkOff_time 0.1f
 
 
 #endif
