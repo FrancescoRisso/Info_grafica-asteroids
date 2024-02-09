@@ -130,7 +130,7 @@ int main() {
 
 	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1);
 
-	endGameStrings[gmOver].Init(glm::vec2(0, 0.65), "Game over", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.3);
+	endGameStrings[gmOver].Init(glm::vec2(0, 0.65), "GAME OVER", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
 	endGameStrings[yourScore].Init(glm::vec2(0, 0.3), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	endGameStrings[hiScore].Init(glm::vec2(0, 0.15), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	endGameStrings[newBest].Init(glm::vec2(0, 0.05), "New high score!", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.06);
@@ -220,7 +220,7 @@ int main() {
 					}
 
 					if(!isInvulnerable && asteroidPtr->collidesWith(&spaceship)) {
-						if(--heartsLeft == 0) {
+						if(--heartsLeft <= 0) {
 							currentPhase = endScreen;
 
 							if(destroyedAsteroids > highScore) {
@@ -288,16 +288,25 @@ int main() {
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
-	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) spaceship.MoveDir(up);
-	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
-	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
-	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		if(timeFromLastShot > 1.0 / speed_autoShoot) timeFromLastShot = 0;
-		if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
-		timeFromLastShot += deltaTime;
+
+	switch(currentPhase) {
+		case game:
+			if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) spaceship.MoveDir(up);
+			if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
+			if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
+			if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
+			if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+				if(timeFromLastShot > 1.0 / speed_autoShoot) timeFromLastShot = 0;
+				if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
+				timeFromLastShot += deltaTime;
+			}
+			if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;
+			break;
+
+		case endScreen:
+			if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) currentPhase = game;  // TODO reset all
+			if(glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) currentPhase = mainMenu;
 	}
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
