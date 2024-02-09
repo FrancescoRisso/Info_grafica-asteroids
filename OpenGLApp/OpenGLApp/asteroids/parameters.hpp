@@ -108,6 +108,9 @@ int weight_largeAsteroid();
 -----------------------------------------------------------------------*/
 
 #define numHearts 3
+#define invulnerabilityTime 2.0f
+#define blinkOn_time 0.25f
+#define blinkOff_time 0.1f
 
 
 #endif

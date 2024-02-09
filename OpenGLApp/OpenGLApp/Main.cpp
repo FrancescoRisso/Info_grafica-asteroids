@@ -70,6 +70,11 @@ int heartsLeft = numHearts;
 
 gamePhases currentPhase = mainMenu;
 
+float invulnerabilityCount = 0;
+float blinkCount = 0;
+bool isInvulnerable = false;
+bool blinkIsOn = false;
+
 
 int main() {
 	// init randomness
@@ -195,13 +200,15 @@ int main() {
 						continue;
 					}
 
-					if(asteroidPtr->collidesWith(&spaceship)) {
-						asteroids.clear();
-
+					if(!isInvulnerable && asteroidPtr->collidesWith(&spaceship)) {
 						if(--heartsLeft == 0)
 							currentPhase = endScreen;
 						else {
-							// blink
+							invulnerabilityCount = 0;
+							blinkCount = 0;
+							isInvulnerable = true;
+							blinkIsOn = true;
+							spaceship.Init(glm::vec2(0));
 						}
 
 						break;
@@ -209,7 +216,18 @@ int main() {
 						asteroidPtr++;
 				}
 
-				spaceship.Draw();
+				if(isInvulnerable) {
+					invulnerabilityCount += deltaTime;
+					blinkCount += deltaTime;
+
+					if(invulnerabilityCount > invulnerabilityTime) isInvulnerable = false;
+					if(blinkCount > (blinkIsOn ? blinkOn_time : blinkOff_time)) {
+						blinkIsOn = !blinkIsOn;
+						blinkCount = 0;
+					}
+				}
+
+				if(!isInvulnerable || blinkIsOn) spaceship.Draw();
 
 				for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
 				break;
