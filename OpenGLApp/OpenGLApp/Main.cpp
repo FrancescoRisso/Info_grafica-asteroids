@@ -163,8 +163,6 @@ int main() {
 					if(stars[i].isOutOfScreen()) stars[i].Spawn();
 				}
 
-				int tmp = Star::VAO;
-
 				while(projectilePtr != projectiles.end()) {
 					if(checkAsteroidProjectileCollision(projectilePtr)) {
 						projectilePtr = projectiles.erase(projectilePtr);
@@ -196,8 +194,17 @@ int main() {
 						continue;
 					}
 
-					if(asteroidPtr->collidesWith(&spaceship)) {}  // todo
-					asteroidPtr++;
+					if(asteroidPtr->collidesWith(&spaceship)) {
+						asteroids.clear();
+
+						if(--heartsLeft == 0)
+							currentPhase = endScreen;
+						else {
+							// blink
+						}
+
+						break;
+					}
 				}
 
 				spaceship.Draw();
@@ -209,6 +216,8 @@ int main() {
 				// todo
 				currentPhase = game;
 				break;
+
+			default: break;
 		}
 
 
