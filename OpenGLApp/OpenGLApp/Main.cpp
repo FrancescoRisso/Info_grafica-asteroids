@@ -186,6 +186,7 @@ int main() {
 					asteroids.push_back(tmpAsteroid);
 				}
 
+				asteroidPtr = asteroids.begin();
 				while(asteroidPtr != asteroids.end()) {
 					asteroidPtr->Draw();
 					asteroidPtr->Move();
@@ -204,7 +205,8 @@ int main() {
 						}
 
 						break;
-					}
+					} else
+						asteroidPtr++;
 				}
 
 				spaceship.Draw();
@@ -217,7 +219,7 @@ int main() {
 				currentPhase = game;
 				break;
 
-			default: break;
+				// default: break;
 		}
 
 
