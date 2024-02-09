@@ -36,6 +36,8 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 
 enum gamePhases { mainMenu, instructions, game, endScreen };
 
+enum endScreenStrings { gmOver, yourScore, hiScore, newBest, restart, goHome1, goHome2, endScreen_NUM_STRINGS };
+
 
 using namespace Asteroids;
 
@@ -65,6 +67,8 @@ std::list<Projectile> projectiles;
 std::list<Asteroid> asteroids;
 DisplayString scoreDisplay;
 
+DisplayString endGameStrings[endScreen_NUM_STRINGS];
+
 Heart hearts[numHearts];
 int heartsLeft = numHearts;
 
@@ -74,6 +78,11 @@ float invulnerabilityCount = 0;
 float blinkCount = 0;
 bool isInvulnerable = false;
 bool blinkIsOn = false;
+
+int highScore = -1;
+bool isNewBest = false;
+
+char buf[100];
 
 
 int main() {
@@ -121,6 +130,15 @@ int main() {
 
 	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1);
 
+	endGameStrings[gmOver].Init(glm::vec2(0, 0.65), "Game over", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.3);
+	endGameStrings[yourScore].Init(glm::vec2(0, 0.3), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
+	endGameStrings[hiScore].Init(glm::vec2(0, 0.15), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
+	endGameStrings[newBest].Init(glm::vec2(0, 0.05), "New high score!", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.06);
+	endGameStrings[restart].Init(glm::vec2(0, -0.25), "Press SPACE to restart", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
+	endGameStrings[goHome1].Init(glm::vec2(0, -0.53), "Press M to return", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
+	endGameStrings[goHome2].Init(glm::vec2(0, -0.66), "to the main menu", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
+
+
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
@@ -148,8 +166,15 @@ int main() {
 		auto projectilePtr = projectiles.begin();
 		auto asteroidPtr = asteroids.begin();
 
+		for(int i = 0; i < numStars; i++) {
+			stars[i].Draw();
+			stars[i].Move();
+			if(stars[i].isOutOfScreen()) stars[i].Spawn();
+		}
+
 		switch(currentPhase) {
 			case mainMenu:
+
 				// todo
 				currentPhase = game;
 				break;
@@ -161,12 +186,6 @@ int main() {
 
 			case game:
 				scoreDisplay.Draw();
-
-				for(int i = 0; i < numStars; i++) {
-					stars[i].Draw();
-					stars[i].Move();
-					if(stars[i].isOutOfScreen()) stars[i].Spawn();
-				}
 
 				while(projectilePtr != projectiles.end()) {
 					if(checkAsteroidProjectileCollision(projectilePtr)) {
@@ -201,9 +220,22 @@ int main() {
 					}
 
 					if(!isInvulnerable && asteroidPtr->collidesWith(&spaceship)) {
-						if(--heartsLeft == 0)
+						if(--heartsLeft == 0) {
 							currentPhase = endScreen;
-						else {
+
+							if(destroyedAsteroids > highScore) {
+								highScore = destroyedAsteroids;
+								isNewBest = true;
+							}
+
+							sprintf_s(buf, "You destroyed %d asteroids", destroyedAsteroids);
+							endGameStrings[yourScore].changeString(buf);
+
+							sprintf_s(buf, "Best score: %d", highScore);
+							endGameStrings[hiScore].changeString(buf);
+
+
+						} else {
 							invulnerabilityCount = 0;
 							blinkCount = 0;
 							isInvulnerable = true;
@@ -233,8 +265,7 @@ int main() {
 				break;
 
 			case endScreen:
-				// todo
-				currentPhase = game;
+				for(int i = 0; i < endScreen_NUM_STRINGS; i++) endGameStrings[i].Draw();
 				break;
 
 				// default: break;
@@ -282,6 +313,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	for(int i = 0; i < numStars; i++) stars[i].updateTransform();
 	scoreDisplay.updateTransform();
 	for(int i = 0; i < numHearts; i++) hearts[i].updateTransform();
+	for(int i = 0; i < endScreen_NUM_STRINGS; i++) endGameStrings[i].updateTransform();
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
