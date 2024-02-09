@@ -14,6 +14,7 @@
 #include "asteroids/star.hpp"
 #include "asteroids/displayString.hpp"
 #include "asteroids/_debugOpts.hpp"
+#include "asteroids/heart.hpp"
 
 
 /*
@@ -60,6 +61,9 @@ std::list<Projectile> projectiles;
 std::list<Asteroid> asteroids;
 DisplayString scoreDisplay;
 
+Heart hearts[numHearts];
+int heartsLeft = numHearts;
+
 bool hasDied = false;
 
 int main() {
@@ -102,6 +106,8 @@ int main() {
 	spaceship.Init(glm::vec2(0));
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
+
+	for(int i = 0; i < numHearts; i++) hearts[i].Init(glm::vec2(0.95 - radius_Heart, 0.9 - radius_Heart), i);
 
 	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1);
 
@@ -178,6 +184,8 @@ int main() {
 
 		spaceship.Draw();
 
+		for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
+
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
@@ -218,6 +226,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	spaceship.updateTransform();
 	for(int i = 0; i < numStars; i++) stars[i].updateTransform();
 	scoreDisplay.updateTransform();
+	for(int i = 0; i < numHearts; i++) hearts[i].updateTransform();
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
