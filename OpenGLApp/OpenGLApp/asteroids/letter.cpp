@@ -23,10 +23,11 @@ void Letter::addCharacterTexture(char c, const char* path, unsigned char width) 
 
 
 void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, vertAligns verticalAlignment, glm::vec3 color, float height) {
-	this->pos = scaleVectorReverse(pos);
 	this->speed = glm::vec2(0);
 	this->angle = 0;
 	shiftAmount = 0;
+	this->horizontalAlignment = horizontalAlignment;
+	this->verticalAlignment = verticalAlignment;
 
 	float top = 0.5;
 	float bottom = -top;
@@ -45,23 +46,10 @@ void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, v
 	};
 	// clang-format on
 
-	glm::vec2 delta = glm::vec2(0, height / 2);
-	delta = scaleVectorReverse(delta);
-
-	switch(verticalAlignment) {
-		case alignTop: this->pos -= delta; break;
-		case alignBottom: this->pos += delta; break;
-	}
-
-	switch(horizontalAlignment) {
-		case alignRight: this->pos -= scaleVectorReverse(glm::vec2(letterAspectRatio * height / 2, 0)); break;
-		case alignLeft: this->pos += scaleVectorReverse(glm::vec2(letterAspectRatio * height / 2, 0)); break;
-	}
-
-	basePos = this->pos;
-
 	thisColor = color;
 	scale = height;
+
+	updatePos(pos);
 
 	addCharacterTexture('0', "./resources/fonts/minecraft/0.png", 5);
 	addCharacterTexture('1', "./resources/fonts/minecraft/1.png", 5);
@@ -160,4 +148,21 @@ void Letter::shiftByPixel(float amount) {
 
 void Letter::extraUpdateTransform() {
 	pos = basePos + scaleVector(glm::vec2(shiftAmount * scale * letterAspectRatio / numPixelsHorizontal, 0));
+}
+
+
+void Letter::updatePos(glm::vec2 pos) {
+	this->pos = scaleVectorReverse(pos);
+
+	switch(verticalAlignment) {
+		case alignTop: this->pos -= scaleVectorReverse(glm::vec2(0, scale / 2)); break;
+		case alignBottom: this->pos += scaleVectorReverse(glm::vec2(0, scale / 2)); break;
+	}
+
+	switch(horizontalAlignment) {
+		case alignRight: this->pos -= scaleVectorReverse(glm::vec2(letterAspectRatio * scale / 2, 0)); break;
+		case alignLeft: this->pos += scaleVectorReverse(glm::vec2(letterAspectRatio * scale / 2, 0)); break;
+	}
+
+	basePos = this->pos;
 }

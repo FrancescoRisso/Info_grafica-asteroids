@@ -14,6 +14,8 @@ std::vector<unsigned int> Asteroid::textures;
 std::vector<const char*> Asteroid::textureFiles;
 bool Asteroid::shaderSet;
 
+extern float timeFromLastSpawn;
+
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
@@ -34,11 +36,7 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 
 	updateChildren();
 
-#ifdef DEBUG_texturesWithShadow
-	addTexture("./resources/textures/asteroid-0.png");
-#else
-	addTexture("./resources/textures/asteroid-grey.png");
-#endif
+	addTexture("./resources/textures/asteroid.png");
 
 	initGL(tmpPoints);
 }
@@ -72,21 +70,23 @@ void Asteroid::Spawn() {
 
 
 bool Asteroid::ShouldSpawn() {
-	return rand() % weightOfSpawningAsteroid == 0;
+	if(timeFromLastSpawn < timeBetweenSpawns()) return false;
+	timeFromLastSpawn = 0;
+	return true;
 }
 
 
 void Asteroid::randomizeSize() {
 	int sizeRand;
 
-	sizeRand = weight_smallAsteroid + weight_mediumAsteroid + weight_largeAsteroid;
+	sizeRand = weight_smallAsteroid() + weight_mediumAsteroid() + weight_largeAsteroid();
 	sizeRand = rand() % sizeRand;
 
-	if(sizeRand >= 0 && sizeRand < weight_smallAsteroid) size = small;
-	sizeRand -= weight_smallAsteroid;
+	if(sizeRand >= 0 && sizeRand < weight_smallAsteroid()) size = small;
+	sizeRand -= weight_smallAsteroid();
 
-	if(sizeRand >= 0 && sizeRand < weight_mediumAsteroid) size = medium;
-	sizeRand -= weight_mediumAsteroid;
+	if(sizeRand >= 0 && sizeRand < weight_mediumAsteroid()) size = medium;
+	sizeRand -= weight_mediumAsteroid();
 
 	if(sizeRand >= 0) size = large;
 }

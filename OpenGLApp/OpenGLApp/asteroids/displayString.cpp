@@ -11,7 +11,10 @@ void DisplayString::Draw() const {
 
 void DisplayString::updateTransform() {
 	pos = scaleVector(unscaledPos);
-	for(int i = 0; i < letterObjects.size(); i++) letterObjects[i].updateTransform();
+	for(int i = 0; i < letterObjects.size(); i++) {
+		letterObjects[i].updatePos(pos);
+		letterObjects[i].updateTransform();
+	}
 }
 
 

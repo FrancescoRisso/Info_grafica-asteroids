@@ -25,11 +25,7 @@ void Spaceship::Init(glm::vec2 pos, float angle) {
 	};
 	// clang-format on
 
-#ifdef DEBUG_texturesWithShadow
-	addTexture("./resources/textures/spaceship-withShadow.png");
-#else
 	addTexture("./resources/textures/spaceship.png");
-#endif
 
 	initGL(tmpPoints);
 }

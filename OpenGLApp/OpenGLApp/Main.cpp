@@ -12,6 +12,7 @@
 #include "asteroids/projectile.hpp"
 #include "asteroids/asteroid.hpp"
 #include "asteroids/star.hpp"
+#include "asteroids/displayString.hpp"
 #include "asteroids/_debugOpts.hpp"
 
 
@@ -46,13 +47,18 @@ float deltaTime;
 float lastFrame = 0;
 float lastX, lastY;
 bool firstMouse = true;
-int shootCount = 0;
+
+int destroyedAsteroids = 0;
+
+float timeFromLastSpawn = 0;
+float timeFromLastShot = 0;
 
 Star stars[numStars];
 
 Spaceship spaceship;
 std::list<Projectile> projectiles;
 std::list<Asteroid> asteroids;
+DisplayString scoreDisplay;
 
 bool hasDied = false;
 
@@ -97,6 +103,8 @@ int main() {
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
 
+	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1);
+
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
@@ -114,11 +122,14 @@ int main() {
 		deltaTime = curTime - lastFrame;
 		lastFrame = curTime;
 #endif
+		timeFromLastSpawn += deltaTime;
 
 		// render
 		// ------
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		scoreDisplay.Draw();
 
 		for(int i = 0; i < numStars; i++) {
 			stars[i].Draw();
@@ -188,12 +199,11 @@ void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
 	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
 	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		if(shootCount > 1.25 / deltaTime) shootCount = 0;
-		// if(shootCount > 1700000 * deltaTime) shootCount = 0;
-		if(shootCount == 0) projectiles.push_back(spaceship.Shoot());
-		shootCount++;
+		if(timeFromLastShot > 1.0 / speed_autoShoot) timeFromLastShot = 0;
+		if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
+		timeFromLastShot += deltaTime;
 	}
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) shootCount = 0;
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -207,6 +217,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 	spaceship.updateTransform();
 	for(int i = 0; i < numStars; i++) stars[i].updateTransform();
+	scoreDisplay.updateTransform();
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
@@ -236,6 +247,10 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 		if(asteroidPtr->collidesWith(&(*proj))) {
 			while(asteroidPtr->hasChildren()) asteroids.push_back(asteroidPtr->getChild());
 			asteroidPtr = asteroids.erase(asteroidPtr);
+			destroyedAsteroids++;
+			char buf[20];
+			sprintf_s(buf, "Score: %d", destroyedAsteroids);
+			scoreDisplay.changeString((const char*) buf);
 			return true;
 		}
 		asteroidPtr++;
