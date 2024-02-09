@@ -57,9 +57,9 @@
 
 // the weights of an asteroid to be small, medium or large
 // chance is weight / (sum of the three weights)
-#define weight_smallAsteroid 1
-#define weight_mediumAsteroid 1
-#define weight_largeAsteroid 1
+int weight_smallAsteroid();
+int weight_mediumAsteroid();
+int weight_largeAsteroid();
 
 // the percentage of momentum that is transferred from an asteroid to its
 // children

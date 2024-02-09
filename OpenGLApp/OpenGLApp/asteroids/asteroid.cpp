@@ -75,14 +75,14 @@ bool Asteroid::ShouldSpawn() {
 void Asteroid::randomizeSize() {
 	int sizeRand;
 
-	sizeRand = weight_smallAsteroid + weight_mediumAsteroid + weight_largeAsteroid;
+	sizeRand = weight_smallAsteroid() + weight_mediumAsteroid() + weight_largeAsteroid();
 	sizeRand = rand() % sizeRand;
 
-	if(sizeRand >= 0 && sizeRand < weight_smallAsteroid) size = small;
-	sizeRand -= weight_smallAsteroid;
+	if(sizeRand >= 0 && sizeRand < weight_smallAsteroid()) size = small;
+	sizeRand -= weight_smallAsteroid();
 
-	if(sizeRand >= 0 && sizeRand < weight_mediumAsteroid) size = medium;
-	sizeRand -= weight_mediumAsteroid;
+	if(sizeRand >= 0 && sizeRand < weight_mediumAsteroid()) size = medium;
+	sizeRand -= weight_mediumAsteroid();
 
 	if(sizeRand >= 0) size = large;
 }
