@@ -93,4 +93,12 @@ int weight_largeAsteroid();
 
 #define numStars 200
 
+
+/*	---------------------------------------------------------------------
+	Speed of auto-shoot
+-----------------------------------------------------------------------*/
+
+#define speed_autoShoot 5  // number of shots per second
+
+
 #endif

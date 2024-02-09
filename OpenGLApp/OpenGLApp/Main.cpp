@@ -47,11 +47,11 @@ float deltaTime;
 float lastFrame = 0;
 float lastX, lastY;
 bool firstMouse = true;
-int shootCount = 0;
 
 int destroyedAsteroids = 0;
 
 float timeFromLastSpawn = 0;
+float timeFromLastShot = 0;
 
 Star stars[numStars];
 
@@ -121,8 +121,8 @@ int main() {
 		float curTime = (float) glfwGetTime();
 		deltaTime = curTime - lastFrame;
 		lastFrame = curTime;
-		timeFromLastSpawn += deltaTime;
 #endif
+		timeFromLastSpawn += deltaTime;
 
 		// render
 		// ------
@@ -199,12 +199,11 @@ void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
 	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
 	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		if(shootCount > 1.25 / deltaTime) shootCount = 0;
-		// if(shootCount > 1700000 * deltaTime) shootCount = 0;
-		if(shootCount == 0) projectiles.push_back(spaceship.Shoot());
-		shootCount++;
+		if(timeFromLastShot > 1.0 / speed_autoShoot) timeFromLastShot = 0;
+		if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
+		timeFromLastShot += deltaTime;
 	}
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) shootCount = 0;
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
