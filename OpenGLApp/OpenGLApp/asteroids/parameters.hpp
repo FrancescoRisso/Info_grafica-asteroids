@@ -45,15 +45,36 @@
 
 
 /*	---------------------------------------------------------------------
+	Time between two asteroids spawning. It is determined by two factors:
+	- the "base line" is a decreasing exponential based on the current
+		score: the further in the game, the faster asteroids spawn
+	- a "slow-down" is added at every 10% increase of weight of big
+		asteroids: the game already becomes more difficult as more
+		asteroids will be in the scene, so the spawn rate decreases
+-----------------------------------------------------------------------*/
+
+// the time that should pass from an asteroid spawn to the next
+float timeBetweenSpawns();
+
+// the number of "slow-down" steps to be applied at this moment
+#define numSteps weight_largeAsteroid() / 10
+
+// the amount of each "slow-down" step
+#define stepSize 0.08
+
+// the how fast the score makes the exponential decrease
+#define scalingSpeed 1 / 150
+
+// the time at score = 0, which also scales the whole exponential
+#define scalingMagnitude 2
+
+/*	---------------------------------------------------------------------
 	Randomness parameters
 -----------------------------------------------------------------------*/
 
 // A freshly spawned asteroid's speed points to the center of the screen
 // plus or minus a random value <= asteroidAngleRandomness (in deg)
 #define asteroidAngleRandomness 30
-
-// the chance of spawining an asteroid at every tick is 1/weightOfSpawningAsteroid
-#define weightOfSpawningAsteroid 2500
 
 // the weights of an asteroid to be small, medium or large
 // chance is weight / (sum of the three weights)

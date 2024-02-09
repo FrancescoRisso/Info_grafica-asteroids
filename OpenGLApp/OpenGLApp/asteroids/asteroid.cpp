@@ -14,6 +14,8 @@ std::vector<unsigned int> Asteroid::textures;
 std::vector<const char*> Asteroid::textureFiles;
 bool Asteroid::shaderSet;
 
+extern float timeFromLastSpawn;
+
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
@@ -68,7 +70,9 @@ void Asteroid::Spawn() {
 
 
 bool Asteroid::ShouldSpawn() {
-	return rand() % weightOfSpawningAsteroid == 0;
+	if(timeFromLastSpawn < timeBetweenSpawns()) return false;
+	timeFromLastSpawn = 0;
+	return true;
 }
 
 

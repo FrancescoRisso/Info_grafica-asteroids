@@ -51,6 +51,8 @@ int shootCount = 0;
 
 int destroyedAsteroids = 0;
 
+float timeFromLastSpawn = 0;
+
 Star stars[numStars];
 
 Spaceship spaceship;
@@ -119,6 +121,7 @@ int main() {
 		float curTime = (float) glfwGetTime();
 		deltaTime = curTime - lastFrame;
 		lastFrame = curTime;
+		timeFromLastSpawn += deltaTime;
 #endif
 
 		// render

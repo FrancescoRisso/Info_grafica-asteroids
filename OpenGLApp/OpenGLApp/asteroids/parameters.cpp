@@ -1,5 +1,7 @@
 #include "parameters.hpp"
 
+#include <cmath>
+
 extern int destroyedAsteroids;
 
 
@@ -71,4 +73,9 @@ int weight_largeAsteroid() {
 	if(destroyedAsteroids <= 161) return 70;
 	if(destroyedAsteroids <= 188) return 75;
 	return 80;
+}
+
+
+float timeBetweenSpawns() {
+	return scalingMagnitude * exp(-destroyedAsteroids * scalingSpeed) + stepSize * numSteps;
 }
