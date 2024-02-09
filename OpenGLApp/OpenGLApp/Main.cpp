@@ -33,6 +33,10 @@
 */
 bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj);
 
+
+enum gamePhases { mainMenu, instructions, game, endScreen };
+
+
 using namespace Asteroids;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -64,7 +68,8 @@ DisplayString scoreDisplay;
 Heart hearts[numHearts];
 int heartsLeft = numHearts;
 
-bool hasDied = false;
+gamePhases currentPhase = mainMenu;
+
 
 int main() {
 	// init randomness
@@ -135,56 +140,77 @@ int main() {
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		scoreDisplay.Draw();
-
-		for(int i = 0; i < numStars; i++) {
-			stars[i].Draw();
-			stars[i].Move();
-			if(stars[i].isOutOfScreen()) stars[i].Spawn();
-		}
-
-		int tmp = Star::VAO;
-
 		auto projectilePtr = projectiles.begin();
-		while(projectilePtr != projectiles.end()) {
-			if(checkAsteroidProjectileCollision(projectilePtr)) {
-				projectilePtr = projectiles.erase(projectilePtr);
-				continue;
-			}
-
-			if(projectilePtr->isOutOfScreen()) {
-				projectilePtr = projectiles.erase(projectilePtr);
-				continue;
-			}
-
-			projectilePtr->Draw();
-			projectilePtr->Move();
-
-			projectilePtr++;
-		}
-
-		if(Asteroid::ShouldSpawn()) {
-			Asteroid tmpAsteroid;
-			tmpAsteroid.Spawn();
-			asteroids.push_back(tmpAsteroid);
-		}
-
 		auto asteroidPtr = asteroids.begin();
-		while(asteroidPtr != asteroids.end()) {
-			asteroidPtr->Draw();
-			asteroidPtr->Move();
-			if(asteroidPtr->isOutOfScreen()) {
-				asteroidPtr = asteroids.erase(asteroidPtr);
-				continue;
-			}
 
-			if(asteroidPtr->collidesWith(&spaceship)) hasDied = true;
-			asteroidPtr++;
+		switch(currentPhase) {
+			case mainMenu:
+				// todo
+				currentPhase = game;
+				break;
+
+			case instructions:
+				// todo
+				currentPhase = game;
+				break;
+
+			case game:
+				scoreDisplay.Draw();
+
+				for(int i = 0; i < numStars; i++) {
+					stars[i].Draw();
+					stars[i].Move();
+					if(stars[i].isOutOfScreen()) stars[i].Spawn();
+				}
+
+				int tmp = Star::VAO;
+
+				while(projectilePtr != projectiles.end()) {
+					if(checkAsteroidProjectileCollision(projectilePtr)) {
+						projectilePtr = projectiles.erase(projectilePtr);
+						continue;
+					}
+
+					if(projectilePtr->isOutOfScreen()) {
+						projectilePtr = projectiles.erase(projectilePtr);
+						continue;
+					}
+
+					projectilePtr->Draw();
+					projectilePtr->Move();
+
+					projectilePtr++;
+				}
+
+				if(Asteroid::ShouldSpawn()) {
+					Asteroid tmpAsteroid;
+					tmpAsteroid.Spawn();
+					asteroids.push_back(tmpAsteroid);
+				}
+
+				while(asteroidPtr != asteroids.end()) {
+					asteroidPtr->Draw();
+					asteroidPtr->Move();
+					if(asteroidPtr->isOutOfScreen()) {
+						asteroidPtr = asteroids.erase(asteroidPtr);
+						continue;
+					}
+
+					if(asteroidPtr->collidesWith(&spaceship)) {}  // todo
+					asteroidPtr++;
+				}
+
+				spaceship.Draw();
+
+				for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
+				break;
+
+			case endScreen:
+				// todo
+				currentPhase = game;
+				break;
 		}
 
-		spaceship.Draw();
-
-		for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
