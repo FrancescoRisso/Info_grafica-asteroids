@@ -5,6 +5,7 @@
 #include <list>
 
 #include "../../Main.hpp"
+#include "../../utils.hpp"
 #include "../asteroid.hpp"
 #include "../displayString.hpp"
 #include "../heart.hpp"

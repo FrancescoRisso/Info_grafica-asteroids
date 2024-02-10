@@ -123,7 +123,7 @@ void renderGame() {
 		if(powerup.collidesWith(&spaceship)) {
 			powerupPresent = false;
 			switch(powerup.getType()) {
-				case extraLife: /* TODO */ break;
+				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
 			}
 		}
 	} else {
