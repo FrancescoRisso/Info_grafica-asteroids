@@ -95,7 +95,7 @@ int weight_largeAsteroid();
 #define conservedMomentum_Asteroid 0.65f
 
 // the average time between two powerup spawns
-#define avgTimeBetweenPowerups 1.0f
+#define avgTimeBetweenPowerups 30.0f
 
 
 /*	---------------------------------------------------------------------
