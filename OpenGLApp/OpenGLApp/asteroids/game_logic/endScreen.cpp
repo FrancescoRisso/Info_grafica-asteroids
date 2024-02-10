@@ -24,7 +24,8 @@ void prepareEndScreen() {
 
 
 void renderEndScreen() {
-	for(int i = 0; i < endScreen_NUM_STRINGS; i++) endGameStrings[i].Draw();
+	for(int i = 0; i < endScreen_NUM_STRINGS; i++)
+		if(i != newBest || isNewBest) endGameStrings[i].Draw();
 }
 
 
