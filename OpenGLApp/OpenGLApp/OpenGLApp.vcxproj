@@ -141,6 +141,8 @@
   <ItemGroup>
     <ClCompile Include="asteroids\asteroid.cpp" />
     <ClCompile Include="asteroids\displayString.cpp" />
+    <ClCompile Include="asteroids\game_logic\endScreen.cpp" />
+    <ClCompile Include="asteroids\game_logic\game.cpp" />
     <ClCompile Include="asteroids\heart.cpp" />
     <ClCompile Include="asteroids\letter.cpp" />
     <ClCompile Include="asteroids\object.cpp" />
@@ -157,8 +159,11 @@
   <ItemGroup>
     <ClInclude Include="asteroids\asteroid.hpp" />
     <ClInclude Include="asteroids\displayString.hpp" />
+    <ClInclude Include="asteroids\game_logic\endScreen.hpp" />
+    <ClInclude Include="asteroids\game_logic\game.hpp" />
     <ClInclude Include="asteroids\heart.hpp" />
     <ClInclude Include="asteroids\letter.hpp" />
+    <ClInclude Include="asteroids\Main.hpp" />
     <ClInclude Include="asteroids\object.hpp" />
     <ClInclude Include="asteroids\object_staticVariablesDefs.hpp" />
     <ClInclude Include="asteroids\parameters.hpp" />
