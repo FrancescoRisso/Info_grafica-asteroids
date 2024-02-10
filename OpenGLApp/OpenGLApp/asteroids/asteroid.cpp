@@ -44,7 +44,7 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 void Asteroid::Spawn() {
 	float firstPos1D = (float) rand() / RAND_MAX * 2 - 1;
 	float otherCoord;
-	glm::vec2 firstPos(0), speedDir;
+	glm::vec2 firstPos(0);
 
 	randomizeSize();
 
@@ -64,7 +64,6 @@ void Asteroid::Spawn() {
 
 	angle = angleBetweenVerticalDir(firstPos);
 	angle = angleOffset + angle;
-	speedDir = glm::vec2(sin(angle), cos(angle));
 	Init(firstPos, angle);
 }
 
