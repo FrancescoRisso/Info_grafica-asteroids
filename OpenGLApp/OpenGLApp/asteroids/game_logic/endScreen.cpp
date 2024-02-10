@@ -35,7 +35,10 @@ void updateTransformEndScreen() {
 
 
 void processKeyboardEndScreen(GLFWwindow* window) {
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) currentPhase = game;  // TODO reset all
+	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		prepareGame();
+		currentPhase = game;
+	}
 	if(glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) currentPhase = mainMenu;
 }
 

@@ -49,6 +49,17 @@ void prepareGame() {
 	for(int i = 0; i < numHearts; i++) hearts[i].Init(glm::vec2(0.95 - radius_Heart, 0.9 - radius_Heart), i);
 
 	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1);
+
+	asteroids.clear();
+	projectiles.clear();
+
+	heartsLeft = numHearts;
+	destroyedAsteroids = 0;
+
+	timeFromLastShot = 0.0000000001;
+	timeFromLastSpawn = 0;
+
+	isInvulnerable = false;
 }
 
 
