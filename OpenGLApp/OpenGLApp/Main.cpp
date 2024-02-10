@@ -59,6 +59,7 @@ int main() {
 
 	prepareGame();
 	prepareEndScreen();
+	prepareInstructions();
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
 
@@ -98,11 +99,7 @@ int main() {
 				currentPhase = game;
 				break;
 
-			case instructions:
-				// todo
-				currentPhase = game;
-				break;
-
+			case instructions: renderInstructions(); break;
 			case game: renderGame(); break;
 			case endScreen: renderEndScreen(); break;
 		}
@@ -126,6 +123,7 @@ void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
 
 	switch(currentPhase) {
+		case instructions: processKeyboardInstructions(window); break;
 		case game: processKeyboardGame(window); break;
 		case endScreen: processKeyboardEndScreen(window); break;
 	}
@@ -143,10 +141,12 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	for(int i = 0; i < numStars; i++) stars[i].updateTransform();
 	updateTransformGame();
 	updateTransformEndScreen();
+	updateTransformInstructions();
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
 	switch(currentPhase) {
+		case instructions: processMouseInstructions(window, xposIn, yposIn); break;
 		case game: processMouseGame(window, xposIn, yposIn); break;
 		case endScreen: processMouseEndScreen(window, xposIn, yposIn); break;
 	}
