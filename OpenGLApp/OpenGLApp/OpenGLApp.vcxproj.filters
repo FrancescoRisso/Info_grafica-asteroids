@@ -57,6 +57,15 @@
     <ClCompile Include="asteroids\heart.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="asteroids\game_logic\endScreen.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="asteroids\game_logic\game.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="asteroids\game_logic\instructions.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader_s.h">
@@ -99,6 +108,18 @@
       <Filter>File di origine</Filter>
     </ClInclude>
     <ClInclude Include="asteroids\heart.hpp">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroids\game_logic\endScreen.hpp">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroids\game_logic\game.hpp">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroids\Main.hpp">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroids\game_logic\instructions.hpp">
       <Filter>File di origine</Filter>
     </ClInclude>
   </ItemGroup>

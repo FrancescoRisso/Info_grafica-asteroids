@@ -1,40 +1,4 @@
-// clang-format off
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-// clang-format on
-
-#include <iostream>
-#include <list>
-
-#include "utils.hpp"
-#include "shader_s.h"
-#include "asteroids/spaceship.hpp"
-#include "asteroids/projectile.hpp"
-#include "asteroids/asteroid.hpp"
-#include "asteroids/star.hpp"
-#include "asteroids/displayString.hpp"
-#include "asteroids/_debugOpts.hpp"
-#include "asteroids/heart.hpp"
-
-
-/*
-	checkAsteroidProjectileCollision
-	---------------------------------------------------------------------
-	Checks if a given projectile collides with any asteroids.
-	If so, the function kills the asteroid, while the callee is in charge
-	of killing the projectile
-	---------------------------------------------------------------------
-	PARAMETERS:
-		- proj: an iterator to find a given projectile
-	---------------------------------------------------------------------
-	OUTPUT:
-		- whether a collision occurred (then, the projectile should be
-			killed)
-*/
-bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj);
-
-
-enum gamePhases { mainMenu, instructions, game, endScreen };
+#include "Main.hpp"
 
 
 using namespace Asteroids;
@@ -50,30 +14,10 @@ unsigned int SCR_HEIGHT = 600;
 // mouse
 float deltaTime;
 float lastFrame = 0;
-float lastX, lastY;
-bool firstMouse = true;
-
-int destroyedAsteroids = 0;
-
-float timeFromLastSpawn = 0;
-float timeFromLastShot = 0;
 
 Star stars[numStars];
 
-Spaceship spaceship;
-std::list<Projectile> projectiles;
-std::list<Asteroid> asteroids;
-DisplayString scoreDisplay;
-
-Heart hearts[numHearts];
-int heartsLeft = numHearts;
-
 gamePhases currentPhase = mainMenu;
-
-float invulnerabilityCount = 0;
-float blinkCount = 0;
-bool isInvulnerable = false;
-bool blinkIsOn = false;
 
 
 int main() {
@@ -113,13 +57,11 @@ int main() {
 		return -1;
 	}
 
-	spaceship.Init(glm::vec2(0));
+	prepareGame();
+	prepareEndScreen();
+	prepareInstructions();
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
-
-	for(int i = 0; i < numHearts; i++) hearts[i].Init(glm::vec2(0.95 - radius_Heart, 0.9 - radius_Heart), i);
-
-	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1);
 
 	// render loop
 	// -----------
@@ -138,106 +80,28 @@ int main() {
 		deltaTime = curTime - lastFrame;
 		lastFrame = curTime;
 #endif
-		timeFromLastSpawn += deltaTime;
 
 		// render
 		// ------
 		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		auto projectilePtr = projectiles.begin();
-		auto asteroidPtr = asteroids.begin();
+		for(int i = 0; i < numStars; i++) {
+			stars[i].Draw();
+			stars[i].Move();
+			if(stars[i].isOutOfScreen()) stars[i].Spawn();
+		}
 
 		switch(currentPhase) {
 			case mainMenu:
+
 				// todo
 				currentPhase = game;
 				break;
 
-			case instructions:
-				// todo
-				currentPhase = game;
-				break;
-
-			case game:
-				scoreDisplay.Draw();
-
-				for(int i = 0; i < numStars; i++) {
-					stars[i].Draw();
-					stars[i].Move();
-					if(stars[i].isOutOfScreen()) stars[i].Spawn();
-				}
-
-				while(projectilePtr != projectiles.end()) {
-					if(checkAsteroidProjectileCollision(projectilePtr)) {
-						projectilePtr = projectiles.erase(projectilePtr);
-						continue;
-					}
-
-					if(projectilePtr->isOutOfScreen()) {
-						projectilePtr = projectiles.erase(projectilePtr);
-						continue;
-					}
-
-					projectilePtr->Draw();
-					projectilePtr->Move();
-
-					projectilePtr++;
-				}
-
-				if(Asteroid::ShouldSpawn()) {
-					Asteroid tmpAsteroid;
-					tmpAsteroid.Spawn();
-					asteroids.push_back(tmpAsteroid);
-				}
-
-				asteroidPtr = asteroids.begin();
-				while(asteroidPtr != asteroids.end()) {
-					asteroidPtr->Draw();
-					asteroidPtr->Move();
-					if(asteroidPtr->isOutOfScreen()) {
-						asteroidPtr = asteroids.erase(asteroidPtr);
-						continue;
-					}
-
-					if(!isInvulnerable && asteroidPtr->collidesWith(&spaceship)) {
-						if(--heartsLeft == 0)
-							currentPhase = endScreen;
-						else {
-							invulnerabilityCount = 0;
-							blinkCount = 0;
-							isInvulnerable = true;
-							blinkIsOn = true;
-							spaceship.Init(glm::vec2(0));
-						}
-
-						break;
-					} else
-						asteroidPtr++;
-				}
-
-				if(isInvulnerable) {
-					invulnerabilityCount += deltaTime;
-					blinkCount += deltaTime;
-
-					if(invulnerabilityCount > invulnerabilityTime) isInvulnerable = false;
-					if(blinkCount > (blinkIsOn ? blinkOn_time : blinkOff_time)) {
-						blinkIsOn = !blinkIsOn;
-						blinkCount = 0;
-					}
-				}
-
-				if(!isInvulnerable || blinkIsOn) spaceship.Draw();
-
-				for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
-				break;
-
-			case endScreen:
-				// todo
-				currentPhase = game;
-				break;
-
-				// default: break;
+			case instructions: renderInstructions(); break;
+			case game: renderGame(); break;
+			case endScreen: renderEndScreen(); break;
 		}
 
 
@@ -257,16 +121,12 @@ int main() {
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
-	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) spaceship.MoveDir(up);
-	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
-	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
-	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		if(timeFromLastShot > 1.0 / speed_autoShoot) timeFromLastShot = 0;
-		if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
-		timeFromLastShot += deltaTime;
+
+	switch(currentPhase) {
+		case instructions: processKeyboardInstructions(window); break;
+		case game: processKeyboardGame(window); break;
+		case endScreen: processKeyboardEndScreen(window); break;
 	}
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -278,47 +138,16 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	SCR_WIDTH = width;
 	SCR_HEIGHT = height;
 
-	spaceship.updateTransform();
 	for(int i = 0; i < numStars; i++) stars[i].updateTransform();
-	scoreDisplay.updateTransform();
-	for(int i = 0; i < numHearts; i++) hearts[i].updateTransform();
+	updateTransformGame();
+	updateTransformEndScreen();
+	updateTransformInstructions();
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
-	float xpos = (float) xposIn;
-	float ypos = (float) yposIn;
-
-	if(firstMouse) {
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
+	switch(currentPhase) {
+		case instructions: processMouseInstructions(window, xposIn, yposIn); break;
+		case game: processMouseGame(window, xposIn, yposIn); break;
+		case endScreen: processMouseEndScreen(window, xposIn, yposIn); break;
 	}
-
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;  // reversed since y-coordinates go from bottom to top
-
-	spaceship.PointTo(mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT)));
-
-	lastX = xpos;
-	lastY = ypos;
-}
-
-
-bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj) {
-	auto asteroidPtr = asteroids.begin();
-
-	while(asteroidPtr != asteroids.end()) {
-		if(asteroidPtr->collidesWith(&(*proj))) {
-			while(asteroidPtr->hasChildren()) asteroids.push_back(asteroidPtr->getChild());
-			asteroidPtr = asteroids.erase(asteroidPtr);
-			destroyedAsteroids++;
-			char buf[20];
-			sprintf_s(buf, "Score: %d", destroyedAsteroids);
-			scoreDisplay.changeString((const char*) buf);
-			return true;
-		}
-		asteroidPtr++;
-	}
-
-	return false;
 }
