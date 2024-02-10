@@ -22,6 +22,7 @@
 #include "asteroids/game_logic/game.hpp"
 #include "asteroids/game_logic/endScreen.hpp"
 #include "asteroids/game_logic/instructions.hpp"
+#include "asteroids/game_logic/homePage.hpp"
 
 enum gamePhases { mainMenu, instructions, game, endScreen };
 

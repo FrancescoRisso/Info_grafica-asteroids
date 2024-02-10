@@ -143,7 +143,9 @@
     <ClCompile Include="asteroids\displayString.cpp" />
     <ClCompile Include="asteroids\game_logic\endScreen.cpp" />
     <ClCompile Include="asteroids\game_logic\game.cpp" />
+    <ClCompile Include="asteroids\game_logic\homePage.cpp" />
     <ClCompile Include="asteroids\game_logic\instructions.cpp" />
+    <ClCompile Include="asteroids\game_logic\logo.cpp" />
     <ClCompile Include="asteroids\heart.cpp" />
     <ClCompile Include="asteroids\letter.cpp" />
     <ClCompile Include="asteroids\object.cpp" />
@@ -162,7 +164,9 @@
     <ClInclude Include="asteroids\displayString.hpp" />
     <ClInclude Include="asteroids\game_logic\endScreen.hpp" />
     <ClInclude Include="asteroids\game_logic\game.hpp" />
+    <ClInclude Include="asteroids\game_logic\homePage.hpp" />
     <ClInclude Include="asteroids\game_logic\instructions.hpp" />
+    <ClInclude Include="asteroids\game_logic\logo.hpp" />
     <ClInclude Include="asteroids\heart.hpp" />
     <ClInclude Include="asteroids\letter.hpp" />
     <ClInclude Include="asteroids\Main.hpp" />
