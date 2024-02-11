@@ -74,6 +74,13 @@ void prepareGame() {
 }
 
 
+void incrementScoreBy(int n) {
+	destroyedAsteroids += n;
+	char buf[20];
+	sprintf_s(buf, "Score: %d", destroyedAsteroids);
+	scoreDisplay.changeString((const char*) buf);
+}
+
 bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj) {
 	auto asteroidPtr = asteroids.begin();
 
@@ -81,10 +88,7 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 		if(asteroidPtr->collidesWith(&(*proj))) {
 			while(asteroidPtr->hasChildren()) asteroids.push_back(asteroidPtr->getChild());
 			asteroidPtr = asteroids.erase(asteroidPtr);
-			destroyedAsteroids++;
-			char buf[20];
-			sprintf_s(buf, "Score: %d", destroyedAsteroids);
-			scoreDisplay.changeString((const char*) buf);
+			incrementScoreBy(1);
 			return true;
 		}
 		asteroidPtr++;
@@ -132,6 +136,10 @@ void renderGame() {
 			powerupPresent = false;
 			switch(powerup.getType()) {
 				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
+				case destroyAsteroids:
+					incrementScoreBy(asteroids.size());
+					asteroids.clear();
+					break;
 			}
 		}
 	} else {
