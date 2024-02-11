@@ -36,7 +36,7 @@ void Powerup::Init(glm::vec2 pos, float angle) {
 	};
 	// clang-format on
 
-	addTypeTexture(extraLife, "./resources/textures/powerup.png");
+	addTypeTexture(extraLife, "./resources/textures/powerup_heart.png");
 
 	initGL(tmpPoints);
 
