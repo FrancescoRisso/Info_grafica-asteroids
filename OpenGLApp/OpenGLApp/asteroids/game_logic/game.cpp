@@ -12,9 +12,6 @@ int destroyedAsteroids = 0;
 float timeFromLastSpawn = 0;
 float timeFromLastShot = 0;
 
-bool firstMouse = true;
-float lastX, lastY;
-
 Heart hearts[numHearts];
 int heartsLeft = numHearts;
 
@@ -30,6 +27,11 @@ extern gamePhases currentPhase;
 
 float explosionTimer;
 explosionLevel_t explosionLevel;
+
+bool paused = false;
+bool PkeyPressed = false;
+
+glm::vec2 spaceshipPointTo;
 
 
 /*
@@ -111,7 +113,7 @@ void renderGame() {
 		}
 
 		projectilePtr->Draw();
-		projectilePtr->Move();
+		if(!paused) projectilePtr->Move();
 
 		projectilePtr++;
 	}
@@ -123,7 +125,7 @@ void renderGame() {
 	}
 
 	if(powerupPresent) {
-		powerup.Move();
+		if(!paused) powerup.Move();
 		powerup.Draw();
 		if(powerup.isOutOfScreen()) powerupPresent = false;
 		if(powerup.collidesWith(&spaceship)) {
@@ -168,7 +170,7 @@ void renderGame() {
 	asteroidPtr = asteroids.begin();
 	while(asteroidPtr != asteroids.end()) {
 		asteroidPtr->Draw();
-		asteroidPtr->Move();
+		if(!paused) asteroidPtr->Move();
 		if(asteroidPtr->isOutOfScreen()) {
 			asteroidPtr = asteroids.erase(asteroidPtr);
 			continue;
@@ -211,16 +213,25 @@ void updateTransformGame() {
 
 
 void processKeyboardGame(GLFWwindow* window) {
-	if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) spaceship.MoveDir(up);
-	if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
-	if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
-	if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		if(timeFromLastShot > 1.0 / speed_autoShoot) timeFromLastShot = 0;
-		if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
-		timeFromLastShot += deltaTime;
+	if(!paused) {
+		if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) spaceship.MoveDir(up);
+		if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) spaceship.MoveDir(down);
+		if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) spaceship.MoveDir(left);
+		if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) spaceship.MoveDir(right);
+		if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+			if(timeFromLastShot > 1.0 / speed_autoShoot) timeFromLastShot = 0;
+			if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
+			timeFromLastShot += deltaTime;
+		}
 	}
+	if(!PkeyPressed && glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
+		PkeyPressed = true;
+		paused = !paused;
+		spaceship.PointTo(spaceshipPointTo);
+	}
+
 	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;
+	if(PkeyPressed && glfwGetKey(window, GLFW_KEY_P) == GLFW_RELEASE) PkeyPressed = false;
 }
 
 
@@ -228,17 +239,6 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn) {
 	float xpos = (float) xposIn;
 	float ypos = (float) yposIn;
 
-	if(firstMouse) {
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
-	}
-
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;  // reversed since y-coordinates go from bottom to top
-
-	spaceship.PointTo(mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT)));
-
-	lastX = xpos;
-	lastY = ypos;
+	spaceshipPointTo = mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT));
+	if(!paused) spaceship.PointTo(spaceshipPointTo);
 }
