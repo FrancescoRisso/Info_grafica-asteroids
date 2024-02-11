@@ -1,3 +1,4 @@
+
 #include "logo.hpp"
 
 using namespace Asteroids;
@@ -29,7 +30,8 @@ void Spacevoid::Init(glm::vec2 pos) {
 	};
 	// clang-format on
 
-	addTexture("./resources/textures/SpaceVoid.PNG");
+	addTexture("./resources/textures/SpaceVoid.png");
 
 	initGL(tmpPoints);
 }
+

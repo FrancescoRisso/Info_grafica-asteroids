@@ -55,7 +55,10 @@ void processKeyboardHomePage(GLFWwindow* window);
 void processMouseHomePage(GLFWwindow* window, double xposIn, double yposIn);
 
 
+void pausasec();
 
+void saveRecord();
+void loadRecord();
 
 
 #endif

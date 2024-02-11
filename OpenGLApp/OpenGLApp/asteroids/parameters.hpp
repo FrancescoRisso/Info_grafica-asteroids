@@ -13,7 +13,7 @@
 #define radius_Projectile 0.01
 #define radius_Star 0.005f
 #define radius_Heart 0.05f
-#define radius_Spacevoid 0.5
+#define radius_Spacevoid 0.8
 
 
 /*	---------------------------------------------------------------------

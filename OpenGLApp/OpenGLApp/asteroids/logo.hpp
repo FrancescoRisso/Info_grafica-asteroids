@@ -1,7 +1,7 @@
 #ifndef _LOGO_H
 #define _LOGO_H
 
-#include "../object.hpp"
+#include "object.hpp"
 #include "logo.hpp"
 
 namespace Asteroids {

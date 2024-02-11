@@ -1,6 +1,6 @@
 #include "homePage.hpp"
 
-#include "logo.hpp"
+#include "../logo.hpp"
 
 
 using namespace Asteroids;
@@ -22,6 +22,31 @@ static homeMenuOptions selectedOption = startGame;
 
 Spacevoid spacevoid;
 
+static int state = 0;
+
+void saveRecord() {
+	FILE* file;
+	int var = getHighScore();
+
+	fopen_s(&file, "./resources/record", "w");
+	if(file == NULL) { return; }
+
+	fprintf_s(file, "%d", var);
+	fclose(file);
+}
+
+void loadRecord() {
+	FILE* file;
+	int var;
+
+	fopen_s(&file, "./resources/record", "r");
+	if(file == NULL) { return; }
+
+	fscanf_s(file, "%d", &var);
+	fclose(file);
+
+	setHighScore(var);
+}
 
 void prepareHomePage() {
 	char buf[100];
@@ -88,7 +113,10 @@ void processKeyboardHomePage(GLFWwindow* window) {
 				resetHighScore();
 				homeStrings[curHighScoreStr].changeString("Reset high score (currently 0)");
 				break;
-			case quitOption: glfwSetWindowShouldClose(window, true); break;
+			case quitOption:
+				glfwSetWindowShouldClose(window, true);
+				saveRecord();
+				break;
 		}
 	}
 
