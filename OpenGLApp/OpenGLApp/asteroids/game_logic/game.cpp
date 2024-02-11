@@ -28,6 +28,9 @@ Powerup powerup;
 
 extern gamePhases currentPhase;
 
+float explosionTimer;
+explosionLevel_t explosionLevel;
+
 
 /*
 	checkAsteroidProjectileCollision
@@ -63,6 +66,9 @@ void prepareGame() {
 	timeFromLastSpawn = 0;
 
 	isInvulnerable = false;
+
+	explosionTimer = 0;
+	explosionLevel = explosion_none;
 }
 
 
@@ -133,6 +139,32 @@ void renderGame() {
 		}
 	}
 
+	if(explosionLevel != explosion_none) {
+		explosionTimer += deltaTime;
+		if(explosionTimer > explosionTimePerLevel) {
+			explosionTimer = 0;
+			explosionLevel = (explosionLevel_t)(explosionLevel + 1);
+			spaceship.setExplosionLevel(explosionLevel);
+			if(explosionLevel == explosion_NUM) {
+				if(heartsLeft <= 0) {
+					currentPhase = endScreen;
+					setScoresEndScreen(destroyedAsteroids);
+				} else {
+					invulnerabilityCount = 0;
+					blinkCount = 0;
+
+					isInvulnerable = true;
+					blinkIsOn = true;
+
+					spaceship.Init(glm::vec2(0));
+				}
+
+				explosionLevel = explosion_none;
+				explosionTimer = 0;
+			}
+		}
+	}
+
 	asteroidPtr = asteroids.begin();
 	while(asteroidPtr != asteroids.end()) {
 		asteroidPtr->Draw();
@@ -142,18 +174,12 @@ void renderGame() {
 			continue;
 		}
 
-		if(!isInvulnerable && asteroidPtr->collidesWith(&spaceship)) {
-			if(--heartsLeft <= 0) {
-				currentPhase = endScreen;
-				setScoresEndScreen(destroyedAsteroids);
-			} else {
-				invulnerabilityCount = 0;
-				blinkCount = 0;
-				isInvulnerable = true;
-				blinkIsOn = true;
-				spaceship.Init(glm::vec2(0));
-			}
-
+		if(explosionLevel == explosion_none && !isInvulnerable && asteroidPtr->collidesWith(&spaceship)) {
+			explosionLevel = (explosionLevel_t)(explosionLevel + 1);
+			explosionTimer = 0;
+			--heartsLeft;
+			asteroidPtr = asteroids.erase(asteroidPtr);
+			spaceship.setExplosionLevel(explosionLevel);
 			break;
 		} else
 			asteroidPtr++;

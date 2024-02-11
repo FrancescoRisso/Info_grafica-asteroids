@@ -14,6 +14,8 @@
 
 namespace Asteroids {
 
+enum explosionLevel_t { explosion_none, explosion_1, explosion_2, explosion_3, explosion_NUM };
+
 class Spaceship : public Object {
    public:
 	Spaceship();
@@ -71,6 +73,17 @@ class Spaceship : public Object {
 
 	staticVariablesAndFunctionDefinitions_hpp(Spaceship);
 
+
+	/*
+		setExplosionLevel
+		---------------------------------------------------------------------
+		Sets the spaceship to use a certain explosion level texture
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- explosionLevel: how much the spaceship is exploding
+	*/
+	void setExplosionLevel(explosionLevel_t explosionLevel);
+
    private:
 	// lastMousePos: the last recorded target of PointTo()
 	glm::vec2 lastMousePos;
@@ -87,6 +100,21 @@ class Spaceship : public Object {
 	float radius() const override {
 		return radius_Spaceship;
 	}
+
+	static unsigned int explosionLevelTextures[explosion_NUM];
+
+
+	/*
+		addExplosionLevelTexture
+		---------------------------------------------------------------------
+		Creates a new texture and inserts the explosion_level-texture
+		association in the vector
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- type: the type of powerup
+			- path: the path to its texture
+	*/
+	void addExplosionLevelTexture(explosionLevel_t level, const char* path);
 };
 
 }  // namespace Asteroids
