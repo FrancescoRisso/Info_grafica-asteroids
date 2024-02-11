@@ -166,3 +166,7 @@ void Letter::updatePos(glm::vec2 pos) {
 
 	basePos = this->pos;
 }
+
+void Letter::setColor(glm::vec3 newColor) {
+	thisColor = newColor;
+}

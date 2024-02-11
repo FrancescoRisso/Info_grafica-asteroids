@@ -97,6 +97,17 @@ class Letter : public Object {
 	void updatePos(glm::vec2 pos);
 
 
+	/*
+		setColor
+		---------------------------------------------------------------------
+		Changes the color of a letter
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- newColor: the new color to be set
+	*/
+	void setColor(glm::vec3 newColor);
+
+
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
