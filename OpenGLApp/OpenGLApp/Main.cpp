@@ -37,7 +37,7 @@ int main() {
 
 	// glfw window creation
 	// --------------------
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Asteroids", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "SpaceVoid", NULL, NULL);
 	if(window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -56,10 +56,11 @@ int main() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
-
+	loadRecord();
 	prepareGame();
 	prepareEndScreen();
 	prepareInstructions();
+	prepareHomePage();
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
 
@@ -93,12 +94,7 @@ int main() {
 		}
 
 		switch(currentPhase) {
-			case mainMenu:
-
-				// todo
-				currentPhase = game;
-				break;
-
+			case mainMenu: renderHomePage(); break;
 			case instructions: renderInstructions(); break;
 			case game: renderGame(); break;
 			case endScreen: renderEndScreen(); break;
@@ -120,12 +116,16 @@ int main() {
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window) {
-	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		saveRecord();
+		glfwSetWindowShouldClose(window, true);
+	}
 
 	switch(currentPhase) {
 		case instructions: processKeyboardInstructions(window); break;
 		case game: processKeyboardGame(window); break;
 		case endScreen: processKeyboardEndScreen(window); break;
+		case mainMenu: processKeyboardHomePage(window); break;
 	}
 }
 
@@ -142,6 +142,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	updateTransformGame();
 	updateTransformEndScreen();
 	updateTransformInstructions();
+	updateTransformHomePage();
 }
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {

@@ -83,3 +83,9 @@ void DisplayString::shiftLetters() {
 void DisplayString::changeString(const char* newString) {
 	Init(unscaledPos, newString, horizontalAlignment, verticalAlignment, color, height);
 }
+
+
+void DisplayString::setColor(glm::vec3 newColor) {
+	color = newColor;
+	for(int i = 0; i < letterObjects.size(); i++) letterObjects[i].setColor(newColor);
+}

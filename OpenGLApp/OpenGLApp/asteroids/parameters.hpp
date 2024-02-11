@@ -13,6 +13,7 @@
 #define radius_Projectile 0.01
 #define radius_Star 0.005f
 #define radius_Heart 0.05f
+#define radius_Spacevoid 0.8
 #define radius_Powerup 0.05f
 
 
@@ -37,6 +38,7 @@
 #define numTriangles_Star 2
 #define numTriangles_Letter 2
 #define numTriangles_Heart 2
+#define numTriangles_Spacevoid 2
 #define numTriangles_Powerup 2
 
 

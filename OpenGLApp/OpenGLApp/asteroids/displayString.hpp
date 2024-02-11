@@ -63,6 +63,17 @@ class DisplayString {
 	void changeString(const char* newString);
 
 
+	/*
+		setColor
+		---------------------------------------------------------------------
+		Changes the color of a string
+		---------------------------------------------------------------------
+		PARAMETERS:
+			- newColor: the new color to be set
+	*/
+	void setColor(glm::vec3 newColor);
+
+
    private:
 	std::vector<char> charSequence;
 	std::vector<Letter> letterObjects;

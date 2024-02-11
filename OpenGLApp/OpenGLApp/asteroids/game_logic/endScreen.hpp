@@ -67,4 +67,25 @@ void processMouseEndScreen(GLFWwindow* window, double xposIn, double yposIn);
 */
 void setScoresEndScreen(int score);
 
+
+/*
+	getHighScore
+	---------------------------------------------------------------------
+	Get current highscore to use in other files
+
+*/
+
+int getHighScore();
+
+
+/*
+	resetHighScore
+	---------------------------------------------------------------------
+	Reet current highscore
+
+*/
+
+void resetHighScore();
+void setHighScore(int a);
+
 #endif

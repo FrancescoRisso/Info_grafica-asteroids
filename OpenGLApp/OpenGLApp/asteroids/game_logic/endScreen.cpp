@@ -17,7 +17,7 @@ void prepareEndScreen() {
 	endGameStrings[yourScore].Init(glm::vec2(0, 0.3), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	endGameStrings[hiScore].Init(glm::vec2(0, 0.15), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	endGameStrings[newBest].Init(glm::vec2(0, 0.05), "New high score!", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.06);
-	endGameStrings[restart].Init(glm::vec2(0, -0.25), "Press SPACE to restart", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
+	endGameStrings[restart].Init(glm::vec2(0, -0.25), "Press R to restart", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	endGameStrings[goHome1].Init(glm::vec2(0, -0.53), "Press M to return", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	endGameStrings[goHome2].Init(glm::vec2(0, -0.66), "to the main menu", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 }
@@ -35,11 +35,14 @@ void updateTransformEndScreen() {
 
 
 void processKeyboardEndScreen(GLFWwindow* window) {
-	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+	if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
 		prepareGame();
 		currentPhase = game;
 	}
-	if(glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) currentPhase = mainMenu;
+	if(glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS) {
+		prepareHomePage();
+		currentPhase = mainMenu;
+	}
 }
 
 
@@ -56,7 +59,20 @@ void setScoresEndScreen(int score) {
 		highScore = score;
 		isNewBest = true;
 		sprintf_s(buf, "Best score: %d", highScore);
+		saveRecord();
 		endGameStrings[hiScore].changeString(buf);
 	} else
 		isNewBest = false;
+}
+
+int getHighScore() {
+	return highScore;
+};
+
+void resetHighScore() {
+	highScore = -1;
+}
+
+void setHighScore(int a) {
+	highScore = a;
 }
