@@ -123,6 +123,8 @@ void Letter::Init(glm::vec2 pos, char letter, horizAligns horizontalAlignment, v
 	addCharacterTexture('-', "./resources/fonts/minecraft/minus.png", 5);
 	addCharacterTexture('?', "./resources/fonts/minecraft/question.png", 5);
 	addCharacterTexture(' ', "./resources/fonts/minecraft/space.png", 5);
+	addCharacterTexture('(', "./resources/fonts/minecraft/open_bracket.png", 4);
+	addCharacterTexture(')', "./resources/fonts/minecraft/close_bracket.png", 4);
 
 	initGL(tmpPoints);
 
