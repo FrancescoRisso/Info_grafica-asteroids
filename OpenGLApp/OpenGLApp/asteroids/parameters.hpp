@@ -124,4 +124,13 @@ int weight_largeAsteroid();
 #define blinkOff_time 0.1f
 
 
+/*	---------------------------------------------------------------------
+	Spaceship explosion
+-----------------------------------------------------------------------*/
+
+#define numExplosionLevels 3
+#define explosionTime 0.5f
+#define explosionTimePerLevel explosionTime / numExplosionLevels
+
+
 #endif
