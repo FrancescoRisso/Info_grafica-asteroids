@@ -8,24 +8,28 @@ Spacevoid::Spacevoid() {}
 staticVariablesInitialize_cpp(Spacevoid);
 
 void Spacevoid::Init(glm::vec2 pos) {
-	this->basePos = pos;
+	this->pos = pos;
 	this->speed = scaleVector(0.0f * scaleVectorReverse(glm::vec2(cos(angle), sin(angle))));
 	this->angle = 0;
 
+	float width = 1.0;
+	float height = 997.0f / 3743.0f;
+
+	scale = 2.0f;
+
 	// clang-format off
 	float tmpPoints[numTriangles_Spacevoid * 3 * 2 * 2] = {
-		(float) radius(),		(float) radius(),		1,	1,
-		(float) -radius(),		(float) radius(), 		0,	1,
-		(float) radius(),		(float) -radius(),		1,	0,
+		(float) width/2,		(float) height/2,		1,	1,
+		(float) -width/2,		(float) height/2, 		0,	1,
+		(float) width/2,		(float) -height/2,		1,	0,
 
-		(float) -radius(),		(float) -radius(),		0,	0,
-		(float) -radius(),		(float) radius(),		0,	1,
-		(float) radius(),		(float) -radius(),		1,	0,
+		(float) -width/2,		(float) -height/2,		0,	0,
+		(float) -width/2,		(float) height/2,		0,	1,
+		(float) width/2,		(float) -height/2,		1,	0,
 	};
 	// clang-format on
 
-	addTexture("C:/Users/s331495/source/repos/Info_grafica-asteroidsNEW/OpenGLApp/OpenGLApp/resources/textures");
+	addTexture("./resources/textures/SpaceVoid.PNG");
 
 	initGL(tmpPoints);
 }
-

@@ -10,7 +10,7 @@ enum homePageKeys { keyDown, keyUp, space, keys_NUM };
 bool pressed[keys_NUM] = {false};
 
 
-enum homepageStrings { spacevoid, explore, instruct, highscore, quit, home_NUM_STRINGS };
+enum homepageStrings { spaceVoidString, explore, instruct, highscore, quit, home_NUM_STRINGS };
 
 DisplayString homeStrings[home_NUM_STRINGS];
 
@@ -20,36 +20,36 @@ enum homeMenuOptions { startGame, showInstructions, resetScore, quitOption };
 
 static homeMenuOptions selectedOption = startGame;
 
+Spacevoid spacevoid;
+
+
 void prepareHomePage() {
 	char buf[100];
 	int highScore = getHighScore();
 	if(highScore == -1) highScore++;
 	sprintf_s(buf, "Best score: %d", highScore);
 
-	homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
+	homeStrings[spaceVoidString].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
 	homeStrings[explore].Init(
 		glm::vec2(0, 0.15), "Start Exploring", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == startGame ? 1 : 0.5), 0.10);
 	homeStrings[instruct].Init(
 		glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == showInstructions ? 1 : 0.5), 0.10);
 	homeStrings[highscore].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resetScore ? 1 : 0.5), 0.10);
 	homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
-}
 
-void logoPrint() {
-	Spacevoid spacevoid;
-	spacevoid.Init(glm::vec2(0, 0.65));
-	spacevoid.Draw();
+	spacevoid.Init(glm::vec2(0, 0.55));
 }
 
 
 void renderHomePage() {
-	for(int i = 0; i < home_NUM_STRINGS; i++) homeStrings[i].Draw();
-	// logoPrint();
+	for(int i = 1; i < home_NUM_STRINGS; i++) homeStrings[i].Draw();
+	spacevoid.Draw();
 }
 
 
 void updateTransformHomePage() {
 	for(int i = 0; i < home_NUM_STRINGS; i++) homeStrings[i].updateTransform();
+	spacevoid.updateTransform();
 }
 
 
@@ -66,7 +66,7 @@ void processKeyboardHomePage(GLFWwindow* window) {
 	}
 
 	if(!pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		selectedOption = (homeMenuOptions)((selectedOption - 1) % 4);
+		selectedOption = (homeMenuOptions)((selectedOption - 1 + 4) % 4);
 		updateColors();
 		pressed[keyUp] = true;
 	}
