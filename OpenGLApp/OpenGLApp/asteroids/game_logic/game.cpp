@@ -12,9 +12,6 @@ int destroyedAsteroids = 0;
 float timeFromLastSpawn = 0;
 float timeFromLastShot = 0;
 
-bool firstMouse = true;
-float lastX, lastY;
-
 Heart hearts[numHearts];
 int heartsLeft = numHearts;
 
@@ -228,17 +225,5 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn) {
 	float xpos = (float) xposIn;
 	float ypos = (float) yposIn;
 
-	if(firstMouse) {
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
-	}
-
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos;  // reversed since y-coordinates go from bottom to top
-
 	spaceship.PointTo(mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT)));
-
-	lastX = xpos;
-	lastY = ypos;
 }
