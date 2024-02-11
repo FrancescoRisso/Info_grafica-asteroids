@@ -8,6 +8,16 @@ Spaceship::Spaceship() : lastMousePos(0.0f) {}
 
 staticVariablesInitialize_cpp(Spaceship);
 
+unsigned int Spaceship::explosionLevelTextures[];
+
+
+void Spaceship::addExplosionLevelTexture(explosionLevel_t level, const char* path) {
+	if(level == explosion_NUM) return;
+
+	int id = addTexture(path);
+	if(id != -1) Spaceship::explosionLevelTextures[level] = id;
+}
+
 void Spaceship::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
 	this->speed = glm::vec2(speed_Spaceship);
@@ -25,9 +35,14 @@ void Spaceship::Init(glm::vec2 pos, float angle) {
 	};
 	// clang-format on
 
-	addTexture("./resources/textures/spaceship.png");
+	addExplosionLevelTexture(explosion_none, "./resources/textures/spaceship.png");
+	addExplosionLevelTexture(explosion_1, "./resources/textures/spaceship_exploding_1.png");
+	addExplosionLevelTexture(explosion_2, "./resources/textures/spaceship_exploding_2.png");
+	addExplosionLevelTexture(explosion_3, "./resources/textures/spaceship_exploding_3.png");
 
 	initGL(tmpPoints);
+
+	setExplosionLevel(explosion_none);
 }
 
 void Spaceship::MoveDir(direction dir) {
@@ -61,4 +76,11 @@ Projectile Spaceship::Shoot() {
 	glm::vec2 dir(-sin(angle), cos(angle));
 	p.Init(pos + radius() * scaleVector(dir), pi_float + angleBetweenVerticalDir(scaleVector(scaleVector(dir))));
 	return p;
+}
+
+
+void Spaceship::setExplosionLevel(explosionLevel_t explosionLevel) {
+	scale = explosionLevel == explosion_none ? 1 : 1.5;
+	useTexture(explosionLevelTextures[explosionLevel]);
+	updateTransform();
 }
