@@ -32,32 +32,30 @@ static int state = 0;
 
 void saveRecord() {
     FILE *file;
-	int variabile = getHighScore();  // Inizializza la variabile
+	int var = getHighScore();  
 
-    file = fopen("./resources/record", "w");  // Apri o crea il file
+    file = fopen("./resources/record", "w");  
     if (file == NULL) {
-        printf("Impossibile aprire il file.\n");
         return;
     }
 
-    fprintf(file, "%d", variabile);  // Scrivi la variabile sul file
-    fclose(file);  // Chiudi il file
+    fprintf(file, "%d", var); 
+    fclose(file);  
 }
 
 void loadRecord() {
 	FILE* file;
-	int variabile;
+	int var;
 
-	file = fopen("./resources/record", "r");  // Apri il file
+	file = fopen("./resources/record", "r");
 	if(file == NULL) {
-		printf("Impossibile aprire il file.\n");
 		return;
 	}
 
-	fscanf(file, "%d", &variabile);  // Leggi il dato dal file e inseriscilo nella variabile
-	fclose(file);                    // Chiudi il file
+	fscanf(file, "%d", &var); 
+	fclose(file);                    
 
-	setHighScore(variabile);
+	setHighScore(var);
 }
 
 void prepareHomePage() {
