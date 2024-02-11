@@ -59,6 +59,7 @@ void setScoresEndScreen(int score) {
 		highScore = score;
 		isNewBest = true;
 		sprintf_s(buf, "Best score: %d", highScore);
+		saveRecord();
 		endGameStrings[hiScore].changeString(buf);
 	} else
 		isNewBest = false;
@@ -70,4 +71,8 @@ int getHighScore() {
 
 void resetHighScore() {
 	highScore = -1;
+}
+
+void setHighScore(int a) {
+	highScore = a;
 }

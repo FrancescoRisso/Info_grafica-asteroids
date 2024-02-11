@@ -24,7 +24,7 @@ void Spacevoid::Init(glm::vec2 pos) {
 	};
 	// clang-format on
 
-	addTexture("C:/Users/s331495/source/repos/Info_grafica-asteroidsNEW/OpenGLApp/OpenGLApp/resources/textures");
+	addTexture("./resources/textures/SpaceVoid.png");
 
 	initGL(tmpPoints);
 }

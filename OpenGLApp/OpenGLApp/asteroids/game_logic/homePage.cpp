@@ -1,7 +1,8 @@
 #include "homePage.hpp"
-#include "logo.hpp"
-
+#include "../logo.hpp"
+#include "stdio.h"
 #include <chrono> // Include per la gestione del tempo
+#pragma warning(disable : 4996)
 
 // Funzione per mettere in pausa il programma per 1 secondo
 void pausasec() {
@@ -21,52 +22,74 @@ void pausasec() {
 using namespace Asteroids;
 
 
-enum homepageStrings { spacevoid, explore, instruct, highscore, quit, home_NUM_STRINGS };
+enum homepageStrings {explore, instruct, highscore, quit, home_NUM_STRINGS };
 
 DisplayString homeStrings[home_NUM_STRINGS];
 
 extern gamePhases currentPhase;
 
 static int state = 0;
-int hs = 0;
-void prepareHS() {
-	homeStrings[highscore].Init(glm::vec2(0, -0.15), "Current highscore: "+ hs, alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 
+void saveRecord() {
+    FILE *file;
+	int variabile = getHighScore();  // Inizializza la variabile
+
+    file = fopen("./resources/record", "w");  // Apri o crea il file
+    if (file == NULL) {
+        printf("Impossibile aprire il file.\n");
+        return;
+    }
+
+    fprintf(file, "%d", variabile);  // Scrivi la variabile sul file
+    fclose(file);  // Chiudi il file
 }
 
-void renderHS(){
-	homeStrings[highscore].Draw();
+void loadRecord() {
+	FILE* file;
+	int variabile;
+
+	file = fopen("./resources/record", "r");  // Apri il file
+	if(file == NULL) {
+		printf("Impossibile aprire il file.\n");
+		return;
+	}
+
+	fscanf(file, "%d", &variabile);  // Leggi il dato dal file e inseriscilo nella variabile
+	fclose(file);                    // Chiudi il file
+
+	setHighScore(variabile);
 }
 
 void prepareHomePage() {
 	char buf[100];
 	int highScore = getHighScore();
 	if(highScore == -1) highScore++;
+	saveRecord();
 	sprintf_s(buf, "Best score: %d", highScore);
 	switch(state) {
 		case 0: 
-		homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
+		//homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(0), 0.25);
 		homeStrings[explore].Init(glm::vec2(0, 0.15), "Start Exploring", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 		homeStrings[instruct].Init(glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[highscore].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		break;
 		case 1:
-		homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
+		//homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(0), 0.25);
 		homeStrings[explore].Init(glm::vec2(0, 0.15), "Start Exploring", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[instruct].Init(glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 		homeStrings[highscore].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		break;
 		case 2:
-		homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
+		//homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(0), 0.25);
 		homeStrings[explore].Init(glm::vec2(0, 0.15), "Start Exploring", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[instruct].Init(glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[highscore].Init(glm::vec2(0, -0.15), "Reset Highscores", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 		homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		break;
 		default:
-		homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
+		//homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(0), 0.25);
 		homeStrings[explore].Init(glm::vec2(0, 0.15), "Start Exploring", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[instruct].Init(glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
 		homeStrings[highscore].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
@@ -82,14 +105,14 @@ void prepareHomePage() {
 
 void logoPrint() {
 	Spacevoid spacevoid;
-	spacevoid.Init(glm::vec2(0, 0.65));
+	spacevoid.Init(glm::vec2(0));
 	spacevoid.Draw();
 }
 
 
 void renderHomePage() {
 	for(int i = 0; i < home_NUM_STRINGS; i++) { homeStrings[i].Draw(); }
-	//logoPrint();
+	logoPrint();
 }
 
 
@@ -247,7 +270,10 @@ void processKeyboardHomePage(GLFWwindow* window) {
 			renderHomePage();
 			pausasec();
 		}
-			if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) { glfwSetWindowShouldClose(window, true); }
+			if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+			saveRecord();
+			glfwSetWindowShouldClose(window, true);
+			}
 			break;
 	}
 }

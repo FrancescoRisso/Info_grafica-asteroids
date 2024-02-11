@@ -11,6 +11,7 @@
 #include "../projectile.hpp"
 #include "../spaceship.hpp"
 #include "endScreen.hpp"
+#include "homePage.hpp"
 
 
 /*

@@ -56,7 +56,7 @@ int main() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
-
+	loadRecord();
 	prepareGame();
 	prepareEndScreen();
 	prepareInstructions();
@@ -124,7 +124,9 @@ int main() {
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window) {
-	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		saveRecord();
+		glfwSetWindowShouldClose(window, true); }
 
 	switch(currentPhase) {
 		case instructions: processKeyboardInstructions(window); break;
