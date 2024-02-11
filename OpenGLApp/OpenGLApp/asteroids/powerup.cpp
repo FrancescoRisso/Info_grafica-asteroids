@@ -37,6 +37,7 @@ void Powerup::Init(glm::vec2 pos, float angle) {
 	// clang-format on
 
 	addTypeTexture(extraLife, "./resources/textures/powerup_heart.png");
+	addTypeTexture(destroyAsteroids, "./resources/textures/powerup_destroy_asteroids.png");
 
 	initGL(tmpPoints);
 
@@ -53,7 +54,9 @@ void Powerup::Spawn() {
 
 	direction side = (direction)(rand() % 4);
 
-	type = (powerup_t)(rand() % powerup_NUM);
+	int tmp = rand();
+	type = (powerup_t)(tmp % powerup_NUM);
+	// type = (powerup_t)(rand() % powerup_NUM);
 
 	float angleOffset = glm::radians((((float) rand() / RAND_MAX) * 2 - 1) * powerupAngleRandomness);
 	float angle;
