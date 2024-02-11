@@ -1,21 +1,6 @@
 #include "homePage.hpp"
+
 #include "logo.hpp"
-
-#include <chrono> // Include per la gestione del tempo
-
-// Funzione per mettere in pausa il programma per 1 secondo
-void pausasec() {
-	// Ottieni l'istante di tempo corrente
-	auto oraCorrente = std::chrono::high_resolution_clock::now();
-
-	// Calcola l'istante di tempo futura (mezzo secondo dopo l'istante corrente)
-	auto istanteFutura = oraCorrente + std::chrono::milliseconds(300);
-
-	// Attendi finch� l'istante di tempo futura non viene raggiunto
-	while(std::chrono::high_resolution_clock::now() < istanteFutura) {
-		// Attendi...
-	}
-}
 
 
 using namespace Asteroids;
@@ -32,15 +17,6 @@ DisplayString homeStrings[home_NUM_STRINGS];
 extern gamePhases currentPhase;
 
 static int state = 0;
-int hs = 0;
-void prepareHS() {
-	homeStrings[highscore].Init(glm::vec2(0, -0.15), "Current highscore: "+ hs, alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
-
-}
-
-void renderHS(){
-	homeStrings[highscore].Draw();
-}
 
 void prepareHomePage() {
 	char buf[100];
@@ -63,8 +39,8 @@ void logoPrint() {
 
 
 void renderHomePage() {
-	for(int i = 0; i < home_NUM_STRINGS; i++) { homeStrings[i].Draw(); }
-	//logoPrint();
+	for(int i = 0; i < home_NUM_STRINGS; i++) homeStrings[i].Draw();
+	// logoPrint();
 }
 
 
