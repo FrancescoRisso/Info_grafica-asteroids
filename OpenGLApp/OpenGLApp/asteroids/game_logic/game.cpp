@@ -23,6 +23,9 @@ float blinkCount = 0;
 bool isInvulnerable = false;
 bool blinkIsOn = false;
 
+bool powerupPresent;
+Powerup powerup;
+
 extern gamePhases currentPhase;
 
 
@@ -113,6 +116,23 @@ void renderGame() {
 		asteroids.push_back(tmpAsteroid);
 	}
 
+	if(powerupPresent) {
+		powerup.Move();
+		powerup.Draw();
+		if(powerup.isOutOfScreen()) powerupPresent = false;
+		if(powerup.collidesWith(&spaceship)) {
+			powerupPresent = false;
+			switch(powerup.getType()) {
+				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
+			}
+		}
+	} else {
+		if(Powerup::shouldSpawn()) {
+			powerupPresent = true;
+			powerup.Spawn();
+		}
+	}
+
 	asteroidPtr = asteroids.begin();
 	while(asteroidPtr != asteroids.end()) {
 		asteroidPtr->Draw();
@@ -159,6 +179,7 @@ void renderGame() {
 void updateTransformGame() {
 	spaceship.updateTransform();
 	scoreDisplay.updateTransform();
+	powerup.updateTransform();
 	for(int i = 0; i < numHearts; i++) hearts[i].updateTransform();
 }
 

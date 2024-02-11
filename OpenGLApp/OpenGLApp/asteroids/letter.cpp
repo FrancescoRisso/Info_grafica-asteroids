@@ -12,8 +12,6 @@ std::map<char, unsigned char> Letter::letterWidth;
 
 
 void Letter::addCharacterTexture(char c, const char* path, unsigned char width) {
-	char buf[100];
-
 	int id = addTexture(path);
 	if(id != -1) {
 		Letter::charToId[c] = id;

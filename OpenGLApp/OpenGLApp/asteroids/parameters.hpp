@@ -14,6 +14,7 @@
 #define radius_Star 0.005f
 #define radius_Heart 0.05f
 #define radius_Spacevoid 0.8
+#define radius_Powerup 0.05f
 
 
 /*	---------------------------------------------------------------------
@@ -24,6 +25,7 @@
 #define speed_Projectile 1.0f
 #define speed_Star 0.005f
 #define speed_Spaceship 0.5f
+#define speed_Powerup 0.3f
 
 
 /*	---------------------------------------------------------------------
@@ -37,6 +39,7 @@
 #define numTriangles_Letter 2
 #define numTriangles_Heart 2
 #define numTriangles_Spacevoid 2
+#define numTriangles_Powerup 2
 
 
 /*	---------------------------------------------------------------------
@@ -80,6 +83,9 @@ float timeBetweenSpawns();
 // plus or minus a random value <= asteroidAngleRandomness (in deg)
 #define asteroidAngleRandomness 30
 
+// same for powerups
+#define powerupAngleRandomness 30
+
 // the weights of an asteroid to be small, medium or large
 // chance is weight / (sum of the three weights)
 int weight_smallAsteroid();
@@ -89,6 +95,9 @@ int weight_largeAsteroid();
 // the percentage of momentum that is transferred from an asteroid to its
 // children
 #define conservedMomentum_Asteroid 0.65f
+
+// the average time between two powerup spawns
+#define avgTimeBetweenPowerups 30.0f
 
 
 /*	---------------------------------------------------------------------

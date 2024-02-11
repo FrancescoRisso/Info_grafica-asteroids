@@ -5,9 +5,11 @@
 #include <list>
 
 #include "../../Main.hpp"
+#include "../../utils.hpp"
 #include "../asteroid.hpp"
 #include "../displayString.hpp"
 #include "../heart.hpp"
+#include "../powerup.hpp"
 #include "../projectile.hpp"
 #include "../spaceship.hpp"
 #include "endScreen.hpp"

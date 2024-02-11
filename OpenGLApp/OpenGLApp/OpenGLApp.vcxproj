@@ -150,6 +150,7 @@
     <ClCompile Include="asteroids\logo.cpp" />
     <ClCompile Include="asteroids\object.cpp" />
     <ClCompile Include="asteroids\parameters.cpp" />
+    <ClCompile Include="asteroids\powerup.cpp" />
     <ClCompile Include="asteroids\projectile.cpp" />
     <ClCompile Include="asteroids\spaceship.cpp" />
     <ClCompile Include="asteroids\star.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="asteroids\object.hpp" />
     <ClInclude Include="asteroids\object_staticVariablesDefs.hpp" />
     <ClInclude Include="asteroids\parameters.hpp" />
+    <ClInclude Include="asteroids\powerup.hpp" />
     <ClInclude Include="asteroids\projectile.hpp" />
     <ClInclude Include="asteroids\spaceship.h" />
     <ClInclude Include="asteroids\star.hpp" />

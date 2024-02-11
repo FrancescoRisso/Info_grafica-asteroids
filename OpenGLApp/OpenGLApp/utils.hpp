@@ -18,6 +18,9 @@ extern unsigned int SCR_WIDTH;
 extern unsigned int SCR_HEIGHT;
 
 
+#define min(a, b) (a < b ? a : b)
+
+
 #define pi_float 3.14159265358979f
 
 
