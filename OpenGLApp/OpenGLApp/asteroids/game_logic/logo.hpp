@@ -33,12 +33,6 @@ class Spacevoid : public Object {
 	float radius() const override {
 		return radius_Spacevoid;
 	}
-
-	//void extraUpdateTransform() override;
-
-   private:
-	glm::vec2 basePos;
-	int position = 0;
 };
 
 }  // namespace Asteroids
