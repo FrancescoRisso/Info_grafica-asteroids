@@ -27,7 +27,7 @@ void prepareHomePage() {
 	char buf[100];
 	int highScore = getHighScore();
 	if(highScore == -1) highScore++;
-	sprintf_s(buf, "Best score: %d", highScore);
+	sprintf_s(buf, "Reset high score (currently %d)", highScore);
 
 	homeStrings[spaceVoidString].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
 	homeStrings[explore].Init(
@@ -83,7 +83,7 @@ void processKeyboardHomePage(GLFWwindow* window) {
 				break;
 			case resetScore:
 				resetHighScore();
-				homeStrings[highscore].changeString("Best score: 0");
+				homeStrings[highscore].changeString("Reset high score (currently 0)");
 				break;
 			case quitOption: glfwSetWindowShouldClose(window, true); break;
 		}
