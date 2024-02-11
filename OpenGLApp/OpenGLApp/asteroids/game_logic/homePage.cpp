@@ -16,7 +16,9 @@ DisplayString homeStrings[home_NUM_STRINGS];
 
 extern gamePhases currentPhase;
 
-static int state = 0;
+enum homeMenuOptions { startGame, showInstructions, resetScore, quitOption };
+
+static homeMenuOptions selectedOption = startGame;
 
 void prepareHomePage() {
 	char buf[100];
@@ -25,10 +27,12 @@ void prepareHomePage() {
 	sprintf_s(buf, "Best score: %d", highScore);
 
 	homeStrings[spacevoid].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
-	homeStrings[explore].Init(glm::vec2(0, 0.15), "Start Exploring", alignCenterHoriz, alignCenterVert, glm::vec3(state == 0 ? 1 : 0.5), 0.10);
-	homeStrings[instruct].Init(glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(state == 1 ? 1 : 0.5), 0.10);
-	homeStrings[highscore].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(state == 2 ? 1 : 0.5), 0.10);
-	homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(state == 3 ? 1 : 0.5), 0.10);
+	homeStrings[explore].Init(
+		glm::vec2(0, 0.15), "Start Exploring", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == startGame ? 1 : 0.5), 0.10);
+	homeStrings[instruct].Init(
+		glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == showInstructions ? 1 : 0.5), 0.10);
+	homeStrings[highscore].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resetScore ? 1 : 0.5), 0.10);
+	homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
 }
 
 void logoPrint() {
@@ -50,38 +54,38 @@ void updateTransformHomePage() {
 
 
 void updateColors() {
-	for(int i = 1; i < home_NUM_STRINGS; i++) homeStrings[i].setColor(glm::vec3(state == i - 1 ? 1 : 0.5));
+	for(int i = 1; i < home_NUM_STRINGS; i++) homeStrings[i].setColor(glm::vec3(selectedOption == i - 1 ? 1 : 0.5));
 }
 
 
 void processKeyboardHomePage(GLFWwindow* window) {
 	if(!pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		state = (state + 1) % 4;
+		selectedOption = (homeMenuOptions)((selectedOption + 1) % 4);
 		updateColors();
 		pressed[keyDown] = true;
 	}
 
 	if(!pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		state = (state - 1) % 4;
+		selectedOption = (homeMenuOptions)((selectedOption - 1) % 4);
 		updateColors();
 		pressed[keyUp] = true;
 	}
 
 	if(!pressed[space] && glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		switch(state) {
-			case 0:
+		switch(selectedOption) {
+			case startGame:
 				prepareGame();
 				currentPhase = game;
 				break;
-			case 1:
+			case showInstructions:
 				prepareInstructions();
 				currentPhase = instructions;
 				break;
-			case 2:
+			case resetScore:
 				resetHighScore();
 				homeStrings[highscore].changeString("Best score: 0");
 				break;
-			case 3: glfwSetWindowShouldClose(window, true); break;
+			case quitOption: glfwSetWindowShouldClose(window, true); break;
 		}
 	}
 
