@@ -100,7 +100,7 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 bool gameBubble = false;
 
 void renderGame() {
-	timeFromLastSpawn += deltaTime;
+	if(!paused)timeFromLastSpawn += deltaTime;
 	auto projectilePtr = projectiles.begin();
 	auto asteroidPtr = asteroids.begin();
 	scoreDisplay.Draw();
@@ -143,7 +143,7 @@ void renderGame() {
 					asteroids.clear();
 					break;
 				case shieldBubble: isInvulnerable = true; 
-					invulnerabilityCount = -15;
+					invulnerabilityCount = -10;
 					if(!gameBubble) {
 						spaceship.changeBubble();
 						gameBubble = !gameBubble;
@@ -161,7 +161,7 @@ void renderGame() {
 	}
 
 	if(explosionLevel != explosion_none) {
-		explosionTimer += deltaTime;
+		if (!paused) explosionTimer += deltaTime;
 		if(explosionTimer > explosionTimePerLevel) {
 			explosionTimer = 0;
 			explosionLevel = (explosionLevel_t)(explosionLevel + 1);
@@ -206,15 +206,19 @@ void renderGame() {
 			asteroidPtr++;
 	}
 
-	if(isInvulnerable) {
+	if(isInvulnerable && !paused) {
 		invulnerabilityCount += deltaTime;
 		blinkCount += deltaTime;
-
+		/* if(invulnerabilityCount >= 0 && invulnerabilityCount < invulnerabilityTime) {  
+			blinkCount = 0;
+			blinkIsOn = true; 
+			//gameBubble = blinkIsOn;
+		}*/
 		if(invulnerabilityCount > invulnerabilityTime) { isInvulnerable = false; 
 		if(gameBubble == true) {
 				spaceship.changeBubble();
 				spaceship.setExplosionLevel(explosion_none);
-				gameBubble = !gameBubble;
+				gameBubble = false;
 			}
 		}
 		if(blinkCount > (blinkIsOn ? blinkOn_time : blinkOff_time)) {
@@ -222,9 +226,18 @@ void renderGame() {
 			blinkCount = 0;
 		}
 	}
-
-	if(!isInvulnerable || blinkIsOn || gameBubble) 
+	bool powerupFlag = false;
+	if(!isInvulnerable || blinkIsOn)
 		spaceship.Draw();
+	else
+		if(gameBubble) powerupFlag = true;
+	if(isInvulnerable && invulnerabilityCount < 0 && gameBubble)
+		spaceship.Draw();
+	else if(powerupFlag){ spaceship.setExplosionLevel(explosion_none);
+		spaceship.Draw();
+	spaceship.setExplosionLevel(bubbled);
+	}
+
 
 	for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
 }
