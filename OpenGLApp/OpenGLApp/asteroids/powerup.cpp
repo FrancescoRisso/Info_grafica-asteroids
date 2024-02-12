@@ -38,6 +38,7 @@ void Powerup::Init(glm::vec2 pos, float angle) {
 
 	addTypeTexture(extraLife, "./resources/textures/powerup_heart.png");
 	addTypeTexture(destroyAsteroids, "./resources/textures/powerup_destroy_asteroids.png");
+	addTypeTexture(shieldBubble, "./resources/textures/powerup_shield.png");
 
 	initGL(tmpPoints);
 

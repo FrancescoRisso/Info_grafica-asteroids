@@ -88,4 +88,5 @@ int getHighScore();
 void resetHighScore();
 void setHighScore(int a);
 
+
 #endif

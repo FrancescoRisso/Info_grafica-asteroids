@@ -14,7 +14,9 @@
 
 namespace Asteroids {
 
-enum explosionLevel_t { explosion_none, explosion_1, explosion_2, explosion_3, explosion_NUM };
+enum explosionLevel_t { bubbled, explosion_none, explosion_1, explosion_2, explosion_3, explosion_NUM };
+
+
 
 class Spaceship : public Object {
    public:
@@ -35,7 +37,7 @@ class Spaceship : public Object {
 			- dir: the direction where to move
 	*/
 	void MoveDir(direction dir);
-
+	void changeBubble();
 
 	// Init: implemented as required by class Object.
 	// Since speed is fixed (assigned by Init), there is no need to pass an

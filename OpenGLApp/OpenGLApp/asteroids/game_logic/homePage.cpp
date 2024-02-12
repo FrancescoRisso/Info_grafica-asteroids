@@ -54,7 +54,7 @@ void prepareHomePage() {
 	if(highScore == -1) highScore++;
 	sprintf_s(buf, "Reset high score (currently %d)", highScore);
 
-	homeStrings[spaceVoidString].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
+	//homeStrings[spaceVoidString].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
 	homeStrings[explore].Init(
 		glm::vec2(0, 0.15), "Start game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == startGame ? 1 : 0.5), 0.10);
 	homeStrings[instruct].Init(
@@ -114,8 +114,8 @@ void processKeyboardHomePage(GLFWwindow* window) {
 				homeStrings[curHighScoreStr].changeString("Reset high score (currently 0)");
 				break;
 			case quitOption:
-				glfwSetWindowShouldClose(window, true);
 				saveRecord();
+				glfwSetWindowShouldClose(window, true);
 				break;
 		}
 	}

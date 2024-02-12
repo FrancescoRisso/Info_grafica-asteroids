@@ -10,6 +10,13 @@ staticVariablesInitialize_cpp(Spaceship);
 
 unsigned int Spaceship::explosionLevelTextures[];
 
+bool bubble = false;
+
+
+void Spaceship::changeBubble() {
+	bubble != bubble;
+}
+
 
 void Spaceship::addExplosionLevelTexture(explosionLevel_t level, const char* path) {
 	if(level == explosion_NUM) return;
@@ -36,6 +43,7 @@ void Spaceship::Init(glm::vec2 pos, float angle) {
 	// clang-format on
 
 	addExplosionLevelTexture(explosion_none, "./resources/textures/spaceship.png");
+	addExplosionLevelTexture(bubbled, "./resources/textures/spaceshipBubble2.png");
 	addExplosionLevelTexture(explosion_1, "./resources/textures/spaceship_exploding_1.png");
 	addExplosionLevelTexture(explosion_2, "./resources/textures/spaceship_exploding_2.png");
 	addExplosionLevelTexture(explosion_3, "./resources/textures/spaceship_exploding_3.png");
@@ -80,7 +88,7 @@ Projectile Spaceship::Shoot() {
 
 
 void Spaceship::setExplosionLevel(explosionLevel_t explosionLevel) {
-	scale = explosionLevel == explosion_none ? 1 : 1.5;
+	scale = explosionLevel == explosion_none || explosionLevel == bubbled ? 1 : 1.5;
 	useTexture(explosionLevelTextures[explosionLevel]);
 	updateTransform();
 }
