@@ -17,7 +17,6 @@ namespace Asteroids {
 enum explosionLevel_t { bubbled, explosion_none, explosion_1, explosion_2, explosion_3, explosion_NUM };
 
 
-
 class Spaceship : public Object {
    public:
 	Spaceship();

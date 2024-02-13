@@ -100,7 +100,7 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 bool gameBubble = false;
 
 void renderGame() {
-	if(!paused)timeFromLastSpawn += deltaTime;
+	if(!paused) timeFromLastSpawn += deltaTime;
 	auto projectilePtr = projectiles.begin();
 	auto asteroidPtr = asteroids.begin();
 	scoreDisplay.Draw();
@@ -135,21 +135,20 @@ void renderGame() {
 		if(powerup.collidesWith(&spaceship)) {
 			powerupPresent = false;
 			switch(powerup.getType()) {
-				case extraLife:
-					 heartsLeft = min(heartsLeft + 1, numHearts); break;
+				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
 				case destroyAsteroids:
-					
+
 					incrementScoreBy(asteroids.size());
 					asteroids.clear();
 					break;
-				case shieldBubble: isInvulnerable = true; 
+				case shieldBubble:
+					isInvulnerable = true;
 					invulnerabilityCount = -10;
 					if(!gameBubble) {
 						spaceship.changeBubble();
 						gameBubble = !gameBubble;
 						spaceship.setExplosionLevel(bubbled);
-						
-					} 
+					}
 					break;
 			}
 		}
@@ -161,7 +160,7 @@ void renderGame() {
 	}
 
 	if(explosionLevel != explosion_none) {
-		if (!paused) explosionTimer += deltaTime;
+		if(!paused) explosionTimer += deltaTime;
 		if(explosionTimer > explosionTimePerLevel) {
 			explosionTimer = 0;
 			explosionLevel = (explosionLevel_t)(explosionLevel + 1);
@@ -209,13 +208,14 @@ void renderGame() {
 	if(isInvulnerable && !paused) {
 		invulnerabilityCount += deltaTime;
 		blinkCount += deltaTime;
-		/* if(invulnerabilityCount >= 0 && invulnerabilityCount < invulnerabilityTime) {  
+		/* if(invulnerabilityCount >= 0 && invulnerabilityCount < invulnerabilityTime) {
 			blinkCount = 0;
-			blinkIsOn = true; 
+			blinkIsOn = true;
 			//gameBubble = blinkIsOn;
 		}*/
-		if(invulnerabilityCount > invulnerabilityTime) { isInvulnerable = false; 
-		if(gameBubble == true) {
+		if(invulnerabilityCount > invulnerabilityTime) {
+			isInvulnerable = false;
+			if(gameBubble == true) {
 				spaceship.changeBubble();
 				spaceship.setExplosionLevel(explosion_none);
 				gameBubble = false;
@@ -229,13 +229,14 @@ void renderGame() {
 	bool powerupFlag = false;
 	if(!isInvulnerable || blinkIsOn)
 		spaceship.Draw();
-	else
-		if(gameBubble) powerupFlag = true;
+	else if(gameBubble)
+		powerupFlag = true;
 	if(isInvulnerable && invulnerabilityCount < 0 && gameBubble)
 		spaceship.Draw();
-	else if(powerupFlag){ spaceship.setExplosionLevel(explosion_none);
+	else if(powerupFlag) {
+		spaceship.setExplosionLevel(explosion_none);
 		spaceship.Draw();
-	spaceship.setExplosionLevel(bubbled);
+		spaceship.setExplosionLevel(bubbled);
 	}
 
 
@@ -290,13 +291,13 @@ void updateColorsP() {
 void processKeyboardPause(GLFWwindow* window) {
 	if(!paused) return;
 	if(!pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		selectedOption = (pauseMenuOptions) ((selectedOption + 1) % 4);
+		selectedOption = (pauseMenuOptions)((selectedOption + 1) % 4);
 		updateColorsP();
 		pressed[keyDown] = true;
 	}
 
 	if(!pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		selectedOption = (pauseMenuOptions) ((selectedOption - 1 + 4) % 4);
+		selectedOption = (pauseMenuOptions)((selectedOption - 1 + 4) % 4);
 		updateColorsP();
 		pressed[keyUp] = true;
 	}
@@ -306,7 +307,7 @@ void processKeyboardPause(GLFWwindow* window) {
 			case resumeGame:
 				paused = !paused;
 				spaceship.PointTo(spaceshipPointTo);
-				break;	
+				break;
 			case restartGame:
 				prepareGame();
 				currentPhase = game;
@@ -344,15 +345,13 @@ void processKeyboardGame(GLFWwindow* window) {
 	}
 	if(!PkeyPressed && glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
 		PkeyPressed = true;
-		//if(!paused)
-			paused = !paused;
+		// if(!paused)
+		paused = !paused;
 		spaceship.PointTo(spaceshipPointTo);
-
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;
 	if(PkeyPressed && glfwGetKey(window, GLFW_KEY_P) == GLFW_RELEASE) PkeyPressed = false;
-
 }
 
 
