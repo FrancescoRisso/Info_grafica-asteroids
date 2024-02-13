@@ -11,7 +11,7 @@
 
 namespace Asteroids {
 
-enum powerup_t { extraLife, destroyAsteroids, powerup_NUM };
+enum powerup_t { extraLife, destroyAsteroids, shieldBubble, powerup_NUM };
 
 class Powerup : public Object {
    public:
