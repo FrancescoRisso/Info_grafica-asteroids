@@ -21,11 +21,11 @@
 	Speed of items
 -----------------------------------------------------------------------*/
 
-#define speed_Asteroid 0.5f
-#define speed_Projectile 1.0f
+#define speed_Asteroid 0.3f
+#define speed_Projectile 1.5f
 #define speed_Star 0.005f
 #define speed_Spaceship 0.5f
-#define speed_Powerup 0.3f
+#define speed_Powerup 0.2f
 
 
 /*	---------------------------------------------------------------------
