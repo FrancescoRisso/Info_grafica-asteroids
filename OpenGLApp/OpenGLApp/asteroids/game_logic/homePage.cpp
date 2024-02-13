@@ -28,7 +28,7 @@ void saveRecord() {
 	FILE* file;
 	int var = getHighScore();
 
-	fopen_s(&file, "./resources/record", "w");
+	fopen_s(&file, ".record", "w");
 	if(file == NULL) { return; }
 
 	fprintf_s(file, "%d", var);
@@ -39,7 +39,7 @@ void loadRecord() {
 	FILE* file;
 	int var;
 
-	fopen_s(&file, "./resources/record", "r");
+	fopen_s(&file, ".record", "r");
 	if(file == NULL) { return; }
 
 	fscanf_s(file, "%d", &var);
