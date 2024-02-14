@@ -57,6 +57,8 @@ float getiFlash() {
 }
 
 void prepareGame() {
+	preparePause();
+
 	spaceship.Init(glm::vec2(0));
 
 
