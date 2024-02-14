@@ -25,6 +25,8 @@ Powerup powerup;
 
 extern gamePhases currentPhase;
 
+float flashTimer = 0.0;
+
 float explosionTimer;
 explosionLevel_t explosionLevel;
 
@@ -138,6 +140,7 @@ bool gameBubble = false;
 bool flashIncrease = false;
 bool flashDecrease = false;
 float iFlash = 0;
+
 
 float getiFlash(){
 	return iFlash;
