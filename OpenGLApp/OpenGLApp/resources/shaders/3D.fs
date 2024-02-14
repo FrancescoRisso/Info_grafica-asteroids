@@ -1,11 +1,16 @@
 #version 330 core
 out vec4 FragColor;
 
-in vec2 TexCoords;
-
-uniform sampler2D texture_diffuse1;
+in vec3 Normal;
+in vec3 FragPos;
 
 void main()
 {    
-    FragColor = vec4(1, 1, 1, 0.5);
+	vec3 norm = normalize(Normal);
+	vec3 lightDir = normalize(vec3(0, 0, -0.75) - FragPos);
+
+	float diff = max(dot(norm, lightDir), 0.0);
+	vec3 color = 1.15* diff * vec3(1);
+
+    FragColor = vec4(color, 1.0);
 }
