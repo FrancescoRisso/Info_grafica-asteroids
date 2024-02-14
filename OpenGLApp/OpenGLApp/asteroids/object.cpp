@@ -149,6 +149,7 @@ void Object::initGL(float points[]) {
 			case shader_monochromatic: setShader(Shader("./resources/shaders/shader.vs", "./resources/shaders/shader.fs")); break;
 			case shader_withTexture: setShader(Shader("./resources/shaders/texture.vs", "./resources/shaders/texture.fs")); break;
 			case shader_textureTransparency: setShader(Shader("./resources/shaders/texture-alpha.vs", "./resources/shaders/texture-alpha.fs")); break;
+			case shader_3D: setShader(Shader("./resources/shaders/3D.vs", "./resources/shaders/3D.fs")); break;
 		}
 	}
 

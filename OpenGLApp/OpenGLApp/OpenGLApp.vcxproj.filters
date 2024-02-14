@@ -140,6 +140,12 @@
     <ClInclude Include="asteroids\powerup.hpp">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.vs">
