@@ -17,10 +17,14 @@ namespace Asteroids {
 
 enum size_t { small, medium, large };
 
+enum golden_t { normal, golden, golden_type_NUM};
+
+
+
 class Asteroid : public Object {
    public:
 	Asteroid();
-
+	bool goldenFlag = false;
 
 	// Init: implemented as required by class Object
 	void Init(glm::vec2 pos, float angle) override;
@@ -201,7 +205,12 @@ class Asteroid : public Object {
 			- the mass for that size
 	*/
 	static int getMass(size_t s);
+
+	static unsigned int texturesAsteroidsID[golden_type_NUM];
+	void addGoldenTexture(golden_t level, const char* path);
+
 };
+
 
 }  // namespace Asteroids
 

@@ -22,6 +22,7 @@
 -----------------------------------------------------------------------*/
 
 #define speed_Asteroid 0.3f
+#define speed_goldenAsteroid 1.5f
 #define speed_Projectile 1.5f
 #define speed_Star 0.005f
 #define speed_Spaceship 0.5f
@@ -91,7 +92,9 @@ float timeBetweenSpawns();
 int weight_smallAsteroid();
 int weight_mediumAsteroid();
 int weight_largeAsteroid();
-
+#define goldenChance 10
+#define minimumAsteroidsBetweenGolden 10
+#define goldenPoints 100
 // the percentage of momentum that is transferred from an asteroid to its
 // children
 #define conservedMomentum_Asteroid 0.65f
@@ -122,7 +125,7 @@ int weight_largeAsteroid();
 #define invulnerabilityTime 2.0f
 #define blinkOn_time 0.25f
 #define blinkOff_time 0.1f
-
+#define shieldTime 10
 
 /*	---------------------------------------------------------------------
 	Spaceship explosion
@@ -132,6 +135,12 @@ int weight_largeAsteroid();
 #define explosionTime 0.5f
 #define explosionTimePerLevel explosionTime / numExplosionLevels
 
+/*	---------------------------------------------------------------------
+	Flash parameters
+-----------------------------------------------------------------------*/
+
+#define flashBrightness 0.3f
+#define flashSpeed 0.0002f
 
 /*	---------------------------------------------------------------------
 	Title

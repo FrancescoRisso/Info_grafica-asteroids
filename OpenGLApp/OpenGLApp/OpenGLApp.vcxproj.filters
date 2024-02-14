@@ -75,6 +75,9 @@
     <ClCompile Include="asteroids\powerup.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+    <ClCompile Include="asteroids\game_logic\pause.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
     <ClCompile Include="model.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="asteroids\powerup.hpp">
       <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="asteroids\game_logic\pause.hpp">
+      <Filter>File di origine</Filter>
     </ClInclude>
     <ClInclude Include="mesh.h">
       <Filter>File di origine</Filter>

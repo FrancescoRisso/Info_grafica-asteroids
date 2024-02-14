@@ -16,10 +16,22 @@ bool Asteroid::shaderSet;
 
 extern float timeFromLastSpawn;
 
+static int goldenCoolDown = minimumAsteroidsBetweenGolden;
+
+unsigned int Asteroid::texturesAsteroidsID[];
+
+
+void Asteroid::addGoldenTexture(golden_t level, const char* path) {
+	if(level == golden_type_NUM) return;
+
+	int id = addTexture(path);
+	if(id != -1) Asteroid::texturesAsteroidsID[level] = id;
+}
+
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = scaleVector(speed_Asteroid * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
+	this->speed = scaleVector((goldenFlag? speed_goldenAsteroid : speed_Asteroid) * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
 	this->angle = angle;
 
 	// clang-format off
@@ -36,7 +48,8 @@ void Asteroid::Init(glm::vec2 pos, float angle) {
 
 	updateChildren();
 
-	addTexture("./resources/textures/asteroid.png");
+	addGoldenTexture(normal, "./resources/textures/asteroid.png");
+	addGoldenTexture(golden, "./resources/textures/golden_asteroid.png");
 
 	initGL(tmpPoints);
 }
@@ -47,6 +60,14 @@ void Asteroid::Spawn() {
 	glm::vec2 firstPos(0);
 
 	randomizeSize();
+	if(goldenCoolDown<=0 && rand() % 100 <= goldenChance) { goldenFlag = true;
+		goldenCoolDown = minimumAsteroidsBetweenGolden;
+		size = small;
+	} else {
+		goldenFlag = false;
+		goldenCoolDown--;
+	}
+
 
 	otherCoord = 1 + radius();
 
@@ -65,6 +86,10 @@ void Asteroid::Spawn() {
 	angle = angleBetweenVerticalDir(firstPos);
 	angle = angleOffset + angle;
 	Init(firstPos, angle);
+	if(goldenFlag)
+		useTexture(texturesAsteroidsID[golden]);
+	else
+		useTexture(texturesAsteroidsID[normal]);
 }
 
 
@@ -183,6 +208,8 @@ void Asteroid::updateChildren() {
 	}
 
 	for(int i = 0; i < numChildren; i++) childrenAngles.push_back(glm::radians(angles[i]));
+
+	useTexture(texturesAsteroidsID[normal]);
 }
 
 
@@ -196,10 +223,11 @@ Asteroid Asteroid::getChild() {
 
 	tmpAsteroid.size = children.back();
 	children.pop_back();
-
+	tmpAsteroid.goldenFlag = false;
 	tmpAsteroid.Init(pos, childrenAngles.back());
 	childrenAngles.pop_back();
-	tmpAsteroid.useSameTextureAs(this);
+	//tmpAsteroid.useSameTextureAs(this);
+	tmpAsteroid.useTexture(texturesAsteroidsID[normal]);
 
 	return tmpAsteroid;
 }
