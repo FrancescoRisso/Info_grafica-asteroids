@@ -1,7 +1,5 @@
 #include "homePage.hpp"
 
-#include "../logo.hpp"
-
 
 using namespace Asteroids;
 

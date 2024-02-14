@@ -4,7 +4,7 @@
 using namespace Asteroids;
 
 
-enum instructionsStrings { title, youSpaceship, avoidAsteroids, youCan, aim, shoot, move, pause, lives, returnMain, instr_NUM_STRINGS };
+enum instructionsStrings { title, youSpaceship, avoidAsteroids, youCan, aim, shoot, moveStr, pause, lives, returnMain, instr_NUM_STRINGS };
 
 DisplayString instrStrings[instr_NUM_STRINGS];
 
@@ -20,7 +20,7 @@ void prepareInstructions() {
 	instrStrings[youCan].Init(glm::vec2(-0.90, 0), "You can:", alignLeft, alignCenterVert, glm::vec3(1), 0.10);
 	instrStrings[aim].Init(glm::vec2(-0.90, -0.15), " - aim with your MOUSE", alignLeft, alignCenterVert, glm::vec3(1), 0.10);
 	instrStrings[shoot].Init(glm::vec2(-0.90, -0.3), " - shoot with SPACE", alignLeft, alignCenterVert, glm::vec3(1), 0.10);
-	instrStrings[move].Init(glm::vec2(-0.90, -0.45), " - move with WASD", alignLeft, alignCenterVert, glm::vec3(1), 0.10);
+	instrStrings[moveStr].Init(glm::vec2(-0.90, -0.45), " - move with WASD", alignLeft, alignCenterVert, glm::vec3(1), 0.10);
 	instrStrings[pause].Init(glm::vec2(-0.90, -0.6), " - pause (and continue) with P", alignLeft, alignCenterVert, glm::vec3(1), 0.10);
 	instrStrings[lives].Init(glm::vec2(-0.90, -0.75), "Once you finish your 3 lives, the game ends.", alignLeft, alignCenterVert, glm::vec3(1), 0.10);
 	instrStrings[returnMain].Init(glm::vec2(0.90, -0.95), "Press M to return to main menu.", alignRight, alignCenterVert, glm::vec3(1), 0.06);

@@ -1,7 +1,7 @@
 #ifndef _LOGO_H
 #define _LOGO_H
 
-#include "../model.h"
+#include "../model.hpp"
 #include "logo.hpp"
 #include "object.hpp"
 

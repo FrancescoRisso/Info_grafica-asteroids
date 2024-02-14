@@ -156,6 +156,7 @@
     <ClCompile Include="asteroids\star.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="model.cpp" />
     <ClCompile Include="shader_s.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -180,7 +181,7 @@
     <ClInclude Include="asteroids\star.hpp" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="mesh.h" />
-    <ClInclude Include="model.h" />
+    <ClInclude Include="model.hpp" />
     <ClInclude Include="shader_s.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="utils.hpp" />
