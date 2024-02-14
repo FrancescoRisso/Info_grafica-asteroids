@@ -12,7 +12,7 @@ void Object::updateTransform() {
 
 	transform = glm::scale(transform, glm::vec3(scale, 1));
 
-	transform = glm::translate(transform, glm::vec3(pos / scale, 0));
+	transform = glm::translate(transform, glm::vec3(pos / scale, zLayer));
 	transform = glm::rotate(transform, angle, glm::vec3(0, 0, 1));
 	transform = glm::rotate(transform, angleY, glm::vec3(0, 1, 0));
 	transform = glm::rotate(transform, angleX, glm::vec3(1, 0, 0));

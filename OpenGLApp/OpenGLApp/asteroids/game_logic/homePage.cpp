@@ -61,7 +61,7 @@ void prepareHomePage() {
 	homeStrings[curHighScoreStr].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
 
-	spacevoid.Init(glm::vec2(0, 0.55));
+	spacevoid.Init(glm::vec2(0, 0.65));
 }
 
 

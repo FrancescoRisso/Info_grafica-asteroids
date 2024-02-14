@@ -159,6 +159,7 @@ class Object {
 	// angles for 3D rotations
 	float angleY = 0;
 	float angleX = 0;
+	float zLayer = 0;
 
 	// transform: the matrix that applies the position, the rotation angle,
 	// and the scaling factor in order to keep proportions fixed
