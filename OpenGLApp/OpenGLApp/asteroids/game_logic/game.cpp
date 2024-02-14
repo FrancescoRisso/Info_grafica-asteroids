@@ -285,6 +285,7 @@ void renderGame() {
 			spaceship.setExplosionLevel(explosionLevel);
 			if(explosionLevel == explosion_NUM) {
 				if(heartsLeft <= 0) {
+					stopMusic();
 					currentPhase = endScreen;
 					setScoresEndScreen(destroyedAsteroids);
 				} else {
