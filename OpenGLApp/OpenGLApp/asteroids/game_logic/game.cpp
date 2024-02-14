@@ -346,7 +346,7 @@ void renderGame() {
 		}
 	}
 
-	if(flashDecrease) {
+	if(flashDecrease && !flashIncrease) {
 		iFlash -= flashSpeed;
 		if(iFlash <= 0.0) {
 			flashDecrease = false;
@@ -380,10 +380,10 @@ void renderGame() {
 void updateTransformGame() {
 	spaceship.updateTransform();
 	scoreDisplay.updateTransform();
-	if(paused) {
+
 		for(int i = 0; i < pause_NUM_STRINGS; i++) pauseStrings[i].updateTransform();
 	pauseStrings[pause].updateTransform();
-}
+
 	powerup.updateTransform();
 	for(int i = 0; i < numHearts; i++) hearts[i].updateTransform();
 }
