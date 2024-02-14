@@ -20,7 +20,24 @@ Star stars[numStars];
 gamePhases currentPhase = mainMenu;
 irrklang::ISoundEngine* engine;
 
-void restartMusic() {}
+void startMusic() {
+	if(!musicPlaying) {
+		engine->play2D("./resources/sounds/beatwave.wav", true);
+		musicPlaying = true;
+	}
+}
+
+void stopMusic(){
+		if(musicPlaying) {engine->drop();
+		musicPlaying = false;
+	}
+}
+
+//void restartMusic() {
+//	if (musicPlaying) { 
+//		engine->play2D("./resources/sounds/beatwave.wav", true);
+//	}
+//}
 
 int main() {
 	// init randomness
@@ -111,7 +128,7 @@ int main() {
 					engine = irrklang::createIrrKlangDevice();
 					engine->play2D("./resources/sounds/beatwave.wav", true);
 					musicPlaying = !musicPlaying;
-				}
+				} 
 				renderGame(); break;
 			case endScreen: renderEndScreen(); break;
 		}

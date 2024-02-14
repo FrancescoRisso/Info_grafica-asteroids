@@ -90,6 +90,7 @@ void processKeyboardPause(GLFWwindow* window) {
 				break;
 			case restartGame:
 				paused = !paused;
+				stopMusic();
 				prepareGame();
 				currentPhase = game;
 				break;

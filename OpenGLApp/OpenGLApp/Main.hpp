@@ -26,6 +26,8 @@
 
 enum gamePhases { mainMenu, instructions, game, endScreen };
 
-void restartMusic();
+void startMusic();
+
+void stopMusic();
 
 #endif
