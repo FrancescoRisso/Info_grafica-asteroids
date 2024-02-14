@@ -137,7 +137,7 @@ int weight_largeAsteroid();
 	Title
 -----------------------------------------------------------------------*/
 
-#define titleRotationAngle 10
+#define titleRotationAngle 20
 
 
 #endif
