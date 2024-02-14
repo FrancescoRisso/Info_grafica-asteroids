@@ -1,7 +1,5 @@
 #include "homePage.hpp"
 
-#include "../logo.hpp"
-
 
 using namespace Asteroids;
 
@@ -63,13 +61,14 @@ void prepareHomePage() {
 	homeStrings[curHighScoreStr].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
 	homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
 
-	spacevoid.Init(glm::vec2(0, 0.55));
+	spacevoid.Init(glm::vec2(0, 0.65));
 }
 
 
 void renderHomePage() {
 	for(int i = 1; i < home_NUM_STRINGS; i++)
 		if((selectedOption == resetScore && i != resetHighScoreStr) || (selectedOption != resetScore && i != curHighScoreStr)) homeStrings[i].Draw();
+	spacevoid.Move();
 	spacevoid.Draw();
 }
 

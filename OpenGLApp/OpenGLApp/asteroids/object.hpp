@@ -53,7 +53,7 @@ enum direction { up, down, left, right };
 	---------------------------------------------------------------------
 	Provides an easy way to choose a shader among the available ones
 */
-enum availableShaders { shader_monochromatic, shader_withTexture, shader_textureTransparency };
+enum availableShaders { shader_monochromatic, shader_withTexture, shader_textureTransparency, shader_3D };
 
 
 class Object {
@@ -92,7 +92,7 @@ class Object {
 		be the transformation matrix that handles the position and rotation
 		of the object
 	*/
-	void Draw() const;
+	virtual void Draw() const;
 
 
 	/*
@@ -111,7 +111,7 @@ class Object {
 		angle and scaling factor
 		It MUST be invoked every time position and angle (and eventually more
 		parameters, if needed by the class) change
-		If a child class needs some custom work, it should be put into 
+		If a child class needs some custom work, it should be put into
 		extraUpdateTransform, which is called at the start of updateTransform
 	*/
 	void updateTransform();
@@ -155,6 +155,11 @@ class Object {
 	// angle: the rotation angle of the object around its center
 	// angle = 0 points towards up, which is the positive Y direction
 	float angle = 0;
+
+	// angles for 3D rotations
+	float angleY = 0;
+	float angleX = 0;
+	float zLayer = 0;
 
 	// transform: the matrix that applies the position, the rotation angle,
 	// and the scaling factor in order to keep proportions fixed
