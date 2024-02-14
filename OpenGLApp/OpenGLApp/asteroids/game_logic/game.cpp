@@ -253,7 +253,7 @@ void renderGame() {
 		if(!paused) powerup.Move();
 		powerup.Draw();
 		if(powerup.isOutOfScreen()) powerupPresent = false;
-		if(powerup.collidesWith(&spaceship)) {
+		if(powerup.collidesWith(&spaceship)&&explosionLevel<=explosion_none) {
 			powerupPresent = false;
 			switch(powerup.getType()) {
 				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
@@ -277,7 +277,7 @@ void renderGame() {
 		}
 	}
 
-	if(explosionLevel != explosion_none) {
+	if(explosionLevel != explosion_none && explosionLevel != bubbled) {
 		if(!paused) explosionTimer += deltaTime;
 		if(explosionTimer > explosionTimePerLevel) {
 			explosionTimer = 0;
