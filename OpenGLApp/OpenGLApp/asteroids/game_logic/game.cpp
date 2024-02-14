@@ -34,7 +34,6 @@ bool PkeyPressed = false;
 glm::vec2 spaceshipPointTo;
 
 //pause new
-
 enum pauseMenuKeys { keyDown, keyUp, enter, keys_NUM };
 bool static pressed[keys_NUM] = {false};
 
@@ -46,8 +45,6 @@ enum pauseMenuOptions { resumeGame, restartGame, backToMenu, quitOption };
 
 static pauseMenuOptions selectedOption = resumeGame;
 
-
-/*gestione alternativa pausa*/
 
 
 void renderPause() {
@@ -115,7 +112,7 @@ void processKeyboardPause(GLFWwindow* window) {
 }
 
 
-/*fine gestione alternativa pausa*/
+
 
 
 //end pause new
