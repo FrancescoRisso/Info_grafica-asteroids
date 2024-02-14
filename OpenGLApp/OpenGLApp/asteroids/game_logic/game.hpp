@@ -15,8 +15,9 @@
 #include "endScreen.hpp"
 #include "homePage.hpp"
 
-
-/*
+float getiFlash();
+	
+	/*
 	prepareGame
 	---------------------------------------------------------------------
 	Does all the initializations for the game to start

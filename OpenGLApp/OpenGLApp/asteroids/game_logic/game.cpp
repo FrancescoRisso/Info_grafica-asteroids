@@ -33,6 +33,92 @@ bool PkeyPressed = false;
 
 glm::vec2 spaceshipPointTo;
 
+//pause new
+
+enum pauseMenuKeys { keyDown, keyUp, enter, keys_NUM };
+bool static pressed[keys_NUM] = {false};
+
+enum pauseStrings { resume, restartP, menu, quitP, pause_NUM_STRINGS, pause };
+
+DisplayString pauseStrings[pause_NUM_STRINGS];
+
+enum pauseMenuOptions { resumeGame, restartGame, backToMenu, quitOption };
+
+static pauseMenuOptions selectedOption = resumeGame;
+
+
+/*gestione alternativa pausa*/
+
+
+void renderPause() {
+	if(!paused) return;
+	for(int i = 0; i < pause_NUM_STRINGS; i++) pauseStrings[i].Draw();
+	pauseStrings[pause].Draw();
+}
+
+void pauseScreen() {
+	if(!paused) return;
+	renderPause();
+}
+
+void updateColorsP() {
+	if(!paused) return;
+	for(int i = 0; i < pause_NUM_STRINGS; i++) {
+		if(i == selectedOption)
+			pauseStrings[i].setColor(glm::vec3(1));
+		else
+			pauseStrings[i].setColor(glm::vec3(0.5));
+	}
+}
+
+void processKeyboardPause(GLFWwindow* window) {
+	if(!paused) return;
+	if(!pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		selectedOption = (pauseMenuOptions) ((selectedOption + 1) % 4);
+		updateColorsP();
+		pressed[keyDown] = true;
+	}
+
+	if(!pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		selectedOption = (pauseMenuOptions) ((selectedOption - 1 + 4) % 4);
+		updateColorsP();
+		pressed[keyUp] = true;
+	}
+
+	if(!pressed[enter] && glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+		switch(selectedOption) {
+			case resumeGame:
+				paused = !paused;
+				spaceship.PointTo(spaceshipPointTo);
+				break;
+			case restartGame:
+				paused = !paused;
+				prepareGame();
+				currentPhase = game;
+				break;
+			case backToMenu:
+				paused = !paused;
+				prepareHomePage();
+				enterSet();
+				currentPhase = mainMenu;
+				break;
+			case quitOption:
+				saveRecord();
+				glfwSetWindowShouldClose(window, true);
+				break;
+		}
+	}
+
+	if(pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_RELEASE) pressed[keyDown] = false;
+	if(pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_RELEASE) pressed[keyUp] = false;
+	if(pressed[enter] && glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_RELEASE) pressed[enter] = false;
+}
+
+
+/*fine gestione alternativa pausa*/
+
+
+//end pause new
 
 /*
 	checkAsteroidProjectileCollision
@@ -50,9 +136,18 @@ glm::vec2 spaceshipPointTo;
 */
 bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj);
 
+bool gameBubble = false;
+bool flashIncrease = false;
+bool flashDecrease = false;
+float iFlash = 0;
+
+float getiFlash(){
+	return iFlash;
+}
 
 void prepareGame() {
 	spaceship.Init(glm::vec2(0));
+	selectedOption = resumeGame;
 
 	for(int i = 0; i < numHearts; i++) hearts[i].Init(glm::vec2(0.95 - radius_Heart, 0.9 - radius_Heart), i);
 
@@ -60,7 +155,7 @@ void prepareGame() {
 
 	asteroids.clear();
 	projectiles.clear();
-
+	powerupPresent = false;
 	heartsLeft = numHearts;
 	destroyedAsteroids = 0;
 
@@ -71,6 +166,22 @@ void prepareGame() {
 
 	explosionTimer = 0;
 	explosionLevel = explosion_none;
+
+	flashIncrease = false;
+	flashDecrease = false;
+	iFlash = 0.0;
+
+	//pause new
+	pauseStrings[pause].Init(
+		glm::vec2(0, 0.35), "PAUSE", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.15);
+	pauseStrings[resume].Init(
+		glm::vec2(0, 0.15), "Resume game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resumeGame ? 1 : 0.5), 0.10);
+	pauseStrings[restartP].Init(
+		glm::vec2(0, 0.0), "Restart game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == restartGame ? 1 : 0.5), 0.10);
+	pauseStrings[menu].Init(
+		glm::vec2(0, -0.15), "Back to menu", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == backToMenu ? 1 : 0.5), 0.10);
+	pauseStrings[quitP].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
+	//end pause new
 }
 
 
@@ -97,7 +208,7 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 	return false;
 }
 
-bool gameBubble = false;
+
 
 void renderGame() {
 	if(!paused) timeFromLastSpawn += deltaTime;
@@ -136,14 +247,11 @@ void renderGame() {
 			powerupPresent = false;
 			switch(powerup.getType()) {
 				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
-				case destroyAsteroids:
-
-					incrementScoreBy(asteroids.size());
-					asteroids.clear();
+				case destroyAsteroids: flashIncrease = true;
 					break;
 				case shieldBubble:
 					isInvulnerable = true;
-					invulnerabilityCount = -10;
+					invulnerabilityCount = -shieldTime+2;
 					if(!gameBubble) {
 						spaceship.changeBubble();
 						gameBubble = !gameBubble;
@@ -194,7 +302,7 @@ void renderGame() {
 			continue;
 		}
 
-		if(explosionLevel == explosion_none && !isInvulnerable && asteroidPtr->collidesWith(&spaceship)) {
+		if(explosionLevel == explosion_none && !isInvulnerable && !flashIncrease && asteroidPtr->collidesWith(&spaceship)) {
 			explosionLevel = (explosionLevel_t)(explosionLevel + 1);
 			explosionTimer = 0;
 			--heartsLeft;
@@ -226,6 +334,26 @@ void renderGame() {
 			blinkCount = 0;
 		}
 	}
+
+		if(flashIncrease) {
+		iFlash += flashSpeed;
+		if(iFlash >= flashBrightness) {
+			iFlash = flashBrightness;
+			flashIncrease = false;
+			flashDecrease = true;
+			incrementScoreBy(asteroids.size());
+			asteroids.clear();
+		}
+	}
+
+	if(flashDecrease) {
+		iFlash -= flashSpeed;
+		if(iFlash <= 0.0) {
+			flashDecrease = false;
+			iFlash = 0.0;
+		}
+	}
+
 	bool powerupFlag = false;
 	if(!isInvulnerable || blinkIsOn)
 		spaceship.Draw();
@@ -240,6 +368,11 @@ void renderGame() {
 	}
 
 
+	
+
+	updateColorsP();
+	pauseScreen();
+
 	for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
 }
 
@@ -247,89 +380,16 @@ void renderGame() {
 void updateTransformGame() {
 	spaceship.updateTransform();
 	scoreDisplay.updateTransform();
+	if(paused) {
+		for(int i = 0; i < pause_NUM_STRINGS; i++) pauseStrings[i].updateTransform();
+	pauseStrings[pause].updateTransform();
+}
 	powerup.updateTransform();
 	for(int i = 0; i < numHearts; i++) hearts[i].updateTransform();
 }
 
 
-/*gestione alternativa pausa*/
 
-enum homePageKeys { keyDown, keyUp, space, keys_NUM };
-bool static pressed[keys_NUM] = {false};
-
-enum pauseStrings { resume, restartP, menu, quit, pause_NUM_STRINGS };
-
-DisplayString pauseStrings[pause_NUM_STRINGS];
-
-enum pauseMenuOptions { resumeGame, restartGame, backToMenu, quitOption };
-
-static pauseMenuOptions selectedOption = resumeGame;
-
-void renderPause() {
-	if(!paused) return;
-	for(int i = 1; i < pause_NUM_STRINGS; i++) pauseStrings[i].Draw();
-}
-
-void pauseScreen() {
-	if(!paused) return;
-	pauseStrings[resume].Init(
-		glm::vec2(0, 0.15), "Resume game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resumeGame ? 1 : 0.5), 0.10);
-	pauseStrings[restartP].Init(
-		glm::vec2(0, 0.0), "Restart game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == restartGame ? 1 : 0.5), 0.10);
-	pauseStrings[menu].Init(
-		glm::vec2(0, -0.15), "Back to menu", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == restartGame ? 1 : 0.5), 0.10);
-	pauseStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
-	renderPause();
-}
-
-void updateColorsP() {
-	if(!paused) return;
-	for(int i = 1; i < pause_NUM_STRINGS; i++)
-		if(i != 3 && i != 4) pauseStrings[i].setColor(glm::vec3(selectedOption == i - (i < 4 ? 1 : 2) ? 1 : 0.5));
-}
-
-void processKeyboardPause(GLFWwindow* window) {
-	if(!paused) return;
-	if(!pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		selectedOption = (pauseMenuOptions)((selectedOption + 1) % 4);
-		updateColorsP();
-		pressed[keyDown] = true;
-	}
-
-	if(!pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		selectedOption = (pauseMenuOptions)((selectedOption - 1 + 4) % 4);
-		updateColorsP();
-		pressed[keyUp] = true;
-	}
-
-	if(!pressed[space] && glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		switch(selectedOption) {
-			case resumeGame:
-				paused = !paused;
-				spaceship.PointTo(spaceshipPointTo);
-				break;
-			case restartGame:
-				prepareGame();
-				currentPhase = game;
-				break;
-			case backToMenu:
-				prepareHomePage();
-				currentPhase = mainMenu;
-				break;
-			case quitOption:
-				saveRecord();
-				glfwSetWindowShouldClose(window, true);
-				break;
-		}
-	}
-
-	if(pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_RELEASE) pressed[keyDown] = false;
-	if(pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_RELEASE) pressed[keyUp] = false;
-	if(pressed[space] && glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) pressed[space] = false;
-}
-
-
-/*fine gestione alternativa pausa*/
 
 void processKeyboardGame(GLFWwindow* window) {
 	if(!paused) {
@@ -342,12 +402,16 @@ void processKeyboardGame(GLFWwindow* window) {
 			if(timeFromLastShot == 0) projectiles.push_back(spaceship.Shoot());
 			timeFromLastShot += deltaTime;
 		}
-	}
+	} else
+		processKeyboardPause(window);
 	if(!PkeyPressed && glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
 		PkeyPressed = true;
-		// if(!paused)
-		paused = !paused;
-		spaceship.PointTo(spaceshipPointTo);
+		//selectedOption = resumeGame; 
+		if(!paused) {
+			paused = !paused;
+			spaceship.PointTo(spaceshipPointTo);
+		}
+		 pauseScreen();
 	}
 
 	if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) timeFromLastShot = 0;

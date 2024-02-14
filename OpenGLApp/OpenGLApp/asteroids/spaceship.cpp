@@ -43,7 +43,7 @@ void Spaceship::Init(glm::vec2 pos, float angle) {
 	// clang-format on
 
 	addExplosionLevelTexture(explosion_none, "./resources/textures/spaceship.png");
-	addExplosionLevelTexture(bubbled, "./resources/textures/spaceshipBubble2.png");
+	addExplosionLevelTexture(bubbled, "./resources/textures/spaceshipBubble_LEGACY.png");
 	addExplosionLevelTexture(explosion_1, "./resources/textures/spaceship_exploding_1.png");
 	addExplosionLevelTexture(explosion_2, "./resources/textures/spaceship_exploding_2.png");
 	addExplosionLevelTexture(explosion_3, "./resources/textures/spaceship_exploding_3.png");

@@ -97,7 +97,7 @@ int weight_largeAsteroid();
 #define conservedMomentum_Asteroid 0.65f
 
 // the average time between two powerup spawns
-#define avgTimeBetweenPowerups 30.0f
+#define avgTimeBetweenPowerups 3.0f
 
 
 /*	---------------------------------------------------------------------
@@ -122,7 +122,7 @@ int weight_largeAsteroid();
 #define invulnerabilityTime 2.0f
 #define blinkOn_time 0.25f
 #define blinkOff_time 0.1f
-
+#define shieldTime 10
 
 /*	---------------------------------------------------------------------
 	Spaceship explosion
@@ -132,5 +132,11 @@ int weight_largeAsteroid();
 #define explosionTime 0.5f
 #define explosionTimePerLevel explosionTime / numExplosionLevels
 
+/*	---------------------------------------------------------------------
+	Flash parameters
+-----------------------------------------------------------------------*/
+
+#define flashBrightness 0.3f
+#define flashSpeed 0.0002f
 
 #endif

@@ -6,7 +6,7 @@
 using namespace Asteroids;
 
 
-enum homePageKeys { keyDown, keyUp, space, keys_NUM };
+enum homePageKeys { keyDown, keyUp, enter, keys_NUM };
 bool pressed[keys_NUM] = {false};
 
 
@@ -28,7 +28,7 @@ void saveRecord() {
 	FILE* file;
 	int var = getHighScore();
 
-	fopen_s(&file, ".record", "w");
+	fopen_s(&file, "./resources/.record", "w");
 	if(file == NULL) { return; }
 
 	fprintf_s(file, "%d", var);
@@ -39,7 +39,7 @@ void loadRecord() {
 	FILE* file;
 	int var;
 
-	fopen_s(&file, ".record", "r");
+	fopen_s(&file, "./resources/.record", "r");
 	if(file == NULL) { return; }
 
 	fscanf_s(file, "%d", &var);
@@ -85,6 +85,9 @@ void updateColors() {
 		if(i != 3 && i != 4) homeStrings[i].setColor(glm::vec3(selectedOption == i - (i < 4 ? 1 : 2) ? 1 : 0.5));
 }
 
+void enterSet() {
+	pressed[enter] = true;
+}
 
 void processKeyboardHomePage(GLFWwindow* window) {
 	if(!pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
@@ -99,7 +102,7 @@ void processKeyboardHomePage(GLFWwindow* window) {
 		pressed[keyUp] = true;
 	}
 
-	if(!pressed[space] && glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+	if(!pressed[enter] && glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
 		switch(selectedOption) {
 			case startGame:
 				prepareGame();
@@ -122,7 +125,7 @@ void processKeyboardHomePage(GLFWwindow* window) {
 
 	if(pressed[keyDown] && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_RELEASE) pressed[keyDown] = false;
 	if(pressed[keyUp] && glfwGetKey(window, GLFW_KEY_UP) == GLFW_RELEASE) pressed[keyUp] = false;
-	if(pressed[space] && glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) pressed[space] = false;
+	if(pressed[enter] && glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_RELEASE) pressed[enter] = false;
 }
 
 

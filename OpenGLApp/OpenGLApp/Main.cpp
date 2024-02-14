@@ -84,7 +84,7 @@ int main() {
 
 		// render
 		// ------
-		glClearColor(0, 0, 0, 1);
+		glClearColor(getiFlash(), getiFlash(), getiFlash(), 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		for(int i = 0; i < numStars; i++) {
