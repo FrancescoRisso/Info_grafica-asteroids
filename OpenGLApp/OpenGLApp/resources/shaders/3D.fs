@@ -13,6 +13,4 @@ void main()
 	vec3 color = diff * vec3(1);
 
     FragColor = vec4(color, 1.0);
-	// FragColor = vec4(1);
-	// FragColor = vec4(0.5+0.5*Normal.y, 0, 0, 1);
 }
