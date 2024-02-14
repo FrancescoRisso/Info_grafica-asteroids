@@ -18,13 +18,16 @@ static float musicPlaying = false;
 Star stars[numStars];
 
 gamePhases currentPhase = mainMenu;
+irrklang::ISoundEngine* engine;
 
+void restartMusic() {}
 
 int main() {
 	// init randomness
 	srand(time(NULL));
-	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
-	if(!engine) return 0;  // error starting up the engine
+
+	
+
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -96,11 +99,17 @@ int main() {
 		}
 
 		switch(currentPhase) {
-			case mainMenu: renderHomePage(); break;
+			case mainMenu: 
+				if(musicPlaying) {
+					if(engine) engine->drop();
+					musicPlaying = !musicPlaying;
+				}
+				renderHomePage(); break;
 			case instructions: renderInstructions(); break;
 			case game: 
 				if(!musicPlaying) {
-					//engine->play2D("./resources/sounds/beatwave.mp3", true);
+					engine = irrklang::createIrrKlangDevice();
+					engine->play2D("./resources/sounds/beatwave.wav", true);
 					musicPlaying = !musicPlaying;
 				}
 				renderGame(); break;
