@@ -14,7 +14,7 @@ unsigned int SCR_HEIGHT = 600;
 // mouse
 float deltaTime;
 float lastFrame = 0;
-
+static float musicPlaying = false;
 Star stars[numStars];
 
 gamePhases currentPhase = mainMenu;
@@ -23,7 +23,8 @@ gamePhases currentPhase = mainMenu;
 int main() {
 	// init randomness
 	srand(time(NULL));
-
+	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+	if(!engine) return 0;  // error starting up the engine
 	// glfw: initialize and configure
 	// ------------------------------
 	glfwInit();
@@ -97,7 +98,12 @@ int main() {
 		switch(currentPhase) {
 			case mainMenu: renderHomePage(); break;
 			case instructions: renderInstructions(); break;
-			case game: renderGame(); break;
+			case game: 
+				if(!musicPlaying) {
+					//engine->play2D("./resources/sounds/beatwave.mp3", true);
+					musicPlaying = !musicPlaying;
+				}
+				renderGame(); break;
 			case endScreen: renderEndScreen(); break;
 		}
 
