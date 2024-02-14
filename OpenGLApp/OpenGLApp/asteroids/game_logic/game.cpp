@@ -157,6 +157,8 @@ void preparePause(){
 }
 
 void prepareGame() {
+	preparePause();
+
 	spaceship.Init(glm::vec2(0));
 	
 
