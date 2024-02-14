@@ -99,6 +99,7 @@ int main() {
 			case instructions: renderInstructions(); break;
 			case game: renderGame(); break;
 			case endScreen: renderEndScreen(); break;
+			case pauseScreen: renderPause(); break;
 		}
 
 
@@ -127,6 +128,7 @@ void processInput(GLFWwindow* window) {
 		case game: processKeyboardGame(window); break;
 		case endScreen: processKeyboardEndScreen(window); break;
 		case mainMenu: processKeyboardHomePage(window); break;
+		case pauseScreen: processKeyboardPause(window); break;
 	}
 }
 
@@ -141,6 +143,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 	for(int i = 0; i < numStars; i++) stars[i].updateTransform();
 	updateTransformGame();
+	updateTransformPause();
 	updateTransformEndScreen();
 	updateTransformInstructions();
 	updateTransformHomePage();
@@ -150,6 +153,8 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
 	switch(currentPhase) {
 		case instructions: processMouseInstructions(window, xposIn, yposIn); break;
 		case game: processMouseGame(window, xposIn, yposIn); break;
+		case mainMenu: processMouseHomePage(window, xposIn, yposIn); break;
+		case pauseScreen: processMousePause(window, xposIn, yposIn); break;
 		case endScreen: processMouseEndScreen(window, xposIn, yposIn); break;
 	}
 }
