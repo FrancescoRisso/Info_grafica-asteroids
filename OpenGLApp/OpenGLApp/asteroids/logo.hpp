@@ -18,6 +18,7 @@ class Spacevoid : public Object {
 	staticVariablesAndFunctionDefinitions_hpp(Spacevoid);
 
 	void Draw() const override;
+	void Move() override;
 
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here

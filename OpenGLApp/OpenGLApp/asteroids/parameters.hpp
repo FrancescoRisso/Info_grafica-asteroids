@@ -133,4 +133,11 @@ int weight_largeAsteroid();
 #define explosionTimePerLevel explosionTime / numExplosionLevels
 
 
+/*	---------------------------------------------------------------------
+	Title
+-----------------------------------------------------------------------*/
+
+#define titleRotationAngle 10
+
+
 #endif

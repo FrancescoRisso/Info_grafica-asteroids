@@ -68,6 +68,7 @@ void prepareHomePage() {
 void renderHomePage() {
 	for(int i = 1; i < home_NUM_STRINGS; i++)
 		if((selectedOption == resetScore && i != resetHighScoreStr) || (selectedOption != resetScore && i != curHighScoreStr)) homeStrings[i].Draw();
+	spacevoid.Move();
 	spacevoid.Draw();
 }
 
