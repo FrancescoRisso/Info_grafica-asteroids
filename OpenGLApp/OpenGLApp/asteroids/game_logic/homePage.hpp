@@ -4,7 +4,7 @@
 
 #include "../../Main.hpp"
 #include "../displayString.hpp"
-#include "homePage.hpp"
+#include "../logo.hpp"
 
 
 /*

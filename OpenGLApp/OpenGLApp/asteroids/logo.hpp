@@ -1,8 +1,10 @@
 #ifndef _LOGO_H
 #define _LOGO_H
 
-#include "object.hpp"
+#include "../model.hpp"
 #include "logo.hpp"
+#include "object.hpp"
+
 
 namespace Asteroids {
 
@@ -15,6 +17,9 @@ class Spacevoid : public Object {
 
 	staticVariablesAndFunctionDefinitions_hpp(Spacevoid);
 
+	void Draw() const override;
+	void Move() override;
+
    protected:
 	// projectile can exit the screen: the default "false" is overwritten here
 	bool canExitTheScreen() const override {
@@ -23,11 +28,11 @@ class Spacevoid : public Object {
 
 	// set number of triangles to be rendered
 	int numTriangles() const override {
-		return numTriangles_Spacevoid;
+		return 0;
 	};
 
 	availableShaders shaderChoice() const override {
-		return shader_withTexture;
+		return shader_3D;
 	}
 
 	float radius() const override {

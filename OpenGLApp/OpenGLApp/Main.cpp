@@ -64,6 +64,8 @@ int main() {
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
 
+	glEnable(GL_DEPTH_TEST);
+
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
@@ -85,7 +87,7 @@ int main() {
 		// render
 		// ------
 		glClearColor(0, 0, 0, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		for(int i = 0; i < numStars; i++) {
 			stars[i].Draw();
