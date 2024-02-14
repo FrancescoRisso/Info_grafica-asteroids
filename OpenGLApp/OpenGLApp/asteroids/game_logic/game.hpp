@@ -64,5 +64,5 @@ void processKeyboardGame(GLFWwindow* window);
 */
 void processMouseGame(GLFWwindow* window, double xposIn, double yposIn);
 
-
+void preparePause();
 #endif

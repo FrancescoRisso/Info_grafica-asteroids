@@ -105,11 +105,11 @@ void processKeyboardHomePage(GLFWwindow* window) {
 	if(!pressed[enter] && glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
 		switch(selectedOption) {
 			case startGame:
-				//prepareGame();
+				prepareGame();
 				currentPhase = game;
 				break;
 			case showInstructions:
-				//prepareInstructions();
+				prepareInstructions();
 				currentPhase = instructions;
 				break;
 			case resetScore:

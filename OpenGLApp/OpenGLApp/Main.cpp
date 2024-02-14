@@ -61,6 +61,7 @@ int main() {
 	prepareEndScreen();
 	prepareInstructions();
 	prepareHomePage();
+	preparePause();
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
 

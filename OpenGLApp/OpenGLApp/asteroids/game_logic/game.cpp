@@ -145,9 +145,23 @@ float getiFlash(){
 	return iFlash;
 }
 
+void preparePause(){
+	selectedOption = resumeGame;
+	// pause new
+	pauseStrings[pause].Init(glm::vec2(0, 0.35), "PAUSE", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.15);
+	pauseStrings[resume].Init(
+		glm::vec2(0, 0.15), "Resume game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resumeGame ? 1 : 0.5), 0.10);
+	pauseStrings[restartP].Init(
+		glm::vec2(0, 0.0), "Restart game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == restartGame ? 1 : 0.5), 0.10);
+	pauseStrings[menu].Init(
+		glm::vec2(0, -0.15), "Back to menu", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == backToMenu ? 1 : 0.5), 0.10);
+	pauseStrings[quitP].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
+	// end pause new
+}
+
 void prepareGame() {
 	spaceship.Init(glm::vec2(0));
-	selectedOption = resumeGame;
+	
 
 	for(int i = 0; i < numHearts; i++) hearts[i].Init(glm::vec2(0.95 - radius_Heart, 0.9 - radius_Heart), i);
 
@@ -171,17 +185,7 @@ void prepareGame() {
 	flashDecrease = false;
 	iFlash = 0.0;
 
-	//pause new
-	pauseStrings[pause].Init(
-		glm::vec2(0, 0.35), "PAUSE", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.15);
-	pauseStrings[resume].Init(
-		glm::vec2(0, 0.15), "Resume game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resumeGame ? 1 : 0.5), 0.10);
-	pauseStrings[restartP].Init(
-		glm::vec2(0, 0.0), "Restart game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == restartGame ? 1 : 0.5), 0.10);
-	pauseStrings[menu].Init(
-		glm::vec2(0, -0.15), "Back to menu", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == backToMenu ? 1 : 0.5), 0.10);
-	pauseStrings[quitP].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
-	//end pause new
+
 }
 
 
@@ -198,8 +202,14 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 	while(asteroidPtr != asteroids.end()) {
 		if(asteroidPtr->collidesWith(&(*proj))) {
 			while(asteroidPtr->hasChildren()) asteroids.push_back(asteroidPtr->getChild());
+			if(asteroidPtr->goldenFlag) {
+				incrementScoreBy(goldenPoints);
+				
+			} else {
+				incrementScoreBy(1);
+			
+			}
 			asteroidPtr = asteroids.erase(asteroidPtr);
-			incrementScoreBy(1);
 			return true;
 		}
 		asteroidPtr++;
