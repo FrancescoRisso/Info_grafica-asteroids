@@ -67,5 +67,5 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn);
 
 int getScore();
 
-
+void powerupIsPresent();
 #endif
