@@ -1,6 +1,9 @@
 #include "parameters.hpp"
-#include "./game_logic/game.hpp"
+
 #include <cmath>
+
+#include "./game_logic/game.hpp"
+
 
 extern int destroyedAsteroids;
 
