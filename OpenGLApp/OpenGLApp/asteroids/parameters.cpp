@@ -87,8 +87,8 @@ float setSpeedDifficulty(float speed, bool isPositive) {
 	if(getScore() <= 100) return speed;
 	int score = getScore() - 100;
 	if(score > 2100) score = 2100;
-  
-	float deltaSpeed = score * 2*0f;
+
+	float deltaSpeed = score * 2.0f;
 	deltaSpeed /= 2000;
 	deltaSpeed += 1;
 
