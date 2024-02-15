@@ -142,7 +142,7 @@ void Asteroid::updateChildren() {
 
 	float prevDist;
 
-	int baseAngle = -angleBetweenVerticalDir(speed) * 180 / pi_float;
+	int baseAngle = (int) (-angleBetweenVerticalDir(speed) * 180 / pi_float);
 
 	int numTries = 0;
 
