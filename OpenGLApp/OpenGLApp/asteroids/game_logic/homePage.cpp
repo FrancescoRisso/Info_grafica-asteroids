@@ -52,14 +52,13 @@ void prepareHomePage() {
 	if(highScore == -1) highScore++;
 	sprintf_s(buf, "Reset high score (currently %d)", highScore);
 
-	// homeStrings[spaceVoidString].Init(glm::vec2(0, 0.65), " SPACEVOID", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
 	homeStrings[explore].Init(
-		glm::vec2(0, 0.15), "Start game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == startGame ? 1 : 0.5), 0.10);
+		glm::vec2(0, 0.15), "Start game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == startGame ? 1 : 0.5f), 0.10f);
 	homeStrings[instruct].Init(
-		glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == showInstructions ? 1 : 0.5), 0.10);
-	homeStrings[resetHighScoreStr].Init(glm::vec2(0, -0.15), "Reset high score", alignCenterHoriz, alignCenterVert, glm::vec3(0.5), 0.10);
-	homeStrings[curHighScoreStr].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
-	homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
+		glm::vec2(0, 0.0), "Instructions", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == showInstructions ? 1 : 0.5f), 0.10f);
+	homeStrings[resetHighScoreStr].Init(glm::vec2(0, -0.15), "Reset high score", alignCenterHoriz, alignCenterVert, glm::vec3(0.5f), 0.10f);
+	homeStrings[curHighScoreStr].Init(glm::vec2(0, -0.15), buf, alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10f);
+	homeStrings[quit].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5f), 0.10f);
 
 	spacevoid.Init(glm::vec2(0, 0.65));
 }
@@ -81,7 +80,7 @@ void updateTransformHomePage() {
 
 void updateColors() {
 	for(int i = 1; i < home_NUM_STRINGS; i++)
-		if(i != 3 && i != 4) homeStrings[i].setColor(glm::vec3(selectedOption == i - (i < 4 ? 1 : 2) ? 1 : 0.5));
+		if(i != 3 && i != 4) homeStrings[i].setColor(glm::vec3(selectedOption == i - (i < 4 ? 1 : 2) ? 1 : 0.5f));
 }
 
 void enterSet() {

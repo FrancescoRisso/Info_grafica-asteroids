@@ -15,7 +15,7 @@ float angleBetween(glm::vec2 a, glm::vec2 b, glm::vec2 origin) {
 	float sin = sina * cosb - cosa * sinb;
 	float cos = cosa * cosb + sina * sinb;
 
-	if(cos < 0) return glm::atan(sin / cos) + glm::radians(180.0);
+	if(cos < 0) return glm::atan(sin / cos) + (float) glm::radians(180.0);
 	return glm::atan(sin / cos);
 }
 

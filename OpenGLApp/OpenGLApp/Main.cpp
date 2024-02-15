@@ -27,25 +27,17 @@ void startMusic() {
 	}
 }
 
-void stopMusic(){
-		if(musicPlaying) {engine->drop();
+void stopMusic() {
+	if(musicPlaying) {
+		engine->drop();
 		musicPlaying = false;
 	}
 }
 
 
-
-//void restartMusic() {
-//	if (musicPlaying) { 
-//		engine->play2D("./resources/sounds/beatwave.wav", true);
-//	}
-//}
-
 int main() {
 	// init randomness
-	srand(time(NULL));
-
-	
+	srand((unsigned int) time(NULL));
 
 	// glfw: initialize and configure
 	// ------------------------------
@@ -79,12 +71,12 @@ int main() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
+
 	loadRecord();
 	prepareGame();
 	prepareEndScreen();
 	prepareInstructions();
 	prepareHomePage();
-	//hpreparePause();
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
 
@@ -93,8 +85,6 @@ int main() {
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
-		// if(hasDied) continue;
-
 		// input
 		// -----
 		processInput(window);
@@ -120,20 +110,22 @@ int main() {
 		}
 
 		switch(currentPhase) {
-			case mainMenu: 
+			case mainMenu:
 				if(musicPlaying) {
 					if(engine) engine->drop();
 					musicPlaying = !musicPlaying;
 				}
-				renderHomePage(); break;
+				renderHomePage();
+				break;
 			case instructions: renderInstructions(); break;
-			case game: 
+			case game:
 				if(!musicPlaying) {
 					engine = irrklang::createIrrKlangDevice();
 					engine->play2D("./resources/sounds/beatwave.wav", true);
 					musicPlaying = !musicPlaying;
-				} 
-				renderGame(); break;
+				}
+				renderGame();
+				break;
 			case endScreen: renderEndScreen(); break;
 			case pauseScreen: renderPause(); break;
 		}

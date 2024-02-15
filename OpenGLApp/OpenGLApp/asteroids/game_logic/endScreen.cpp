@@ -13,13 +13,13 @@ extern gamePhases currentPhase;
 
 
 void prepareEndScreen() {
-	endGameStrings[gmOver].Init(glm::vec2(0, 0.65), "GAME OVER", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25);
-	endGameStrings[yourScore].Init(glm::vec2(0, 0.3), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
-	endGameStrings[hiScore].Init(glm::vec2(0, 0.15), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
-	endGameStrings[newBest].Init(glm::vec2(0, 0.05), "New high score!", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.06);
-	endGameStrings[restart].Init(glm::vec2(0, -0.25), "Press R to restart", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
-	endGameStrings[goHome1].Init(glm::vec2(0, -0.53), "Press M to return", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
-	endGameStrings[goHome2].Init(glm::vec2(0, -0.66), "to the main menu", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10);
+	endGameStrings[gmOver].Init(glm::vec2(0, 0.65), "GAME OVER", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.25f);
+	endGameStrings[yourScore].Init(glm::vec2(0, 0.3), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10f);
+	endGameStrings[hiScore].Init(glm::vec2(0, 0.15), "", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10f);
+	endGameStrings[newBest].Init(glm::vec2(0, 0.05), "New high score!", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.06f);
+	endGameStrings[restart].Init(glm::vec2(0, -0.25), "Press R to restart", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10f);
+	endGameStrings[goHome1].Init(glm::vec2(0, -0.53), "Press M to return", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10f);
+	endGameStrings[goHome2].Init(glm::vec2(0, -0.66), "to the main menu", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.10f);
 }
 
 

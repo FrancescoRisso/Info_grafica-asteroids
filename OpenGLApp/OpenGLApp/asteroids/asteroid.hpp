@@ -17,8 +17,7 @@ namespace Asteroids {
 
 enum size_t { small, medium, large };
 
-enum golden_t { normal, golden, golden_type_NUM};
-
+enum golden_t { normal, golden, golden_type_NUM };
 
 
 class Asteroid : public Object {
@@ -173,10 +172,10 @@ class Asteroid : public Object {
 
    private:
 	// size: the size of this asteroid
-	size_t size;
+	size_t size = small;
 
 	// numChildren: the number of children this asteroid will generate
-	unsigned int numChildren;
+	unsigned int numChildren = 0;
 
 	// children: the sizes of the children asteroids
 	std::vector<size_t> children;
@@ -208,7 +207,6 @@ class Asteroid : public Object {
 
 	static unsigned int texturesAsteroidsID[golden_type_NUM];
 	void addGoldenTexture(golden_t level, const char* path);
-
 };
 
 
