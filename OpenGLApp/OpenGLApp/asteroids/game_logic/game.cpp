@@ -75,7 +75,6 @@ void prepareGame() {
 	projectiles.clear();
 	powerupPresent = false;
 	heartsLeft = numHearts;
-	destroyedAsteroids = 0;
 
 	timeFromLastShot = 0.0000000001;
 	timeFromLastSpawn = 0;
