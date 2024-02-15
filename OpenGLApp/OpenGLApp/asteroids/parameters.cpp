@@ -87,7 +87,7 @@ float setSpeedDifficulty(float speed, bool isPositive) {
 	// X:3 = score:2000
 
 	//dS : S = x:100
-	float deltaSpeed = score * 3;
+	float deltaSpeed = score * 2;
 	deltaSpeed /= 2000;
 	deltaSpeed += 1;
 

@@ -140,8 +140,15 @@ int weight_largeAsteroid();
 -----------------------------------------------------------------------*/
 
 #define flashBrightness 0.3f
-#define flashSpeed 0.0002f
+#define flashSpeed 0.0005f
 
 float setSpeedDifficulty(float speed, bool isPositive);
+
+/*	---------------------------------------------------------------------
+	Title
+-----------------------------------------------------------------------*/
+
+#define titleRotationAngle 20
+
 
 #endif
