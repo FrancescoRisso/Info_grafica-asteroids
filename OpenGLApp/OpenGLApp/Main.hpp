@@ -4,6 +4,7 @@
 // clang-format off
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <irrKlang.h>
 // clang-format on
 
 #include <iostream>
@@ -25,5 +26,10 @@
 #include "asteroids/game_logic/pause.hpp"
 
 enum gamePhases { mainMenu, instructions, game, endScreen, pauseScreen };
+
+void startMusic();
+
+void stopMusic();
+
 
 #endif

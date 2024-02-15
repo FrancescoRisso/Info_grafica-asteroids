@@ -14,15 +14,38 @@ unsigned int SCR_HEIGHT = 600;
 // mouse
 float deltaTime;
 float lastFrame = 0;
-
+static float musicPlaying = false;
 Star stars[numStars];
 
 gamePhases currentPhase = mainMenu;
+irrklang::ISoundEngine* engine;
 
+void startMusic() {
+	if(!musicPlaying) {
+		engine->play2D("./resources/sounds/beatwave.wav", true);
+		musicPlaying = true;
+	}
+}
+
+void stopMusic(){
+		if(musicPlaying) {engine->drop();
+		musicPlaying = false;
+	}
+}
+
+
+
+//void restartMusic() {
+//	if (musicPlaying) { 
+//		engine->play2D("./resources/sounds/beatwave.wav", true);
+//	}
+//}
 
 int main() {
 	// init randomness
 	srand(time(NULL));
+
+	
 
 	// glfw: initialize and configure
 	// ------------------------------
@@ -97,9 +120,20 @@ int main() {
 		}
 
 		switch(currentPhase) {
-			case mainMenu: renderHomePage(); break;
+			case mainMenu: 
+				if(musicPlaying) {
+					if(engine) engine->drop();
+					musicPlaying = !musicPlaying;
+				}
+				renderHomePage(); break;
 			case instructions: renderInstructions(); break;
-			case game: renderGame(); break;
+			case game: 
+				if(!musicPlaying) {
+					engine = irrklang::createIrrKlangDevice();
+					engine->play2D("./resources/sounds/beatwave.wav", true);
+					musicPlaying = !musicPlaying;
+				} 
+				renderGame(); break;
 			case endScreen: renderEndScreen(); break;
 			case pauseScreen: renderPause(); break;
 		}

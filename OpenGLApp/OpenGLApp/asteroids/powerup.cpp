@@ -21,7 +21,7 @@ void Powerup::addTypeTexture(powerup_t type, const char* path) {
 
 void Powerup::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = scaleVector(speed_Powerup * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
+	this->speed = scaleVector(setSpeedDifficulty(speed_Powerup, true) * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
 	this->angle = 0;
 
 	// clang-format off

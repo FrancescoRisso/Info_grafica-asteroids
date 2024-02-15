@@ -36,6 +36,7 @@ void updateTransformEndScreen() {
 
 void processKeyboardEndScreen(GLFWwindow* window) {
 	if(glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+		stopMusic();
 		prepareGame();
 		currentPhase = game;
 	}
