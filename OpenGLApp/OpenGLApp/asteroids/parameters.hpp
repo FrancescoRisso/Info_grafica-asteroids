@@ -150,8 +150,8 @@ int weight_largeAsteroid();
 float setSpeedDifficulty(float speed, bool isPositive);
 
 #define maxScoreDifficulty 2000
-#define minScoreDifficuly 100
-#define maxDifficultyFactor 3 //actual factor = maxDifficultyFactor * 2
+#define minScoreDifficulty 100
+#define maxDifficultyFactor 3  // actual factor = maxDifficultyFactor * 2
 
 /*	---------------------------------------------------------------------
 	Title

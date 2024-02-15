@@ -84,10 +84,10 @@ float timeBetweenSpawns() {
 }
 
 float setSpeedDifficulty(float speed, bool isPositive) {
-	if(getScore() <= minScoreDifficuly) return speed;
-	int score = getScore() - minScoreDifficuly;
-	if(score > maxScoreDifficulty + minScoreDifficuly) score = maxScoreDifficulty + minScoreDifficuly;
-  
+	if(getScore() <= minScoreDifficulty) return speed;
+	int score = getScore() - minScoreDifficulty;
+	if(score > maxScoreDifficulty + minScoreDifficulty) score = maxScoreDifficulty + minScoreDifficulty;
+
 	float deltaSpeed = score * maxDifficultyFactor;
 	deltaSpeed /= maxScoreDifficulty;
 	deltaSpeed += 1;
