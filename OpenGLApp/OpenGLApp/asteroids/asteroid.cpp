@@ -156,7 +156,7 @@ void Asteroid::updateChildren() {
 		glm::vec2 tmp(0);
 
 		// start with random values
-		for(int child = 0; child < numChildren; child++) {
+		for(unsigned int child = 0; child < numChildren; child++) {
 			angles.push_back(baseAngle + rand() % 360);
 			glm::vec2 foo = glm::vec2(sin(glm::radians(angles[child])), cos(glm::radians(angles[child])));
 			sum += foo;
@@ -201,7 +201,7 @@ void Asteroid::updateChildren() {
 
 
 		minDelta = abs(angles[0] - angles[1]);
-		for(int i = 0; i < numChildren; i++) {
+		for(unsigned int i = 0; i < numChildren; i++) {
 			for(int j = i; j < numChildren; j++)
 				if(abs(angles[i] - angles[j]) < minDelta) minDelta = abs(angles[i] - angles[j]);
 		}
@@ -209,7 +209,7 @@ void Asteroid::updateChildren() {
 		numTries++;
 	}
 
-	for(int i = 0; i < numChildren; i++) childrenAngles.push_back(glm::radians(angles[i]));
+	for(unsigned int i = 0; i < numChildren; i++) childrenAngles.push_back(glm::radians(angles[i]));
 
 	useTexture(texturesAsteroidsID[normal]);
 }
