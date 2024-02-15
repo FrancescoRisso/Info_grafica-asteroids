@@ -51,7 +51,8 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 bool gameBubble = false;
 bool flashIncrease = false;
 bool flashDecrease = false;
-float iFlash = 0;
+float iFlash = 0.0f;
+float wholeScreenFlashTimer = 0.0f;
 
 float getiFlash() {
 	return iFlash;
@@ -240,9 +241,11 @@ void renderGame() {
 	}
 
 	if(flashIncrease) {
-		iFlash += flashSpeed;
+		wholeScreenFlashTimer += deltaTime;
+		iFlash = wholeScreenFlashTimer / flashTime * flashBrightness;
 		if(iFlash >= flashBrightness) {
 			iFlash = flashBrightness;
+			wholeScreenFlashTimer = flashTime;
 			flashIncrease = false;
 			flashDecrease = true;
 			incrementScoreBy((int) asteroids.size());
@@ -251,10 +254,12 @@ void renderGame() {
 	}
 
 	if(flashDecrease && !flashIncrease) {
-		iFlash -= flashSpeed;
+		wholeScreenFlashTimer -= deltaTime;
+		iFlash = wholeScreenFlashTimer / flashTime * flashBrightness;
 		if(iFlash <= 0.0) {
 			flashDecrease = false;
-			iFlash = 0.0;
+			wholeScreenFlashTimer = 0.0f;
+			iFlash = 0.0f;
 		}
 	}
 
