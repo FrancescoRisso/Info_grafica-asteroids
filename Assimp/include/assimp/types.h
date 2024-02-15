@@ -98,13 +98,13 @@ struct ASSIMP_API AllocateFromAssimpHeap {
     // http://www.gotw.ca/publications/mill15.htm
 
     // new/delete overload
-    void *operator new(size_t num_bytes) /* throw( std::bad_alloc ) */;
-    void *operator new(size_t num_bytes, const std::nothrow_t &) throw();
+    void *operator new(std::size_t num_bytes) /* throw( std::bad_alloc ) */;
+    void *operator new(std::size_t num_bytes, const std::nothrow_t &) throw();
     void operator delete(void *data);
 
     // array new/delete overload
-    void *operator new[](size_t num_bytes) /* throw( std::bad_alloc ) */;
-    void *operator new[](size_t num_bytes, const std::nothrow_t &) throw();
+    void *operator new[](std::size_t num_bytes) /* throw( std::bad_alloc ) */;
+    void *operator new[](std::size_t num_bytes, const std::nothrow_t &) throw();
     void operator delete[](void *data);
 
 }; // struct AllocateFromAssimpHeap
@@ -118,7 +118,7 @@ extern "C" {
 
 /** Maximum dimension for strings, ASSIMP strings are zero terminated. */
 #ifdef __cplusplus
-static const size_t MAXLEN = 1024;
+static const std::size_t MAXLEN = 1024;
 #else
 #define MAXLEN 1024
 #endif
