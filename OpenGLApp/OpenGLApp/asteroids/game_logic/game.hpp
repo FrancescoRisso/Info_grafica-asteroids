@@ -14,6 +14,7 @@
 #include "../spaceship.hpp"
 #include "endScreen.hpp"
 #include "homePage.hpp"
+#include "pause.hpp"
 
 float getiFlash();
 	

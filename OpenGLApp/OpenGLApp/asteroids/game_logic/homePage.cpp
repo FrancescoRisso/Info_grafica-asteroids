@@ -112,6 +112,7 @@ void processKeyboardHomePage(GLFWwindow* window) {
 				break;
 			case resetScore:
 				resetHighScore();
+				saveRecord();
 				homeStrings[curHighScoreStr].changeString("Reset high score (currently 0)");
 				break;
 			case quitOption:

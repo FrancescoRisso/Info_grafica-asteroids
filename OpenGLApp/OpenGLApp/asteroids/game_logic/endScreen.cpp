@@ -55,15 +55,16 @@ void setScoresEndScreen(int score) {
 
 	sprintf_s(buf, "You destroyed %d asteroids", score);
 	endGameStrings[yourScore].changeString(buf);
-
+	loadRecord();
+	sprintf_s(buf, "Best score: %d", highScore);
 	if(highScore < score) {
 		highScore = score;
 		isNewBest = true;
 		sprintf_s(buf, "Best score: %d", highScore);
 		saveRecord();
-		endGameStrings[hiScore].changeString(buf);
 	} else
 		isNewBest = false;
+	endGameStrings[hiScore].changeString(buf);
 }
 
 int getHighScore() {

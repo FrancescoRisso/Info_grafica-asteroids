@@ -103,11 +103,11 @@ int main() {
 		glClearColor(getiFlash(), getiFlash(), getiFlash(), 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		for(int i = 0; i < numStars; i++) {
-			stars[i].Draw();
-			stars[i].Move();
-			if(stars[i].isOutOfScreen()) stars[i].Spawn();
-		}
+		//for(int i = 0; i < numStars; i++) {
+		//	stars[i].Draw();
+		//	stars[i].Move();
+		//	if(stars[i].isOutOfScreen()) stars[i].Spawn();
+		//}
 
 		switch(currentPhase) {
 			case mainMenu:
@@ -130,6 +130,11 @@ int main() {
 			case pauseScreen: renderPause(); break;
 		}
 
+		for(int i = 0; i < numStars; i++) {
+			stars[i].Draw();
+			stars[i].Move();
+			if(stars[i].isOutOfScreen()) stars[i].Spawn();
+		}
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------

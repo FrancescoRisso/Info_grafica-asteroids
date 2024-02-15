@@ -26,7 +26,7 @@ extern DisplayString scoreDisplay;
 
 void renderPause() {
 	for(int i = 0; i < pause_NUM_STRINGS; i++) pauseStrings[i].Draw();
-
+  
 	spaceship.Draw();
 	for(auto asteroidPtr = asteroids.begin(); asteroidPtr != asteroids.end(); asteroidPtr++) asteroidPtr->Draw();
 	for(auto projectilePtr = projectiles.begin(); projectilePtr != projectiles.end(); projectilePtr++) projectilePtr->Draw();
@@ -87,7 +87,7 @@ void processKeyboardPause(GLFWwindow* window) {
 
 void preparePause() {
 	selectedOption = resumeGame;
-
+  
 	pauseStrings[pause].Init(glm::vec2(0, 0.35), "PAUSE", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.15f);
 	pauseStrings[resume].Init(
 		glm::vec2(0, 0.15), "Resume game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resumeGame ? 1 : 0.5f), 0.10f);

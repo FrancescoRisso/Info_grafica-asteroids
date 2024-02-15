@@ -121,7 +121,7 @@ void renderGame() {
 	auto projectilePtr = projectiles.begin();
 	auto asteroidPtr = asteroids.begin();
 	scoreDisplay.Draw();
-
+	for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
 	while(projectilePtr != projectiles.end()) {
 		if(checkAsteroidProjectileCollision(projectilePtr)) {
 			projectilePtr = projectiles.erase(projectilePtr);
@@ -305,6 +305,10 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn) {
 
 	spaceshipPointTo = mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT));
 	if(currentPhase == game) spaceship.PointTo(spaceshipPointTo);
+}
+
+int getScore() {
+	return destroyedAsteroids;
 }
 
 int getScore() {
