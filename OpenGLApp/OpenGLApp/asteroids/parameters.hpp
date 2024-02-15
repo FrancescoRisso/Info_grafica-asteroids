@@ -144,4 +144,11 @@ int weight_largeAsteroid();
 
 float setSpeedDifficulty(float speed, bool isPositive);
 
+/*	---------------------------------------------------------------------
+	Title
+-----------------------------------------------------------------------*/
+
+#define titleRotationAngle 20
+
+
 #endif

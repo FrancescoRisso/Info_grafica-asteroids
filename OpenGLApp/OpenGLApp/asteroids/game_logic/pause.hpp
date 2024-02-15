@@ -1,59 +1,49 @@
-#ifndef _GAME_LOGIC_H
-#define _GAME_LOGIC_H
+#ifndef _PAUSE_H
+#define _PAUSE_H
 
-#include <iostream>
-#include <list>
 
 #include "../../Main.hpp"
-#include "../../utils.hpp"
-#include "../asteroid.hpp"
 #include "../displayString.hpp"
 #include "../heart.hpp"
-#include "../powerup.hpp"
-#include "../projectile.hpp"
-#include "../spaceship.hpp"
-#include "endScreen.hpp"
-#include "homePage.hpp"
+#include "game.hpp"
 
-float getiFlash();
-	
-	/*
-	prepareGame
+/*
+	preparePause
 	---------------------------------------------------------------------
 	Does all the initializations for the game to start
 */
-void prepareGame();
+void preparePause();
 
 
 /*
-	renderGame
+	renderPause
 	---------------------------------------------------------------------
 	Does all the updating and rendering of the game
 */
-void renderGame();
+void renderPause();
 
 
 /*
-	updateTransformGame
+	updateTransformPause
 	---------------------------------------------------------------------
 	Updates the tranformation matrices of all the game objects
 */
-void updateTransformGame();
+void updateTransformPause();
 
 
 /*
-	processKeyboardGame
+	processKeyboardPause
 	---------------------------------------------------------------------
 	Does all the processing of keyboard inputs during the game phase
 	---------------------------------------------------------------------
 	PARAMETERS:
 		- window: the window where the keyboard is considered
 */
-void processKeyboardGame(GLFWwindow* window);
+void processKeyboardPause(GLFWwindow* window);
 
 
 /*
-	processMouseGame
+	processMousePause
 	---------------------------------------------------------------------
 	Does all the processing of the mouse position during the game phase
 	---------------------------------------------------------------------
@@ -62,9 +52,7 @@ void processKeyboardGame(GLFWwindow* window);
 		- xposIn: the x coordinate of the mouse
 		- yposIn: the y coordinate of the mouse
 */
-void processMouseGame(GLFWwindow* window, double xposIn, double yposIn);
-
-int getScore();
+void processMousePause(GLFWwindow* window, double xposIn, double yposIn);
 
 
 #endif

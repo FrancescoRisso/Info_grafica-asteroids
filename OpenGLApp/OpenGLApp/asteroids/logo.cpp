@@ -8,30 +8,41 @@ Spacevoid::Spacevoid() {}
 
 staticVariablesInitialize_cpp(Spacevoid);
 
+Model title;
+
+extern unsigned int SCR_HEIGHT, SCR_WIDTH;
+extern float lastFrame;
+
+glm::vec3 cameraPos = glm::vec3(0, 0, 6);
+glm::mat4 viewMatrix = glm::lookAt(cameraPos, cameraPos + glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
+glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
+
 void Spacevoid::Init(glm::vec2 pos) {
 	this->pos = pos;
 	this->speed = scaleVector(0.0f * scaleVectorReverse(glm::vec2(cos(angle), sin(angle))));
 	this->angle = 0;
+	zLayer = 3;
 
-	float width = 1.0;
-	float height = 997.0f / 3743.0f;
+	angleX = glm::radians(90.0f);
 
-	scale = 2.0f;
+	scale = 0.5;
 
-	// clang-format off
-	float tmpPoints[numTriangles_Spacevoid * 3 * 2 * 2] = {
-		(float) width/2,		(float) height/2,		1,	1,
-		(float) -width/2,		(float) height/2, 		0,	1,
-		(float) width/2,		(float) -height/2,		1,	0,
+	title.Init("./resources/objects/3d-title.obj");
 
-		(float) -width/2,		(float) -height/2,		0,	0,
-		(float) -width/2,		(float) height/2,		0,	1,
-		(float) width/2,		(float) -height/2,		1,	0,
-	};
-	// clang-format on
-
-	addTexture("./resources/textures/SpaceVoid.png");
-
-	initGL(tmpPoints);
+	initGL((float*) 0);
 }
 
+void Spacevoid::Draw() const {
+	shader.use();
+
+	shader.setMat4("view", viewMatrix);
+	shader.setMat4("projection", projection);
+	shader.setMat4("model", transform);
+
+	title.Draw(shader);
+}
+
+void Spacevoid::Move() {
+	angleY = glm::sin(lastFrame) * ((float) titleRotationAngle / 90.0f);
+	updateTransform();
+}

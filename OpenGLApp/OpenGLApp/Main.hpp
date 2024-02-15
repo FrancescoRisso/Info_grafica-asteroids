@@ -23,8 +23,9 @@
 #include "asteroids/game_logic/endScreen.hpp"
 #include "asteroids/game_logic/instructions.hpp"
 #include "asteroids/game_logic/homePage.hpp"
+#include "asteroids/game_logic/pause.hpp"
 
-enum gamePhases { mainMenu, instructions, game, endScreen };
+enum gamePhases { mainMenu, instructions, game, endScreen, pauseScreen };
 
 void startMusic();
 
