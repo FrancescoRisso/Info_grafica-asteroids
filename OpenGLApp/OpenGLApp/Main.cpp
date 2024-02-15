@@ -22,6 +22,7 @@ irrklang::ISoundEngine* engine;
 
 void startMusic() {
 	if(!musicPlaying) {
+		engine = irrklang::createIrrKlangDevice();
 		engine->play2D("./resources/sounds/beatwave.wav", true);
 		musicPlaying = true;
 	}
@@ -82,6 +83,8 @@ int main() {
 
 	glEnable(GL_DEPTH_TEST);
 
+	startMusic();
+
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
@@ -103,29 +106,16 @@ int main() {
 		glClearColor(getiFlash(), getiFlash(), getiFlash(), 1);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//for(int i = 0; i < numStars; i++) {
+		// for(int i = 0; i < numStars; i++) {
 		//	stars[i].Draw();
 		//	stars[i].Move();
 		//	if(stars[i].isOutOfScreen()) stars[i].Spawn();
 		//}
 
 		switch(currentPhase) {
-			case mainMenu:
-				if(musicPlaying) {
-					if(engine) engine->drop();
-					musicPlaying = !musicPlaying;
-				}
-				renderHomePage();
-				break;
+			case mainMenu: renderHomePage(); break;
 			case instructions: renderInstructions(); break;
-			case game:
-				if(!musicPlaying) {
-					engine = irrklang::createIrrKlangDevice();
-					engine->play2D("./resources/sounds/beatwave.wav", true);
-					musicPlaying = !musicPlaying;
-				}
-				renderGame();
-				break;
+			case game: renderGame(); break;
 			case endScreen: renderEndScreen(); break;
 			case pauseScreen: renderPause(); break;
 		}
