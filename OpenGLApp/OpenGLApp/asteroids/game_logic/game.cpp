@@ -58,6 +58,10 @@ void pauseScreen() {
 	renderPause();
 }
 
+int getScore() {
+	return destroyedAsteroids;
+}
+
 void updateColorsP() {
 	if(!paused) return;
 	for(int i = 0; i < pause_NUM_STRINGS; i++) {

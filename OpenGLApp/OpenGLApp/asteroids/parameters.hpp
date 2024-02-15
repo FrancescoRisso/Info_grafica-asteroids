@@ -1,6 +1,6 @@
 #ifndef _PARAMETERS_H
 #define _PARAMETERS_H
-
+//#include "./game_logic/game.hpp"
 
 /*	---------------------------------------------------------------------
 	Sizes of items
@@ -141,5 +141,7 @@ int weight_largeAsteroid();
 
 #define flashBrightness 0.3f
 #define flashSpeed 0.0002f
+
+float setSpeedDifficulty(float speed, bool isPositive);
 
 #endif
