@@ -157,7 +157,7 @@ void Asteroid::updateChildren() {
 
 		// start with random values
 		for(unsigned int child = 0; child < numChildren; child++) {
-			angles.push_back(baseAngle + rand() % 360);
+			angles.push_back((float) (baseAngle + rand() % 360));
 			glm::vec2 foo = glm::vec2(sin(glm::radians(angles[child])), cos(glm::radians(angles[child])));
 			sum += foo;
 		}
@@ -200,10 +200,10 @@ void Asteroid::updateChildren() {
 		}
 
 
-		minDelta = abs(angles[0] - angles[1]);
+		minDelta = (int) abs(angles[0] - angles[1]);
 		for(unsigned int i = 0; i < numChildren; i++) {
-			for(int j = i; j < numChildren; j++)
-				if(abs(angles[i] - angles[j]) < minDelta) minDelta = abs(angles[i] - angles[j]);
+			for(unsigned int j = i; j < numChildren; j++)
+				if((int) abs(angles[i] - angles[j]) < minDelta) minDelta = (int) abs(angles[i] - angles[j]);
 		}
 
 		numTries++;
