@@ -149,8 +149,11 @@
     <ClInclude Include="asteroids\game_logic\pause.hpp">
       <Filter>File di origine</Filter>
     </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
     <ClInclude Include="model.hpp">
-      <Filter>File di intestazione</Filter>
+      <Filter>File di origine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

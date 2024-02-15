@@ -65,7 +65,7 @@ void prepareGame() {
 
 	for(int i = 0; i < numHearts; i++) hearts[i].Init(glm::vec2(0.95 - radius_Heart, 0.9 - radius_Heart), i);
 
-	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1);
+	scoreDisplay.Init(glm::vec2(-0.95, 0.9), "Score: 0", alignLeft, alignTop, glm::vec3(1), 0.1f);
 
 	asteroids.clear();
 	projectiles.clear();
@@ -73,7 +73,7 @@ void prepareGame() {
 	heartsLeft = numHearts;
 	destroyedAsteroids = 0;
 
-	timeFromLastShot = 0.0000000001;
+	timeFromLastShot = 0.0000000001f;
 	timeFromLastSpawn = 0;
 
 	isInvulnerable = false;
@@ -149,7 +149,7 @@ void renderGame() {
 		powerup.Move();
 		powerup.Draw();
 		if(powerup.isOutOfScreen()) powerupPresent = false;
-		if(powerup.collidesWith(&spaceship)&&explosionLevel<=explosion_none) {
+		if(powerup.collidesWith(&spaceship) && explosionLevel <= explosion_none) {
 			powerupPresent = false;
 			switch(powerup.getType()) {
 				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
@@ -222,11 +222,6 @@ void renderGame() {
 	if(isInvulnerable) {
 		invulnerabilityCount += deltaTime;
 		blinkCount += deltaTime;
-		/* if(invulnerabilityCount >= 0 && invulnerabilityCount < invulnerabilityTime) {
-			blinkCount = 0;
-			blinkIsOn = true;
-			//gameBubble = blinkIsOn;
-		}*/
 		if(invulnerabilityCount > invulnerabilityTime) {
 			isInvulnerable = false;
 			if(gameBubble == true) {
@@ -247,7 +242,7 @@ void renderGame() {
 			iFlash = flashBrightness;
 			flashIncrease = false;
 			flashDecrease = true;
-			incrementScoreBy(asteroids.size());
+			incrementScoreBy((int) asteroids.size());
 			asteroids.clear();
 		}
 	}
@@ -273,7 +268,7 @@ void renderGame() {
 		spaceship.setExplosionLevel(bubbled);
 	}
 
-
+	for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
 }
 
 
@@ -310,6 +305,10 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn) {
 
 	spaceshipPointTo = mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT));
 	if(currentPhase == game) spaceship.PointTo(spaceshipPointTo);
+}
+
+int getScore() {
+	return destroyedAsteroids;
 }
 
 int getScore() {

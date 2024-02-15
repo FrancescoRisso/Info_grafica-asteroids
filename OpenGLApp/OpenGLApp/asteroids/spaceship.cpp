@@ -14,7 +14,7 @@ bool bubble = false;
 
 
 void Spaceship::changeBubble() {
-	bubble != bubble;
+	bubble = !bubble;
 }
 
 
@@ -74,7 +74,7 @@ void Spaceship::MoveDir(direction dir) {
 void Spaceship::PointTo(glm::vec2 mousePos) {
 	lastMousePos = mousePos;
 
-	float newAngle = angleBetween(pos + YaxisVersor, mousePos, pos) - 3.14;
+	float newAngle = angleBetween(pos + YaxisVersor, mousePos, pos) - 3.14f;
 	if(newAngle == newAngle) angle = newAngle;  // to avoid indeterminate forms
 	updateTransform();
 }
@@ -88,7 +88,7 @@ Projectile Spaceship::Shoot() {
 
 
 void Spaceship::setExplosionLevel(explosionLevel_t explosionLevel) {
-	scale = explosionLevel == explosion_none || explosionLevel == bubbled ? 1 : 1.5;
+	scale = explosionLevel == explosion_none || explosionLevel == bubbled ? 1 : 1.5f;
 	useTexture(explosionLevelTextures[explosionLevel]);
 	updateTransform();
 }

@@ -26,15 +26,12 @@ extern DisplayString scoreDisplay;
 
 void renderPause() {
 	for(int i = 0; i < pause_NUM_STRINGS; i++) pauseStrings[i].Draw();
-	
-	
+  
 	spaceship.Draw();
 	for(auto asteroidPtr = asteroids.begin(); asteroidPtr != asteroids.end(); asteroidPtr++) asteroidPtr->Draw();
 	for(auto projectilePtr = projectiles.begin(); projectilePtr != projectiles.end(); projectilePtr++) projectilePtr->Draw();
 	for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();
 	scoreDisplay.Draw();
-
-
 }
 
 
@@ -90,15 +87,16 @@ void processKeyboardPause(GLFWwindow* window) {
 
 void preparePause() {
 	selectedOption = resumeGame;
-
-	pauseStrings[pause].Init(glm::vec2(0, 0.35), "PAUSE", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.15);
+  
+	pauseStrings[pause].Init(glm::vec2(0, 0.35), "PAUSE", alignCenterHoriz, alignCenterVert, glm::vec3(1), 0.15f);
 	pauseStrings[resume].Init(
-		glm::vec2(0, 0.15), "Resume game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resumeGame ? 1 : 0.5), 0.10);
+		glm::vec2(0, 0.15), "Resume game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == resumeGame ? 1 : 0.5f), 0.10f);
 	pauseStrings[restartP].Init(
-		glm::vec2(0, 0.0), "Restart game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == restartGame ? 1 : 0.5), 0.10);
+		glm::vec2(0, 0.0), "Restart game", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == restartGame ? 1 : 0.5f), 0.10f);
 	pauseStrings[menu].Init(
-		glm::vec2(0, -0.15), "Back to menu", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == backToMenu ? 1 : 0.5), 0.10);
-	pauseStrings[quitP].Init(glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5), 0.10);
+		glm::vec2(0, -0.15), "Back to menu", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == backToMenu ? 1 : 0.5f), 0.10f);
+	pauseStrings[quitP].Init(
+		glm::vec2(0, -0.30), "Quit", alignCenterHoriz, alignCenterVert, glm::vec3(selectedOption == quitOption ? 1 : 0.5f), 0.10f);
 }
 
 
