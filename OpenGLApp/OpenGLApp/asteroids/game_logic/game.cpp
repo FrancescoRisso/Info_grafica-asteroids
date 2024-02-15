@@ -57,6 +57,10 @@ float getiFlash() {
 	return iFlash;
 }
 
+void powerupIsPresent() {
+	if(powerupPresent) powerup.Draw();
+}
+
 void prepareGame() {
 	preparePause();
 	destroyedAsteroids = 0;
