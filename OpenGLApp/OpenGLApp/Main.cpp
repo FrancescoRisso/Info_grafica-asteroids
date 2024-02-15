@@ -27,8 +27,9 @@ void startMusic() {
 	}
 }
 
-void stopMusic(){
-		if(musicPlaying) {engine->drop();
+void stopMusic() {
+	if(musicPlaying) {
+		engine->drop();
 		musicPlaying = false;
 	}
 }
@@ -36,9 +37,7 @@ void stopMusic(){
 
 int main() {
 	// init randomness
-	srand(time(NULL));
-
-	
+	srand((unsigned int) time(NULL));
 
 	// glfw: initialize and configure
 	// ------------------------------
@@ -111,20 +110,22 @@ int main() {
 		}
 
 		switch(currentPhase) {
-			case mainMenu: 
+			case mainMenu:
 				if(musicPlaying) {
 					if(engine) engine->drop();
 					musicPlaying = !musicPlaying;
 				}
-				renderHomePage(); break;
+				renderHomePage();
+				break;
 			case instructions: renderInstructions(); break;
-			case game: 
+			case game:
 				if(!musicPlaying) {
 					engine = irrklang::createIrrKlangDevice();
 					engine->play2D("./resources/sounds/beatwave.wav", true);
 					musicPlaying = !musicPlaying;
-				} 
-				renderGame(); break;
+				}
+				renderGame();
+				break;
 			case endScreen: renderEndScreen(); break;
 			case pauseScreen: renderPause(); break;
 		}
