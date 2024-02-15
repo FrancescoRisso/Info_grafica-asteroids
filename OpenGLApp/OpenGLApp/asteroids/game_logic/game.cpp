@@ -222,11 +222,6 @@ void renderGame() {
 	if(isInvulnerable) {
 		invulnerabilityCount += deltaTime;
 		blinkCount += deltaTime;
-		/* if(invulnerabilityCount >= 0 && invulnerabilityCount < invulnerabilityTime) {
-			blinkCount = 0;
-			blinkIsOn = true;
-			//gameBubble = blinkIsOn;
-		}*/
 		if(invulnerabilityCount > invulnerabilityTime) {
 			isInvulnerable = false;
 			if(gameBubble == true) {
