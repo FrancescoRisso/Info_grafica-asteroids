@@ -34,13 +34,6 @@ void stopMusic(){
 }
 
 
-
-//void restartMusic() {
-//	if (musicPlaying) { 
-//		engine->play2D("./resources/sounds/beatwave.wav", true);
-//	}
-//}
-
 int main() {
 	// init randomness
 	srand(time(NULL));
@@ -79,12 +72,12 @@ int main() {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
+
 	loadRecord();
 	prepareGame();
 	prepareEndScreen();
 	prepareInstructions();
 	prepareHomePage();
-	//hpreparePause();
 
 	for(int i = 0; i < numStars; i++) stars[i].Spawn();
 
@@ -93,8 +86,6 @@ int main() {
 	// render loop
 	// -----------
 	while(!glfwWindowShouldClose(window)) {
-		// if(hasDied) continue;
-
 		// input
 		// -----
 		processInput(window);
