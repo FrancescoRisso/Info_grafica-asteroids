@@ -142,7 +142,16 @@ int weight_largeAsteroid();
 #define flashBrightness 0.3f
 #define flashSpeed 0.0005f
 
+
+/*	---------------------------------------------------------------------
+	Difficulty increase parameters
+-----------------------------------------------------------------------*/
+
 float setSpeedDifficulty(float speed, bool isPositive);
+
+#define maxScoreDifficulty 2000
+#define minScoreDifficuly 100
+#define maxDifficultyFactor 3 //actual factor = maxDifficultyFactor * 2
 
 /*	---------------------------------------------------------------------
 	Title
