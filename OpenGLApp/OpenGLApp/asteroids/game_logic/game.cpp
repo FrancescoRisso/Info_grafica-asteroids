@@ -59,7 +59,7 @@ float getiFlash() {
 
 void prepareGame() {
 	preparePause();
-
+	destroyedAsteroids = 0;
 	spaceship.Init(glm::vec2(0));
 
 
