@@ -358,7 +358,8 @@ struct aiString {
         if (!len) {
             return;
         }
-        if (length + len >= MAXLEN) {
+		const long long int tmp = len + length;
+        if (tmp >= MAXLEN) {
             return;
         }
 
