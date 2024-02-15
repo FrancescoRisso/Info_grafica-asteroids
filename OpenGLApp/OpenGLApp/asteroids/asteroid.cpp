@@ -31,7 +31,8 @@ void Asteroid::addGoldenTexture(golden_t level, const char* path) {
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = scaleVector((goldenFlag? setSpeedDifficulty(speed_goldenAsteroid, false) : setSpeedDifficulty(speed_Asteroid,false)) * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
+	this->speed = scaleVector((goldenFlag ? setSpeedDifficulty(speed_goldenAsteroid, false) : setSpeedDifficulty(speed_Asteroid, false)) *
+							  scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
 	this->angle = angle;
 
 	// clang-format off
@@ -60,7 +61,8 @@ void Asteroid::Spawn() {
 	glm::vec2 firstPos(0);
 
 	randomizeSize();
-	if(goldenCoolDown<=0 && rand() % 100 <= goldenChance) { goldenFlag = true;
+	if(goldenCoolDown <= 0 && rand() % 100 <= goldenChance) {
+		goldenFlag = true;
 		goldenCoolDown = minimumAsteroidsBetweenGolden;
 		size = small;
 	} else {
@@ -133,14 +135,14 @@ void Asteroid::updateChildren() {
 			mass--;
 		}
 	}
-	numChildren = children.size();
+	numChildren = (unsigned int) children.size();
 
 	// generate the orientations of the children
 	std::vector<float> angles;
 
 	float prevDist;
 
-	int baseAngle = -angleBetweenVerticalDir(speed) * 180 / pi_float;
+	int baseAngle = (int) (-angleBetweenVerticalDir(speed) * 180 / pi_float);
 
 	int numTries = 0;
 
@@ -150,12 +152,12 @@ void Asteroid::updateChildren() {
 	while(minDelta < 20 && numTries < 5) {
 		angles.clear();
 
-		glm::vec2 sum(-conservedMomentum_Asteroid * speed / setSpeedDifficulty(speed_Asteroid,false) * (float) Asteroid::getMass(size));
+		glm::vec2 sum(-conservedMomentum_Asteroid * speed / setSpeedDifficulty(speed_Asteroid, false) * (float) Asteroid::getMass(size));
 		glm::vec2 tmp(0);
 
 		// start with random values
-		for(int child = 0; child < numChildren; child++) {
-			angles.push_back(baseAngle + rand() % 360);
+		for(unsigned int child = 0; child < numChildren; child++) {
+			angles.push_back((float) (baseAngle + rand() % 360));
 			glm::vec2 foo = glm::vec2(sin(glm::radians(angles[child])), cos(glm::radians(angles[child])));
 			sum += foo;
 		}
@@ -198,16 +200,16 @@ void Asteroid::updateChildren() {
 		}
 
 
-		minDelta = abs(angles[0] - angles[1]);
-		for(int i = 0; i < numChildren; i++) {
-			for(int j = i; j < numChildren; j++)
-				if(abs(angles[i] - angles[j]) < minDelta) minDelta = abs(angles[i] - angles[j]);
+		minDelta = (int) abs(angles[0] - angles[1]);
+		for(unsigned int i = 0; i < numChildren; i++) {
+			for(unsigned int j = i; j < numChildren; j++)
+				if((int) abs(angles[i] - angles[j]) < minDelta) minDelta = (int) abs(angles[i] - angles[j]);
 		}
 
 		numTries++;
 	}
 
-	for(int i = 0; i < numChildren; i++) childrenAngles.push_back(glm::radians(angles[i]));
+	for(unsigned int i = 0; i < numChildren; i++) childrenAngles.push_back(glm::radians(angles[i]));
 
 	useTexture(texturesAsteroidsID[normal]);
 }
@@ -226,7 +228,7 @@ Asteroid Asteroid::getChild() {
 	tmpAsteroid.goldenFlag = false;
 	tmpAsteroid.Init(pos, childrenAngles.back());
 	childrenAngles.pop_back();
-	//tmpAsteroid.useSameTextureAs(this);
+	// tmpAsteroid.useSameTextureAs(this);
 	tmpAsteroid.useTexture(texturesAsteroidsID[normal]);
 
 	return tmpAsteroid;

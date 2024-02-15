@@ -50,16 +50,16 @@ void DisplayString::shiftLetters() {
 		case alignLeft:
 			totSize = -1;
 			for(int i = 0; i < letterObjects.size(); i++) {
-				letterObjects[i].shiftByPixel(++totSize);
+				letterObjects[i].shiftByPixel((float) ++totSize);
 				totSize += letterObjects[i].getWidth();
 			}
 			break;
 
 		case alignRight:
 			totSize = 1;
-			for(int i = letterObjects.size() - 1; i >= 0; i--) {
+			for(int i = (int) letterObjects.size() - 1; i >= 0; i--) {
 				totSize -= letterObjects[i].getWidth();
-				letterObjects[i].shiftByPixel(--totSize);
+				letterObjects[i].shiftByPixel((float) --totSize);
 			}
 			break;
 

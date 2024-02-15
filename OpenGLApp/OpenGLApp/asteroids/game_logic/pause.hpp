@@ -6,7 +6,7 @@
 #include "../displayString.hpp"
 #include "../heart.hpp"
 #include "game.hpp"
-
+#include "../powerup.hpp"
 /*
 	preparePause
 	---------------------------------------------------------------------

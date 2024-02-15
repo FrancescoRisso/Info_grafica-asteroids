@@ -6,14 +6,14 @@
 	Sizes of items
 -----------------------------------------------------------------------*/
 
-#define radius_smallAsteroid 0.05
-#define radius_mediumAsteroid 0.1
-#define radius_largeAsteroid 0.2
-#define radius_Spaceship 0.1
-#define radius_Projectile 0.01
+#define radius_smallAsteroid 0.05f
+#define radius_mediumAsteroid 0.1f
+#define radius_largeAsteroid 0.2f
+#define radius_Spaceship 0.1f
+#define radius_Projectile 0.01f
 #define radius_Star 0.005f
 #define radius_Heart 0.05f
-#define radius_Spacevoid 0.8
+#define radius_Spacevoid 0.8f
 #define radius_Powerup 0.05f
 
 

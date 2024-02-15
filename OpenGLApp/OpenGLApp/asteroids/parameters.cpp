@@ -1,6 +1,9 @@
 #include "parameters.hpp"
-#include "./game_logic/game.hpp"
+
 #include <cmath>
+
+#include "./game_logic/game.hpp"
+
 
 extern int destroyedAsteroids;
 
@@ -77,21 +80,18 @@ int weight_largeAsteroid() {
 
 
 float timeBetweenSpawns() {
-	return scalingMagnitude * exp(-destroyedAsteroids * scalingSpeed) + stepSize * numSteps;
+	return (float) (scalingMagnitude * exp(-destroyedAsteroids * scalingSpeed) + stepSize * numSteps);
 }
 
 float setSpeedDifficulty(float speed, bool isPositive) {
 	if(getScore() <= minScoreDifficuly) return speed;
 	int score = getScore() - minScoreDifficuly;
 	if(score > maxScoreDifficulty + minScoreDifficuly) score = maxScoreDifficulty + minScoreDifficuly;
-	// X:3 = score:2000
-
-	//dS : S = x:100
+  
 	float deltaSpeed = score * maxDifficultyFactor;
 	deltaSpeed /= maxScoreDifficulty;
 	deltaSpeed += 1;
 
-	//printf("%f", deltaSpeed);
 	if(isPositive) {
 		return speed / deltaSpeed;
 	} else

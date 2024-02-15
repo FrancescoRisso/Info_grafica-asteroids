@@ -4,7 +4,6 @@
 # Object files
 *.o
 *.ko
-*.obj
 *.elf
 
 # Linker output
@@ -17,19 +16,19 @@
 *.pch
 
 # Libraries
-*.lib
 *.a
 *.la
 *.lo
 
 # Shared objects (inc. Windows DLLs)
-*.dll
 *.so
 *.so.*
 *.dylib
 
 # Executables
-*.exe
+Assimp/*.exe
+Assimp/*/*.exe
+Assimp/*/*/*.exe
 *.out
 *.app
 *.i*86
@@ -51,8 +50,9 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-
+Debug/
+Release/
 .vs/
-x64/
 
 record
+.record
