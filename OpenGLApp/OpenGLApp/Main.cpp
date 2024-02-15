@@ -33,6 +33,8 @@ void stopMusic(){
 	}
 }
 
+
+
 //void restartMusic() {
 //	if (musicPlaying) { 
 //		engine->play2D("./resources/sounds/beatwave.wav", true);
