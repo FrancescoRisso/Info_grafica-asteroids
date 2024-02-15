@@ -77,21 +77,18 @@ int weight_largeAsteroid() {
 
 
 float timeBetweenSpawns() {
-	return scalingMagnitude * exp(-destroyedAsteroids * scalingSpeed) + stepSize * numSteps;
+	return (float) (scalingMagnitude * exp(-destroyedAsteroids * scalingSpeed) + stepSize * numSteps);
 }
 
 float setSpeedDifficulty(float speed, bool isPositive) {
 	if(getScore() <= 100) return speed;
 	int score = getScore() - 100;
 	if(score > 2100) score = 2100;
-	// X:3 = score:2000
 
-	//dS : S = x:100
-	float deltaSpeed = score * 3;
+	float deltaSpeed = score * 3.0f;
 	deltaSpeed /= 2000;
 	deltaSpeed += 1;
 
-	//printf("%f", deltaSpeed);
 	if(isPositive) {
 		return speed / deltaSpeed;
 	} else
