@@ -26,7 +26,9 @@
 *.dylib
 
 # Executables
-*.exe
+Assimp/*.exe
+Assimp/*/*.exe
+Assimp/*/*/*.exe
 *.out
 *.app
 *.i*86
@@ -49,6 +51,8 @@ Mkfile.old
 dkms.conf
 
 Debug/
+Release/
 .vs/
 
 record
+.record
