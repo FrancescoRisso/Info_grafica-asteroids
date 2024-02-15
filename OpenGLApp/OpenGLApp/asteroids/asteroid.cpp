@@ -31,7 +31,7 @@ void Asteroid::addGoldenTexture(golden_t level, const char* path) {
 
 void Asteroid::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = scaleVector((goldenFlag? speed_goldenAsteroid : speed_Asteroid) * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
+	this->speed = scaleVector((goldenFlag? setSpeedDifficulty(speed_goldenAsteroid, false) : setSpeedDifficulty(speed_Asteroid,false)) * scaleVectorReverse(glm::vec2(sin(angle), cos(angle))));
 	this->angle = angle;
 
 	// clang-format off
@@ -150,7 +150,7 @@ void Asteroid::updateChildren() {
 	while(minDelta < 20 && numTries < 5) {
 		angles.clear();
 
-		glm::vec2 sum(-conservedMomentum_Asteroid * speed / speed_Asteroid * (float) Asteroid::getMass(size));
+		glm::vec2 sum(-conservedMomentum_Asteroid * speed / setSpeedDifficulty(speed_Asteroid,false) * (float) Asteroid::getMass(size));
 		glm::vec2 tmp(0);
 
 		// start with random values

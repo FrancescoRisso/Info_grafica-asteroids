@@ -27,7 +27,7 @@ void Spaceship::addExplosionLevelTexture(explosionLevel_t level, const char* pat
 
 void Spaceship::Init(glm::vec2 pos, float angle) {
 	this->pos = pos;
-	this->speed = glm::vec2(speed_Spaceship);
+	this->speed = glm::vec2(setSpeedDifficulty(speed_Spaceship, true));
 	angle = 0;
 
 	// clang-format off
