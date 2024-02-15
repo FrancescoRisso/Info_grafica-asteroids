@@ -310,7 +310,3 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn) {
 int getScore() {
 	return destroyedAsteroids;
 }
-
-int getScore() {
-	return destroyedAsteroids;
-}
