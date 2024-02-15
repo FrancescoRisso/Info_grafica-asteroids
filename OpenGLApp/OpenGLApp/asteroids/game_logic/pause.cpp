@@ -28,6 +28,7 @@ void renderPause() {
 	for(int i = 0; i < pause_NUM_STRINGS; i++) pauseStrings[i].Draw();
   
 	spaceship.Draw();
+	powerupIsPresent();
 	for(auto asteroidPtr = asteroids.begin(); asteroidPtr != asteroids.end(); asteroidPtr++) asteroidPtr->Draw();
 	for(auto projectilePtr = projectiles.begin(); projectilePtr != projectiles.end(); projectilePtr++) projectilePtr->Draw();
 	for(int i = 0; i < heartsLeft; i++) hearts[i].Draw();

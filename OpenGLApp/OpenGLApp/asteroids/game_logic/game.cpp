@@ -57,9 +57,13 @@ float getiFlash() {
 	return iFlash;
 }
 
+void powerupIsPresent() {
+	if(powerupPresent) powerup.Draw();
+}
+
 void prepareGame() {
 	preparePause();
-
+	destroyedAsteroids = 0;
 	spaceship.Init(glm::vec2(0));
 
 
@@ -71,7 +75,6 @@ void prepareGame() {
 	projectiles.clear();
 	powerupPresent = false;
 	heartsLeft = numHearts;
-	destroyedAsteroids = 0;
 
 	timeFromLastShot = 0.0000000001f;
 	timeFromLastSpawn = 0;
