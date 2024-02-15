@@ -149,7 +149,7 @@ void renderGame() {
 		powerup.Move();
 		powerup.Draw();
 		if(powerup.isOutOfScreen()) powerupPresent = false;
-		if(powerup.collidesWith(&spaceship)&&explosionLevel<=explosion_none) {
+		if(powerup.collidesWith(&spaceship) && explosionLevel <= explosion_none) {
 			powerupPresent = false;
 			switch(powerup.getType()) {
 				case extraLife: heartsLeft = min(heartsLeft + 1, numHearts); break;
@@ -310,4 +310,8 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn) {
 
 	spaceshipPointTo = mouse2graphicCoords(glm::vec2(xpos, ypos), glm::vec2(SCR_WIDTH, SCR_HEIGHT));
 	if(currentPhase == game) spaceship.PointTo(spaceshipPointTo);
+}
+
+int getScore() {
+	return destroyedAsteroids;
 }
