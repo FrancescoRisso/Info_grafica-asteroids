@@ -99,6 +99,9 @@ void incrementScoreBy(int n) {
 }
 
 bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator proj) {
+	if(flashIncrease) return false;
+	if(flashDecrease) return false;
+	
 	auto asteroidPtr = asteroids.begin();
 
 	while(asteroidPtr != asteroids.end()) {
@@ -106,7 +109,6 @@ bool checkAsteroidProjectileCollision(std::list<Asteroids::Projectile>::iterator
 			while(asteroidPtr->hasChildren()) asteroids.push_back(asteroidPtr->getChild());
 			if(asteroidPtr->goldenFlag) {
 				incrementScoreBy(goldenPoints);
-
 			} else {
 				incrementScoreBy(1);
 			}
@@ -206,7 +208,7 @@ void renderGame() {
 	asteroidPtr = asteroids.begin();
 	while(asteroidPtr != asteroids.end()) {
 		asteroidPtr->Draw();
-		asteroidPtr->Move();
+		if(!flashIncrease && !flashDecrease)asteroidPtr->Move();
 		if(asteroidPtr->isOutOfScreen()) {
 			asteroidPtr = asteroids.erase(asteroidPtr);
 			continue;
@@ -318,3 +320,5 @@ void processMouseGame(GLFWwindow* window, double xposIn, double yposIn) {
 int getScore() {
 	return destroyedAsteroids;
 }
+
+

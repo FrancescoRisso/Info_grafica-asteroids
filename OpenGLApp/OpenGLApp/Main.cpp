@@ -29,6 +29,7 @@ void startMusic() {
 }
 
 void stopMusic() {
+	return;
 	if(musicPlaying) {
 		engine->drop();
 		musicPlaying = false;

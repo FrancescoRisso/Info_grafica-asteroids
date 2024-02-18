@@ -64,6 +64,6 @@ void processKeyboardGame(GLFWwindow* window);
 void processMouseGame(GLFWwindow* window, double xposIn, double yposIn);
 
 int getScore();
-
-
+void powerupIsPresent();
+float getiFlash();
 #endif

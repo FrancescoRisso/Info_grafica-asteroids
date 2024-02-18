@@ -22,7 +22,7 @@
 -----------------------------------------------------------------------*/
 
 #define speed_Asteroid 0.3f
-#define speed_goldenAsteroid 1.5f
+#define speed_goldenAsteroid 0.6f
 #define speed_Projectile 1.5f
 #define speed_Star 0.005f
 #define speed_Spaceship 0.5f
@@ -92,9 +92,9 @@ float timeBetweenSpawns();
 int weight_smallAsteroid();
 int weight_mediumAsteroid();
 int weight_largeAsteroid();
-#define goldenChance 10
-#define minimumAsteroidsBetweenGolden 10
-#define goldenPoints 100
+#define goldenChance 20
+#define minimumAsteroidsBetweenGolden 20
+#define goldenPoints 20
 // the percentage of momentum that is transferred from an asteroid to its
 // children
 #define conservedMomentum_Asteroid 0.65f
@@ -151,7 +151,7 @@ float setSpeedDifficulty(float speed, bool isPositive);
 
 #define maxScoreDifficulty 2000
 #define minScoreDifficulty 100
-#define maxDifficultyFactor 3  // actual factor = maxDifficultyFactor * 2
+#define maxDifficultyFactor 4  // actual factor = maxDifficultyFactor * 2
 
 /*	---------------------------------------------------------------------
 	Title
