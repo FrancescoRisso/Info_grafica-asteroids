@@ -85,6 +85,7 @@ float timeBetweenSpawns() {
 
 float setSpeedDifficulty(float speed, bool isPositive) {
 	if(getScore() <= minScoreDifficulty) return speed;
+	isPositive = false;
 	int score = getScore() - minScoreDifficulty;
 	if(score > maxScoreDifficulty + minScoreDifficulty) score = maxScoreDifficulty + minScoreDifficulty;
 

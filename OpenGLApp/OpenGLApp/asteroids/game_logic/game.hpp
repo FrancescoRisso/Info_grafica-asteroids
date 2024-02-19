@@ -14,11 +14,9 @@
 #include "../spaceship.hpp"
 #include "endScreen.hpp"
 #include "homePage.hpp"
-#include "pause.hpp"
 
-float getiFlash();
-	
-	/*
+
+/*
 	prepareGame
 	---------------------------------------------------------------------
 	Does all the initializations for the game to start
@@ -66,6 +64,6 @@ void processKeyboardGame(GLFWwindow* window);
 void processMouseGame(GLFWwindow* window, double xposIn, double yposIn);
 
 int getScore();
-
 void powerupIsPresent();
+float getiFlash();
 #endif
